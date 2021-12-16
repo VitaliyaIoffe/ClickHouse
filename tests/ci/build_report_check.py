@@ -4,14 +4,16 @@ import json
 import logging
 import os
 import sys
-from github import Github
-from report import create_build_html_report
-from s3_helper import S3Helper
-from get_robot_token import get_best_robot_token
-from pr_info import PRInfo, get_event
-from commit_status_helper import  get_commit
+
 from ci_config import CI_CONFIG
+from commit_status_helper import get_commit
+from get_robot_token import get_best_robot_token
+from github import Github
+from pr_info import PRInfo, get_event
+from report import create_build_html_report
 from rerun_helper import RerunHelper
+from s3_helper import S3Helper
+
 
 class BuildResult():
     def __init__(self, compiler, build_type, sanitizer, bundled, splitted, status, elapsed_seconds, with_coverage):

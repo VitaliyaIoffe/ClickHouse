@@ -1,6 +1,6 @@
+from aes_encryption.requirements import *
 from testflows.core import *
 
-from aes_encryption.requirements import *
 
 @TestFeature
 @Name("compatibility")

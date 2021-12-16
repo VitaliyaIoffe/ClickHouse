@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
-import subprocess
-import logging
 import json
+import logging
 import os
-import time
 import shutil
-from github import Github
-from s3_helper import S3Helper
-from pr_info import PRInfo, get_event
-from get_robot_token import get_best_robot_token, get_parameter_from_ssm
-from upload_result_helper import upload_results
+import subprocess
+import time
+
+from clickhouse_helper import (ClickHouseHelper,
+                               prepare_tests_results_for_clickhouse)
 from commit_status_helper import get_commit
-from clickhouse_helper import ClickHouseHelper, prepare_tests_results_for_clickhouse
+from get_robot_token import get_best_robot_token, get_parameter_from_ssm
+from github import Github
+from pr_info import PRInfo, get_event
+from s3_helper import S3Helper
 from stopwatch import Stopwatch
+from upload_result_helper import upload_results
 
 NAME = "Push to Dockerhub (actions)"
 

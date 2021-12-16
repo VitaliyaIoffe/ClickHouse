@@ -4,7 +4,7 @@ import time
 
 import pytest
 from helpers.cluster import ClickHouseCluster
-from helpers.test_tools import assert_eq_with_retry, TSV
+from helpers.test_tools import TSV, assert_eq_with_retry
 
 cluster = ClickHouseCluster(__file__)
 node = cluster.add_instance('node', main_configs=["configs/config.d/remote_servers.xml"],

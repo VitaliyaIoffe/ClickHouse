@@ -1,6 +1,7 @@
-import time
-import pytest
 import logging
+import time
+
+import pytest
 from helpers.cluster import ClickHouseCluster
 
 cluster = ClickHouseCluster(__file__, zookeeper_config_path='configs/zookeeper_config_root_a.xml')

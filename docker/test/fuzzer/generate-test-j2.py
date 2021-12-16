@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-from argparse import ArgumentParser
 import os
+from argparse import ArgumentParser
+
 import jinja2
 
 

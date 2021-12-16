@@ -1,8 +1,8 @@
+from testflows.asserts import error, snapshot, values
 from testflows.core import *
-from testflows.asserts import values, error, snapshot
-
 from window_functions.requirements import *
 from window_functions.tests.common import *
+
 
 @TestOutline(Scenario)
 @Examples("func", [

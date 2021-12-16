@@ -1,6 +1,6 @@
+from rbac.helper.common import *
 from testflows.core import *
 
-from rbac.helper.common import *
 
 @TestFeature
 @Name("privileges")

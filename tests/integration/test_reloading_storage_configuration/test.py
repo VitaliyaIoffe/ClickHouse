@@ -7,9 +7,8 @@ import xml.etree.ElementTree as ET
 
 import helpers.client
 import helpers.cluster
-from helpers.test_tools import TSV
 import pytest
-
+from helpers.test_tools import TSV
 
 cluster = helpers.cluster.ClickHouseCluster(__file__)
 

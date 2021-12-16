@@ -1,9 +1,9 @@
-from testflows.core import *
-from testflows.core.name import basename
-from testflows.asserts import values, error, snapshot
-
 from aes_encryption.requirements.requirements import *
 from aes_encryption.tests.common import *
+from testflows.asserts import error, snapshot, values
+from testflows.core import *
+from testflows.core.name import basename
+
 
 @TestOutline
 def aes_encrypt_mysql(self, plaintext=None, key=None, mode=None, iv=None, exitcode=0, message=None, step=When):

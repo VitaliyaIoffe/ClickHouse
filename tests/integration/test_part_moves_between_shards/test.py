@@ -1,8 +1,8 @@
-import pytest
 import random
 import threading
 import time
 
+import pytest
 from helpers.client import QueryRuntimeException
 from helpers.cluster import ClickHouseCluster
 from helpers.test_tools import TSV

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import json
-import requests
-import time
 import os
+import time
+
+import requests
 
 DB = 'gh-data'
 RETRIES = 5

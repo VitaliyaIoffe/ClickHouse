@@ -1,11 +1,11 @@
-from testflows.core import *
-
-from datetime64_extended_range.requirements.requirements import *
-from datetime64_extended_range.common import *
-from datetime64_extended_range.tests.common import *
+import itertools
 
 import pytz
-import itertools
+from datetime64_extended_range.common import *
+from datetime64_extended_range.requirements.requirements import *
+from datetime64_extended_range.tests.common import *
+from testflows.core import *
+
 
 @TestScenario
 @Requirements(

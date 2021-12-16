@@ -1,11 +1,11 @@
 import textwrap
 from contextlib import contextmanager
 
-from testflows.core import *
-from testflows.asserts import error
-
 from aes_encryption.requirements import *
-from aes_encryption.tests.common import mysql_modes, hex
+from aes_encryption.tests.common import hex, mysql_modes
+from testflows.asserts import error
+from testflows.core import *
+
 
 @contextmanager
 def dictionary(name, node, mysql_node, secret_type):

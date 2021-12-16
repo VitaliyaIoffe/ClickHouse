@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 
-import requests
 import argparse
-import jwt
-import sys
 import json
+import sys
 import time
 from collections import namedtuple
+
 import boto3
+import jwt
+import requests
+
 
 def get_dead_runners_in_ec2(runners):
     ids = {runner.name: runner for runner in runners if runner.offline == True and runner.busy == False}

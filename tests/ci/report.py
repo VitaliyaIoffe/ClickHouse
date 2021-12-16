@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import os
 import datetime
+import os
 
 ### FIXME: BEST FRONTEND PRACTICIES BELOW
 

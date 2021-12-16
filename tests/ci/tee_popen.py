@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from subprocess import Popen, PIPE, STDOUT
-import sys
 import os
+import sys
+from subprocess import PIPE, STDOUT, Popen
 
 
 # Very simple tee logic implementation. You can specify shell command, output

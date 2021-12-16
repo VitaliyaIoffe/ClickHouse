@@ -8,6 +8,7 @@ from helpers.cluster import ClickHouseCluster
 from helpers.network import PartitionManager
 from helpers.test_tools import TSV
 
+
 class ClickHouseClusterWithDDLHelpers(ClickHouseCluster):
     def __init__(self, base_path, config_dir, testcase_name):
         ClickHouseCluster.__init__(self, base_path, name=testcase_name)

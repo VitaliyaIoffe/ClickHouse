@@ -2,12 +2,13 @@
 
 import argparse
 import collections
-import fuzzywuzzy.fuzz
 import itertools
 import json
 import os
 import re
 import sys
+
+import fuzzywuzzy.fuzz
 
 parser = argparse.ArgumentParser(description='Format changelog for given PRs.')
 parser.add_argument('file', metavar='FILE', type=argparse.FileType('r', encoding='utf-8'), nargs='?', default=sys.stdin, help='File with PR numbers, one per line.')

@@ -2,8 +2,8 @@
 import uuid
 
 from testflows._core.testtype import TestSubType
-from testflows.core.name import basename, parentname
 from testflows.core import current
+from testflows.core.name import basename, parentname
 
 modes = [
     # mode, key_len, iv_len, aad

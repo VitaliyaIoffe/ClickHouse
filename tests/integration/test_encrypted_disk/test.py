@@ -1,8 +1,7 @@
 import pytest
-from helpers.cluster import ClickHouseCluster
 from helpers.client import QueryRuntimeException
+from helpers.cluster import ClickHouseCluster
 from helpers.test_tools import assert_eq_with_retry
-
 
 FIRST_PART_NAME = "all_1_1_0"
 

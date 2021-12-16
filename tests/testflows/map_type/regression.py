@@ -6,8 +6,8 @@ from testflows.core import *
 
 append_path(sys.path, "..")
 
-from helpers.cluster import Cluster
 from helpers.argparser import argparser
+from helpers.cluster import Cluster
 from map_type.requirements import SRS018_ClickHouse_Map_Data_Type
 
 xfails = {

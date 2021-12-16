@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-import requests
 import argparse
 import json
-
-from threading import Thread
 from queue import Queue
+from threading import Thread
+
+import requests
 
 
 def get_org_team_members(token: str, org: str, team_slug: str) -> tuple:

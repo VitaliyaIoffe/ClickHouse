@@ -1,6 +1,7 @@
 import testflows.settings as settings
 from testflows.core import *
 
+
 @TestStep(Given)
 def instrument_clickhouse_server_log(self, node=None, test=None,
         clickhouse_server_log="/var/log/clickhouse-server/clickhouse-server.log"):

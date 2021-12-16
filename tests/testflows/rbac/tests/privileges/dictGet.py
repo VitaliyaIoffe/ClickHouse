@@ -1,10 +1,10 @@
 import os
-
 from contextlib import contextmanager
 
-from rbac.requirements import *
-from rbac.helper.common import *
 import rbac.helper.errors as errors
+from rbac.helper.common import *
+from rbac.requirements import *
+
 
 @contextmanager
 def dict_setup(node, table_name, dict_name, type="UInt64"):

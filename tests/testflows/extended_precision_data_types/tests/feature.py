@@ -1,6 +1,7 @@
+from testflows._core.testtype import TestSubType
 from testflows.core import *
 from testflows.core.name import basename, parentname
-from testflows._core.testtype import TestSubType
+
 
 @TestFeature
 @Name("tests")

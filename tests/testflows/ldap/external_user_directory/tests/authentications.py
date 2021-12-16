@@ -2,11 +2,10 @@
 import random
 
 from helpers.common import Pool, join
-from testflows.core import *
-from testflows.asserts import error
-
-from ldap.external_user_directory.tests.common import *
 from ldap.external_user_directory.requirements import *
+from ldap.external_user_directory.tests.common import *
+from testflows.asserts import error
+from testflows.core import *
 
 servers = {
     "openldap1": {

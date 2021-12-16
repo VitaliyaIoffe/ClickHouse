@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
-import os
 import json
-import time
-import subprocess
 import logging
+import os
+import subprocess
+import time
+
 
 class DockerImage:
     def __init__(self, name, version=None):

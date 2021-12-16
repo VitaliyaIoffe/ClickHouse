@@ -10,6 +10,7 @@ import subprocess
 import sys
 import tempfile
 
+
 def read_varint(input):
     res = 0
     multiplier = 1

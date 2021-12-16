@@ -20,11 +20,11 @@ except:
     from .query import Query as RemoteRepo
 
 import argparse
-from enum import Enum
 import logging
 import os
 import subprocess
 import sys
+from enum import Enum
 
 
 class CherryPick:

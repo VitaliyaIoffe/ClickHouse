@@ -1,7 +1,8 @@
-from testflows.core import *
+from ldap.authentication.tests.common import (add_user_to_ldap,
+                                              delete_user_from_ldap)
 from testflows.asserts import error
+from testflows.core import *
 
-from ldap.authentication.tests.common import add_user_to_ldap, delete_user_from_ldap
 
 @TestScenario
 @Name("sanity")

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
+import fnmatch
 import json
 import time
-import fnmatch
 from collections import namedtuple
-import jwt
 
-import requests
 import boto3
+import jwt
+import requests
 
 API_URL = 'https://api.github.com/repos/ClickHouse/ClickHouse'
 

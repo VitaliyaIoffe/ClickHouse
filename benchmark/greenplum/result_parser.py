@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 
-import sys
 import json
+import sys
+
 
 def parse_block(block=[], options=[]):
 

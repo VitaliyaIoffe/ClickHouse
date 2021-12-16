@@ -1,8 +1,8 @@
 import os
 import textwrap
 
-from extended_precision_data_types.requirements import *
 from extended_precision_data_types.common import *
+from extended_precision_data_types.requirements import *
 
 funcs = [
     ('plus', '2'),

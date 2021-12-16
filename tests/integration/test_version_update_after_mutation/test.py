@@ -1,6 +1,6 @@
-import pytest
 import time
 
+import pytest
 from helpers.cluster import ClickHouseCluster
 from helpers.test_tools import assert_eq_with_retry, exec_query_with_retry
 

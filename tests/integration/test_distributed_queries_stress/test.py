@@ -2,8 +2,9 @@
 # pylint: disable=unused-argument
 # pylint: disable=line-too-long
 
-import shlex
 import itertools
+import shlex
+
 import pytest
 from helpers.cluster import ClickHouseCluster
 

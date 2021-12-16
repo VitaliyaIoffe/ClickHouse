@@ -1,11 +1,13 @@
 import os
 
-from testflows.core import *
+from ldap.authentication.tests.common import (
+    Config, add_config, create_ldap_servers_config_content, getuid, xml_append,
+    xml_indent, xml_with_utf8, xmltree)
+from ldap.external_user_directory.tests.common import (ldap_users, rbac_roles,
+                                                       rbac_users)
 from testflows.asserts import error
+from testflows.core import *
 
-from ldap.authentication.tests.common import getuid, create_ldap_servers_config_content, add_config, Config
-from ldap.external_user_directory.tests.common import rbac_roles, rbac_users, ldap_users
-from ldap.authentication.tests.common import xmltree, xml_indent, xml_append, xml_with_utf8
 
 @TestStep(Given)
 def create_table(self, name, create_statement, on_cluster=False):

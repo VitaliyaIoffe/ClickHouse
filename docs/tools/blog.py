@@ -4,16 +4,12 @@ import logging
 import os
 import time
 
-import nav  # monkey patches mkdocs
-
-import mkdocs.commands
-from mkdocs import config
-from mkdocs import exceptions
-
 import mdx_clickhouse
+import mkdocs.commands
+import nav  # monkey patches mkdocs
 import redirects
-
 import util
+from mkdocs import config, exceptions
 
 
 def build_for_lang(lang, args):

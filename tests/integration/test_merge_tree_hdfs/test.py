@@ -1,11 +1,10 @@
 import logging
-import time
 import os
+import time
 
 import pytest
 from helpers.cluster import ClickHouseCluster
 from helpers.utility import generate_values
-
 from pyhdfs import HdfsClient
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))

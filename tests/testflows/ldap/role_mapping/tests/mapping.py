@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
-from testflows.core import *
-from testflows.asserts import error
-
 from helpers.common import Pool, join
-
+from ldap.external_user_directory.tests.authentications import (
+    login_with_invalid_username_and_valid_password,
+    login_with_valid_username_and_invalid_password,
+    login_with_valid_username_and_password)
+from ldap.external_user_directory.tests.common import randomword
 from ldap.role_mapping.requirements import *
 from ldap.role_mapping.tests.common import *
-from ldap.external_user_directory.tests.common import randomword
+from testflows.asserts import error
+from testflows.core import *
 
-from ldap.external_user_directory.tests.authentications import login_with_valid_username_and_password
-from ldap.external_user_directory.tests.authentications import login_with_invalid_username_and_valid_password
-from ldap.external_user_directory.tests.authentications import login_with_valid_username_and_invalid_password
 
 def remove_ldap_groups_in_parallel(groups, i, iterations=10):
     """Remove LDAP groups.

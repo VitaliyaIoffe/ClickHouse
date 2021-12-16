@@ -1,7 +1,7 @@
 from testflows.core import *
-
 from window_functions.requirements import *
 from window_functions.tests.common import *
+
 
 @TestScenario
 def order_by_asc_range_between_days_preceding_and_days_following(self):

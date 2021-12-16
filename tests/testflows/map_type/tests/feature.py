@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import time
 
-from testflows.core import *
-from testflows.asserts import error
-
 from map_type.requirements import *
 from map_type.tests.common import *
+from testflows.asserts import error
+from testflows.core import *
+
 
 @TestOutline
 def select_map(self, map, output, exitcode=0, message=None):

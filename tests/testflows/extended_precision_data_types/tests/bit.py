@@ -1,6 +1,6 @@
-from extended_precision_data_types.requirements import *
 from extended_precision_data_types.common import *
 from extended_precision_data_types.errors import *
+from extended_precision_data_types.requirements import *
 
 funcs = [
     ('bitAnd', True, None),

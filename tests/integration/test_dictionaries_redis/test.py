@@ -1,8 +1,10 @@
 import os
 import shutil
+
 import pytest
 from helpers.cluster import ClickHouseCluster
-from helpers.dictionary import Field, Row, Dictionary, DictionaryStructure, Layout
+from helpers.dictionary import (Dictionary, DictionaryStructure, Field, Layout,
+                                Row)
 from helpers.external_sources import SourceRedis
 
 cluster = None

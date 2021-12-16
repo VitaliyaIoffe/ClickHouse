@@ -1,10 +1,9 @@
 import logging
-from string import Template
 import time
+from string import Template
 
 import pytest
 from helpers.cluster import ClickHouseCluster
-
 from pyhdfs import HdfsClient
 
 SHARDS = 2

@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
-import pytest
-from helpers.cluster import ClickHouseCluster
+import os
 import random
 import string
-import os
 import time
+
+import pytest
+from helpers.cluster import ClickHouseCluster
 
 cluster = ClickHouseCluster(__file__)
 node1 = cluster.add_instance('node1', main_configs=['configs/enable_secure_keeper1.xml', 'configs/ssl_conf.xml', 'configs/server.crt', 'configs/server.key', 'configs/rootCA.pem'])
@@ -13,6 +14,7 @@ node2 = cluster.add_instance('node2', main_configs=['configs/enable_secure_keepe
 node3 = cluster.add_instance('node3', main_configs=['configs/enable_secure_keeper3.xml', 'configs/ssl_conf.xml', 'configs/server.crt', 'configs/server.key', 'configs/rootCA.pem'])
 
 from kazoo.client import KazooClient, KazooState
+
 
 @pytest.fixture(scope="module")
 def started_cluster():

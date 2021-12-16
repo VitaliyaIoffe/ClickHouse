@@ -1,23 +1,24 @@
 #!/usr/bin/env python3
 
-import logging
-import subprocess
-import os
 import csv
+import logging
+import os
+import subprocess
 import sys
 
+from ccache_utils import get_ccache_if_not_exists, upload_ccache
+from clickhouse_helper import (ClickHouseHelper, mark_flaky_tests,
+                               prepare_tests_results_for_clickhouse)
+from commit_status_helper import post_commit_status
+from docker_pull_helper import get_image_with_version
+from get_robot_token import get_best_robot_token
 from github import Github
 from pr_info import PRInfo, get_event
-from s3_helper import S3Helper
-from get_robot_token import get_best_robot_token
-from upload_result_helper import upload_results
-from docker_pull_helper import get_image_with_version
-from commit_status_helper import post_commit_status
-from clickhouse_helper import ClickHouseHelper, mark_flaky_tests, prepare_tests_results_for_clickhouse
-from stopwatch import Stopwatch
 from rerun_helper import RerunHelper
+from s3_helper import S3Helper
+from stopwatch import Stopwatch
 from tee_popen import TeePopen
-from ccache_utils import get_ccache_if_not_exists, upload_ccache
+from upload_result_helper import upload_results
 
 NAME = 'Fast test (actions)'
 

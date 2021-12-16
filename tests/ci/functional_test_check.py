@@ -2,23 +2,24 @@
 
 import csv
 import logging
-import subprocess
 import os
+import subprocess
 import sys
 
-from github import Github
-
-from s3_helper import S3Helper
-from get_robot_token import get_best_robot_token
-from pr_info import PRInfo, get_event
 from build_download_helper import download_all_deb_packages
-from upload_result_helper import upload_results
+from clickhouse_helper import (ClickHouseHelper, mark_flaky_tests,
+                               prepare_tests_results_for_clickhouse)
+from commit_status_helper import get_commit, post_commit_status
 from docker_pull_helper import get_image_with_version
-from commit_status_helper import post_commit_status, get_commit
-from clickhouse_helper import ClickHouseHelper, mark_flaky_tests, prepare_tests_results_for_clickhouse
-from stopwatch import Stopwatch
+from get_robot_token import get_best_robot_token
+from github import Github
+from pr_info import PRInfo, get_event
 from rerun_helper import RerunHelper
+from s3_helper import S3Helper
+from stopwatch import Stopwatch
 from tee_popen import TeePopen
+from upload_result_helper import upload_results
+
 
 def get_additional_envs(check_name, run_by_hash_num, run_by_hash_total):
     result = []

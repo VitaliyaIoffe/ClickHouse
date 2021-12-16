@@ -2,6 +2,7 @@
 import boto3
 from github import Github
 
+
 def get_parameter_from_ssm(name, decrypt=True, client=None):
     if not client:
         client = boto3.client('ssm', region_name='us-east-1')

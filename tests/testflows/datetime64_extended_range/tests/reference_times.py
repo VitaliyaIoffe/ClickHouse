@@ -1,10 +1,10 @@
-import pytz
 from datetime import datetime
 
-from testflows.core import *
+import pytz
 from datetime64_extended_range.common import *
 from datetime64_extended_range.requirements.requirements import *
 from datetime64_extended_range.tests.common import *
+from testflows.core import *
 
 
 @TestSuite

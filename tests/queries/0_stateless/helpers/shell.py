@@ -8,6 +8,7 @@ sys.path.insert(0, os.path.join(CURDIR))
 
 import uexpect
 
+
 class shell(object):
     def __init__(self, command=None, name='', log=None, prompt='[#\$] '):
         if command is None:

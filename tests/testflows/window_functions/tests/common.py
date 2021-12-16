@@ -1,12 +1,13 @@
 import os
 import re
-import uuid
 import tempfile
+import uuid
 
+from testflows._core.testtype import TestSubType
+from testflows.asserts import error, snapshot, values
 from testflows.core import *
 from testflows.core.name import basename, parentname
-from testflows._core.testtype import TestSubType
-from testflows.asserts import values, error, snapshot
+
 
 def window_frame_error():
     return (36, "Exception: Window frame")

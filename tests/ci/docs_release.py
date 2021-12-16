@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 import logging
-import subprocess
 import os
+import subprocess
 
-from github import Github
-
-from s3_helper import S3Helper
-from pr_info import PRInfo, get_event
+from commit_status_helper import get_commit
+from docker_pull_helper import get_image_with_version
 from get_robot_token import get_best_robot_token
+from github import Github
+from pr_info import PRInfo, get_event
+from s3_helper import S3Helper
 from ssh import SSHKey
 from upload_result_helper import upload_results
-from docker_pull_helper import get_image_with_version
-from commit_status_helper import get_commit
 
 NAME = "Docs Release (actions)"
 

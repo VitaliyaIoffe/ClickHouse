@@ -1,14 +1,12 @@
-import pytest
-import time
-import psycopg2
 import os.path as p
-
-from helpers.cluster import ClickHouseCluster
-from helpers.test_tools import assert_eq_with_retry
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-from helpers.test_tools import TSV
-
 import threading
+import time
+
+import psycopg2
+import pytest
+from helpers.cluster import ClickHouseCluster
+from helpers.test_tools import TSV, assert_eq_with_retry
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 cluster = ClickHouseCluster(__file__)
 instance = cluster.add_instance('instance', main_configs=['configs/log_conf.xml'], with_postgres=True, stay_alive=True)

@@ -1,14 +1,16 @@
-import pytest
-from helpers.cluster import ClickHouseCluster
+import os
 import random
 import string
-import os
 import time
 from multiprocessing.dummy import Pool
+
+import pytest
+from helpers.cluster import ClickHouseCluster
 
 cluster = ClickHouseCluster(__file__)
 node = cluster.add_instance('node', main_configs=['configs/enable_keeper.xml'], with_zookeeper=True, use_keeper=False)
 from kazoo.client import KazooClient, KazooState, KeeperState
+
 
 def get_genuine_zk():
     print("Zoo1", cluster.get_instance_ip("zoo1"))
@@ -324,7 +326,7 @@ def test_multitransactions(started_cluster):
             assert results[0] == '/test_multitransactions/freddy'
             assert results[2].startswith('/test_multitransactions/smith0') is True
 
-        from kazoo.exceptions import RolledBackError, NoNodeError
+        from kazoo.exceptions import NoNodeError, RolledBackError
         for i, zk in enumerate([genuine_zk, fake_zk]):
             print("Processing ZK", i)
             t = zk.transaction()

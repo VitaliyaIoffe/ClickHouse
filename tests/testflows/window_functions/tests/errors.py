@@ -1,7 +1,7 @@
 from testflows.core import *
-
 from window_functions.requirements import *
 from window_functions.tests.common import *
+
 
 @TestScenario
 def error_using_non_window_function(self):

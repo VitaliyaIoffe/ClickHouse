@@ -3,13 +3,13 @@ import os
 import re
 import shutil
 import subprocess
-import yaml
+import test
 
 import bs4
 import mkdocs.commands.build
-
-import test
 import util
+import yaml
+
 import website
 
 TEMPORARY_FILE_NAME = 'single.md'

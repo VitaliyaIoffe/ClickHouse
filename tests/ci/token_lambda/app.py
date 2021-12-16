@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
-import requests
 import argparse
-import jwt
-import sys
 import json
+import sys
 import time
+
+import jwt
+import requests
+
 
 def get_installation_id(jwt_token):
     headers = {

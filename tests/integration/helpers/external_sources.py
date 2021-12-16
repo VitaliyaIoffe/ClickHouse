@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+import logging
 import os
 import uuid
 import warnings
@@ -9,7 +10,6 @@ import cassandra.cluster
 import pymongo
 import pymysql.cursors
 import redis
-import logging
 from tzlocal import get_localzone
 
 

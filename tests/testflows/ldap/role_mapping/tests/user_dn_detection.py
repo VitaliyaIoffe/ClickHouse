@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import importlib
 
-from testflows.core import *
-from testflows.asserts import error
-
 from ldap.role_mapping.requirements import *
 from ldap.role_mapping.tests.common import *
+from testflows.asserts import error
+from testflows.core import *
+
 
 @TestOutline
 def check_config(self, entries, valid=True, ldap_server="openldap1", user="user1", password="user1"):

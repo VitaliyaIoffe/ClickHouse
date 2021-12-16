@@ -1,8 +1,9 @@
-from testflows.core import *
-from testflows.asserts import error
-
+from ldap.authentication.requirements import \
+    RQ_SRS_007_LDAP_Authentication_MultipleServers
 from ldap.authentication.tests.common import login
-from ldap.authentication.requirements import RQ_SRS_007_LDAP_Authentication_MultipleServers
+from testflows.asserts import error
+from testflows.core import *
+
 
 @TestScenario
 @Name("multiple servers")

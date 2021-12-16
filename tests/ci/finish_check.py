@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 import logging
 import os
+
+from commit_status_helper import get_commit
+from get_robot_token import get_best_robot_token
 from github import Github
 from pr_info import PRInfo, get_event
-from get_robot_token import get_best_robot_token
-from commit_status_helper import get_commit
 
 NAME = 'Run Check (actions)'
 

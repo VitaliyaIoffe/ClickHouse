@@ -1,8 +1,9 @@
 import os
 import textwrap
 
-from extended_precision_data_types.requirements import *
 from extended_precision_data_types.common import *
+from extended_precision_data_types.requirements import *
+
 
 @contextmanager
 def dictionary(name, node, mysql_node):

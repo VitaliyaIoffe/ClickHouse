@@ -1,10 +1,10 @@
-from testflows.core import *
-from testflows.asserts import error
-from contextlib import contextmanager
-import xml.etree.ElementTree as xmltree
-
 import time
 import uuid
+import xml.etree.ElementTree as xmltree
+from contextlib import contextmanager
+
+from testflows.asserts import error
+from testflows.core import *
 
 
 def getuid():

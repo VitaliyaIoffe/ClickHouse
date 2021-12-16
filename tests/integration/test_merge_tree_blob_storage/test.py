@@ -1,11 +1,10 @@
 import logging
-import time
 import os
+import time
 
 import pytest
 from helpers.cluster import ClickHouseCluster, get_instances_dir
-from helpers.utility import generate_values, replace_config, SafeThread
-
+from helpers.utility import SafeThread, generate_values, replace_config
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 CONFIG_PATH = os.path.join(SCRIPT_DIR, './{}/node/configs/config.d/storage_conf.xml'.format(get_instances_dir()))

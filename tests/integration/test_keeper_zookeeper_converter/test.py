@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
+import os
+
 import pytest
 from helpers.cluster import ClickHouseCluster
 from kazoo.client import KazooClient, KazooState
-from kazoo.security import ACL, make_digest_acl, make_acl
-from kazoo.exceptions import AuthFailedError, InvalidACLError, NoAuthError, KazooException
-import os
+from kazoo.exceptions import (AuthFailedError, InvalidACLError, KazooException,
+                              NoAuthError)
+from kazoo.security import ACL, make_acl, make_digest_acl
 
 cluster = ClickHouseCluster(__file__)
 

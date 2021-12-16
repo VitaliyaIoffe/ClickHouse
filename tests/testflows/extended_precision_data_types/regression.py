@@ -6,9 +6,9 @@ from testflows.core import *
 
 append_path(sys.path, "..")
 
-from helpers.cluster import Cluster
-from helpers.argparser import argparser
 from extended_precision_data_types.requirements import *
+from helpers.argparser import argparser
+from helpers.cluster import Cluster
 
 xfails = {
 }

@@ -5,10 +5,10 @@
 
 import os
 import time
-import pytest
 
 import helpers.cluster
 import helpers.test_tools
+import pytest
 
 from . import fake_sentry_server
 

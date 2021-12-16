@@ -1,7 +1,7 @@
+from ldap.external_user_directory.requirements import *
+from ldap.external_user_directory.tests.common import *
 from testflows.core import *
 
-from ldap.external_user_directory.tests.common import *
-from ldap.external_user_directory.requirements import *
 
 @TestScenario
 @Requirements(

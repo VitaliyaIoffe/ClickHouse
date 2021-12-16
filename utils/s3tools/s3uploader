@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import os
-import logging
 import argparse
-import tarfile
+import logging
 import math
+import os
+import tarfile
 
 try:
     from boto.s3.connection import S3Connection

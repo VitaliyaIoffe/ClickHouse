@@ -2,8 +2,8 @@
 
 try:
     from clickhouse.utils.github.cherrypick import CherryPick
-    from clickhouse.utils.github.query import Query as RemoteRepo
     from clickhouse.utils.github.local import Repository as LocalRepo
+    from clickhouse.utils.github.query import Query as RemoteRepo
 except:
     from .cherrypick import CherryPick
     from .query import Query as RemoteRepo

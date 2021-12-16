@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 import sys
+
 from testflows.core import *
 
 append_path(sys.path, "..")
 
-from helpers.common import Pool, join, run_scenario
 from helpers.argparser import argparser
+from helpers.common import Pool, join, run_scenario
+
 
 @TestModule
 @Name("ldap")

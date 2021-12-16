@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 
 import logging
-import time
-import sys
 import os
 import shutil
+import sys
+import time
 from pathlib import Path
 
 import requests
-
-from compress_files import decompress_fast, compress_fast
+from compress_files import compress_fast, decompress_fast
 
 DOWNLOAD_RETRIES_COUNT = 5
 

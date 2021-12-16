@@ -1,16 +1,16 @@
-import os
-import time
 import inspect
-import threading
+import os
 import tempfile
+import threading
+import time
 
 import testflows.settings as settings
-
-from testflows.core import *
+from testflows._core.testtype import TestSubType
 from testflows.asserts import error
 from testflows.connect import Shell as ShellBase
+from testflows.core import *
 from testflows.uexpect import ExpectTimeoutError
-from testflows._core.testtype import TestSubType
+
 
 class Shell(ShellBase):
     def __exit__(self, type, value, traceback):

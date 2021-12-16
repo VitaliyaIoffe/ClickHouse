@@ -1,16 +1,18 @@
 # coding: utf-8
 
 import datetime
+import logging
 import math
 import os
 import time
 
-import logging
-import docker
 import pymysql.connections
 import pytest
 from docker.models.containers import Container
-from helpers.cluster import ClickHouseCluster, get_docker_compose_path, run_and_check
+from helpers.cluster import (ClickHouseCluster, get_docker_compose_path,
+                             run_and_check)
+
+import docker
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 DOCKER_COMPOSE_PATH = get_docker_compose_path()

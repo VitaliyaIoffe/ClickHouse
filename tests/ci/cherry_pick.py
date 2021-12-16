@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 
-import sys
 import logging
 import os
 import subprocess
+import sys
 
-from get_robot_token import get_parameter_from_ssm
-from ssh import SSHKey
 from cherry_pick_utils.backport import Backport
 from cherry_pick_utils.cherrypick import CherryPick
-
+from get_robot_token import get_parameter_from_ssm
+from ssh import SSHKey
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

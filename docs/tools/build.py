@@ -7,28 +7,25 @@ import os
 import shutil
 import subprocess
 import sys
+import test
 import time
-
-import jinja2
-import livereload
-import markdown.util
-
-import nav  # monkey patches mkdocs
-
-from mkdocs import config
-from mkdocs import exceptions
-import mkdocs.commands.build
 
 import amp
 import blog
+import jinja2
+import livereload
+import markdown.util
 import mdx_clickhouse
+import mkdocs.commands.build
+import nav  # monkey patches mkdocs
 import redirects
 import single_page
-import test
 import util
+from cmake_in_clickhouse_generator import generate_cmake_flags_files
+from mkdocs import config, exceptions
+
 import website
 
-from cmake_in_clickhouse_generator import generate_cmake_flags_files
 
 class ClickHouseMarkdown(markdown.extensions.Extension):
     class ClickHousePreprocessor(markdown.util.Processor):

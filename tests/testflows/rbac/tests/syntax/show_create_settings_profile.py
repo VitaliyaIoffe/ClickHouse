@@ -1,8 +1,8 @@
 from contextlib import contextmanager
 
+from rbac.requirements import *
 from testflows.core import *
 
-from rbac.requirements import *
 
 @TestFeature
 @Name("show create settings profile")

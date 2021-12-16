@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 ##!/usr/bin/env python3
-import pytest
-from helpers.cluster import ClickHouseCluster
-from multiprocessing.dummy import Pool
-from kazoo.client import KazooClient, KazooState
+import os
 import random
 import string
-import os
 import time
+from multiprocessing.dummy import Pool
+
+import pytest
+from helpers.cluster import ClickHouseCluster
+from kazoo.client import KazooClient, KazooState
 
 cluster = ClickHouseCluster(__file__)
 node1 = cluster.add_instance('node1', main_configs=['configs/keeper_config1.xml'], stay_alive=True)

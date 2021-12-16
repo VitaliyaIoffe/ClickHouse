@@ -2,6 +2,7 @@ from testflows.core import *
 from window_functions.requirements import *
 from window_functions.tests.common import *
 
+
 @TestScenario
 def single_expr_asc(self):
     """Check defining of order clause with single expr ASC.

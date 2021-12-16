@@ -2,6 +2,7 @@
 
 from commit_status_helper import get_commit
 
+
 def _filter_statuses(statuses):
     """
     Squash statuses to latest state

@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os, sys
 import argparse
-import subprocess
 import contextlib
-from git import cmd
+import os
+import subprocess
+import sys
 from tempfile import NamedTemporaryFile
+
+from git import cmd
 
 SCRIPT_DESCRIPTION = '''
     usage: ./easy_diff.py language/document path

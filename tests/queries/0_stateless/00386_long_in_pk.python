@@ -36,8 +36,10 @@ def gen_queries():
             yield 'select f in (select tuple((a, b)) from tab_00386) from tab_00386'
             yield 'select tuple(f) in (select tuple(tuple((a, b))) from tab_00386) from tab_00386'
 
-import requests
 import os
+
+import requests
+
 
 def main():
     url = os.environ['CLICKHOUSE_URL']

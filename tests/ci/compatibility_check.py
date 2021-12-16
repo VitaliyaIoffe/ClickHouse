@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
 
-from distutils.version import StrictVersion
 import logging
 import os
 import subprocess
 import sys
+from distutils.version import StrictVersion
 
-from github import Github
-
-from s3_helper import S3Helper
-from get_robot_token import get_best_robot_token
-from pr_info import PRInfo, get_event
 from build_download_helper import download_builds_filter
-from upload_result_helper import upload_results
-from docker_pull_helper import get_images_with_versions
+from clickhouse_helper import (ClickHouseHelper, mark_flaky_tests,
+                               prepare_tests_results_for_clickhouse)
 from commit_status_helper import post_commit_status
-from clickhouse_helper import ClickHouseHelper, mark_flaky_tests, prepare_tests_results_for_clickhouse
-from stopwatch import Stopwatch
+from docker_pull_helper import get_images_with_versions
+from get_robot_token import get_best_robot_token
+from github import Github
+from pr_info import PRInfo, get_event
 from rerun_helper import RerunHelper
+from s3_helper import S3Helper
+from stopwatch import Stopwatch
+from upload_result_helper import upload_results
 
 IMAGE_UBUNTU = "clickhouse/test-old-ubuntu"
 IMAGE_CENTOS = "clickhouse/test-old-centos"

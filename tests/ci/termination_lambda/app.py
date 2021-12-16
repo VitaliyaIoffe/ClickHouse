@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 
-import requests
 import argparse
-import jwt
-import sys
 import json
+import sys
 import time
 from collections import namedtuple
+
+import jwt
+import requests
+
 
 def get_key_and_app_from_aws():
     import boto3

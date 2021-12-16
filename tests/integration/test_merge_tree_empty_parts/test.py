@@ -1,8 +1,7 @@
-import pytest
 import helpers.client
 import helpers.cluster
+import pytest
 from helpers.test_tools import assert_eq_with_retry
-
 
 cluster = helpers.cluster.ClickHouseCluster(__file__)
 node1 = cluster.add_instance('node1', main_configs=['configs/remote_servers.xml', 'configs/cleanup_thread.xml'], with_zookeeper=True)

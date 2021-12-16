@@ -1,12 +1,12 @@
 import json
+import logging
+import math
 import os.path as p
 import random
 import subprocess
 import threading
-import logging
 import time
 from random import randrange
-import math
 
 import pika
 import pytest

@@ -1,10 +1,10 @@
-import pytest
-
-from helpers.cluster import ClickHouseCluster
-from multiprocessing.dummy import Pool
-from helpers.network import PartitionManager
-from helpers.corrupt_part_data_on_disk import corrupt_part_data_on_disk
 import time
+from multiprocessing.dummy import Pool
+
+import pytest
+from helpers.cluster import ClickHouseCluster
+from helpers.corrupt_part_data_on_disk import corrupt_part_data_on_disk
+from helpers.network import PartitionManager
 
 cluster = ClickHouseCluster(__file__)
 

@@ -1,8 +1,8 @@
-from testflows.core import *
-from testflows.asserts import error
-
-from ldap.external_user_directory.tests.common import login
 from ldap.external_user_directory.requirements import *
+from ldap.external_user_directory.tests.common import login
+from testflows.asserts import error
+from testflows.core import *
+
 
 @TestScenario
 @Requirements(

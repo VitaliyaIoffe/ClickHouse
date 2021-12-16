@@ -6,7 +6,6 @@ import urllib
 import requests
 from unidiff import PatchSet
 
-
 DIFF_IN_DOCUMENTATION_EXT = [".html", ".md", ".yml", ".txt", ".css", ".js", ".xml", ".ico", ".conf", ".svg", ".png", ".jpg", ".py", ".sh", ".json"]
 
 def get_pr_for_commit(sha, ref):

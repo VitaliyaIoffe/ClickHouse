@@ -1,5 +1,6 @@
 from testflows.core import *
 
+
 @TestFeature
 @Name("syntax")
 def feature(self):

@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 import sys
+
 from testflows.core import *
 
 append_path(sys.path, ".")
 
 from helpers.argparser import argparser
+
 
 @TestModule
 @Name("clickhouse")

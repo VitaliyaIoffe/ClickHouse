@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from grammarinator.runtime.tree import *
-
-from itertools import tee, islice, zip_longest
 import random
+from itertools import islice, tee, zip_longest
+
+from grammarinator.runtime.tree import *
 
 
 def single_line_whitespace(node):

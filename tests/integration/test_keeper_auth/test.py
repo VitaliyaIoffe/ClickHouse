@@ -2,8 +2,9 @@
 import pytest
 from helpers.cluster import ClickHouseCluster
 from kazoo.client import KazooClient, KazooState
-from kazoo.security import ACL, make_digest_acl, make_acl
-from kazoo.exceptions import AuthFailedError, InvalidACLError, NoAuthError, KazooException
+from kazoo.exceptions import (AuthFailedError, InvalidACLError, KazooException,
+                              NoAuthError)
+from kazoo.security import ACL, make_acl, make_digest_acl
 
 cluster = ClickHouseCluster(__file__)
 node = cluster.add_instance('node', main_configs=['configs/keeper_config.xml'], with_zookeeper=True, use_keeper=False, stay_alive=True)

@@ -1,12 +1,10 @@
 import uuid
-
 from contextlib import contextmanager
 
-from testflows.core.name import basename, parentname
-from testflows._core.testtype import TestSubType
-from testflows.asserts import values, error, snapshot
-
 from helpers.common import *
+from testflows._core.testtype import TestSubType
+from testflows.asserts import error, snapshot, values
+from testflows.core.name import basename, parentname
 
 rounding_precision = 7
 

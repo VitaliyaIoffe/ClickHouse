@@ -10,9 +10,18 @@
 # Most of the command line options are the same, for more information type
 # ./clickhouse_grpc_client.py --help
 
+import argparse
+import cmd
+import os
+import signal
+import subprocess
+import sys
+import threading
+import time
+import uuid
+
 import grpc  # pip3 install grpcio
 import grpc_tools  # pip3 install grpcio-tools
-import argparse, cmd, os, signal, subprocess, sys, threading, time, uuid
 
 DEFAULT_HOST = 'localhost'
 DEFAULT_PORT = 9100
@@ -209,7 +218,8 @@ class ClickHouseGRPCClient(cmd.Cmd):
         gen_dir = os.path.join(script_dir, './_gen')
         sys.path.append(gen_dir)
         global clickhouse_grpc_pb2, clickhouse_grpc_pb2_grpc
-        import clickhouse_grpc_pb2, clickhouse_grpc_pb2_grpc
+        import clickhouse_grpc_pb2
+        import clickhouse_grpc_pb2_grpc
 
     # Prints only if interactive mode is activated.
     def verbatim_print(self, *args, **kwargs):

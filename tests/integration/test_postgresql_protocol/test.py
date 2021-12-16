@@ -7,11 +7,13 @@ import sys
 import time
 import uuid
 
-import docker
 import psycopg2 as py_psql
 import psycopg2.extras
 import pytest
-from helpers.cluster import ClickHouseCluster, get_docker_compose_path, run_and_check
+from helpers.cluster import (ClickHouseCluster, get_docker_compose_path,
+                             run_and_check)
+
+import docker
 
 psycopg2.extras.register_uuid()
 

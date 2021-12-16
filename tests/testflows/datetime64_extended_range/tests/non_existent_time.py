@@ -1,8 +1,8 @@
-from testflows.core import *
 import datetime
 
 from datetime64_extended_range.requirements.requirements import *
 from datetime64_extended_range.tests.common import *
+from testflows.core import *
 
 
 @TestScenario

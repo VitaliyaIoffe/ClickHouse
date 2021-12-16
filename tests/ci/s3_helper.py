@@ -3,8 +3,10 @@ import hashlib
 import logging
 import os
 from multiprocessing.dummy import Pool
+
 import boto3
 from compress_files import compress_file_fast
+
 
 def _md5(fname):
     hash_md5 = hashlib.md5()

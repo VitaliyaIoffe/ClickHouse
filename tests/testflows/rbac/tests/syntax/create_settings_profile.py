@@ -1,9 +1,9 @@
 from contextlib import contextmanager
 
-from testflows.core import *
-
 import rbac.helper.errors as errors
 from rbac.requirements import *
+from testflows.core import *
+
 
 @TestFeature
 @Name("create settings profile")

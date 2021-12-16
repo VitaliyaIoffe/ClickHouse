@@ -1,16 +1,16 @@
-import time
-import pytz
 import decimal
 import itertools
-import numpy as np
-from dateutil.tz import tzlocal
+import time
 from datetime import datetime, timedelta
-import dateutil.relativedelta as rd
-from testflows.core import *
 
-from datetime64_extended_range.requirements.requirements import *
+import dateutil.relativedelta as rd
+import numpy as np
+import pytz
 from datetime64_extended_range.common import *
+from datetime64_extended_range.requirements.requirements import *
 from datetime64_extended_range.tests.common import *
+from dateutil.tz import tzlocal
+from testflows.core import *
 
 
 @TestOutline(Scenario)

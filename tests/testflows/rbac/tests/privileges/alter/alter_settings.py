@@ -1,12 +1,11 @@
 import json
 
-from testflows.core import *
-from testflows.asserts import error
-
-from rbac.requirements import *
-from rbac.helper.common import *
 import rbac.helper.errors as errors
+from rbac.helper.common import *
 from rbac.helper.tables import table_types
+from rbac.requirements import *
+from testflows.asserts import error
+from testflows.core import *
 
 aliases = {"ALTER SETTINGS", "ALTER SETTING", "ALTER MODIFY SETTING", "MODIFY SETTING", "ALL"}
 

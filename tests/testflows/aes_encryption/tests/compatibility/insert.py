@@ -3,12 +3,12 @@ import textwrap
 from contextlib import contextmanager
 from importlib.machinery import SourceFileLoader
 
+from aes_encryption.tests.common import modes, mysql_modes
+from testflows.asserts import error, snapshot, values
+from testflows.asserts.helpers import varname
 from testflows.core import *
 from testflows.core.name import basename
-from testflows.asserts.helpers import varname
-from testflows.asserts import values, error, snapshot
 
-from aes_encryption.tests.common import modes, mysql_modes
 
 @contextmanager
 def table(name):

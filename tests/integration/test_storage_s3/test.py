@@ -1,15 +1,16 @@
 import gzip
+import io
 import json
 import logging
 import os
-import io
 import random
 import threading
 import time
 
 import helpers.client
 import pytest
-from helpers.cluster import ClickHouseCluster, ClickHouseInstance, get_instances_dir
+from helpers.cluster import (ClickHouseCluster, ClickHouseInstance,
+                             get_instances_dir)
 from helpers.network import PartitionManager
 
 MINIO_INTERNAL_PORT = 9001

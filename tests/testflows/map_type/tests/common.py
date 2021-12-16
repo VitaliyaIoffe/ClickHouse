@@ -1,9 +1,10 @@
 import uuid
 from collections import namedtuple
 
+from testflows._core.testtype import TestSubType
 from testflows.core import *
 from testflows.core.name import basename, parentname
-from testflows._core.testtype import TestSubType
+
 
 def getuid():
     if current().subtype == TestSubType.Example:

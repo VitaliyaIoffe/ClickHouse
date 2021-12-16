@@ -2,6 +2,7 @@ from testflows.core import *
 from window_functions.requirements import *
 from window_functions.tests.common import *
 
+
 @TestScenario
 def partition_clause(self):
     """Check window specification that only contains partition clause.

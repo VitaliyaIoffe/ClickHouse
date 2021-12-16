@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-import time
-import logging
 import json
+import logging
+import time
 
 import requests
 from get_robot_token import get_parameter_from_ssm
+
 
 class ClickHouseHelper:
     def __init__(self, url=None, user=None, password=None):

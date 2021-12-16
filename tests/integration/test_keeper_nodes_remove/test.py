@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
+import os
+
 import pytest
 from helpers.cluster import ClickHouseCluster
-import os
 from kazoo.client import KazooClient, KazooState
 
 cluster = ClickHouseCluster(__file__)

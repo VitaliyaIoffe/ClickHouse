@@ -1,15 +1,14 @@
 import uuid
-
-import testflows.settings as settings
-
 from contextlib import contextmanager
 
-from testflows.core.name import basename, parentname
+import testflows.settings as settings
+from helpers.common import (Pool, instrument_clickhouse_server_log, join,
+                            run_scenario)
+from rbac.helper.tables import table_types
 from testflows._core.testtype import TestSubType
 from testflows.core import *
+from testflows.core.name import basename, parentname
 
-from helpers.common import Pool, join, run_scenario, instrument_clickhouse_server_log
-from rbac.helper.tables import table_types
 
 def permutations(table_count=1):
     return [*range((1 << table_count)-1)]

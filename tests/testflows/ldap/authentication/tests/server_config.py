@@ -1,7 +1,7 @@
+from ldap.authentication.requirements import *
+from ldap.authentication.tests.common import *
 from testflows.core import *
 
-from ldap.authentication.tests.common import *
-from ldap.authentication.requirements import *
 
 @TestScenario
 @Requirements(

@@ -1,14 +1,13 @@
 import json
 import random
 
-from testflows._core.cli.arg.parser import parser
-from testflows.core import *
-from testflows.asserts import error
-
-from rbac.requirements import *
-from rbac.helper.common import *
 import rbac.helper.errors as errors
+from rbac.helper.common import *
 from rbac.helper.tables import table_types
+from rbac.requirements import *
+from testflows._core.cli.arg.parser import parser
+from testflows.asserts import error
+from testflows.core import *
 
 subprivileges = {
     "ORDER BY" : 1 << 0,

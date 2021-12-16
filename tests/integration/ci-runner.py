@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 
-import logging
-import subprocess
-import os
-import glob
-import time
-import shutil
-from collections import defaultdict
-import random
-import json
 import csv
+import glob
+import json
+import logging
+import os
+import random
+import shutil
+import subprocess
+import time
 # for crc32
 import zlib
-
+from collections import defaultdict
 
 MAX_RETRY = 3
 NUM_WORKERS = 5

@@ -1,6 +1,7 @@
-from rbac.requirements import *
-from rbac.helper.common import *
 import rbac.helper.errors as errors
+from rbac.helper.common import *
+from rbac.requirements import *
+
 
 @TestSuite
 def privilege_granted_directly_or_via_role(self, table_type, node=None):

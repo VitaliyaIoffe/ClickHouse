@@ -3,41 +3,39 @@
 # pylint: disable=too-many-return-statements
 # pylint: disable=global-variable-not-assigned
 
-import enum
-import shutil
-import sys
-import os
-import os.path
-import signal
-import re
 import copy
-import traceback
-import math
+import enum
 # Not requests, to avoid requiring extra dependency.
 import http.client
-import urllib.parse
 import json
+import math
+import os
+import os.path
+import re
+import shutil
+import signal
+import subprocess
+import sys
+import traceback
+import urllib.parse
 # for crc32
 import zlib
-
 from argparse import ArgumentParser
-from typing import Tuple, Union, Optional, Dict, Set, List
-import subprocess
-from subprocess import Popen
-from subprocess import PIPE
 from datetime import datetime
-from time import time, sleep
 from errno import ESRCH
+from subprocess import PIPE, Popen
+from time import sleep, time
+from typing import Dict, List, Optional, Set, Tuple, Union
 
 try:
     import termcolor
 except ImportError:
     termcolor = None
 
-import random
-import string
 import multiprocessing
+import random
 import socket
+import string
 from contextlib import closing
 
 USE_JINJA = True

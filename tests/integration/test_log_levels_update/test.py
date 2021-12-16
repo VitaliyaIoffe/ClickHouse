@@ -1,6 +1,6 @@
-import pytest
 import re
 
+import pytest
 from helpers.cluster import ClickHouseCluster
 
 cluster = ClickHouseCluster(__file__, name="log_quries_probability")

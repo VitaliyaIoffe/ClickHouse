@@ -1,10 +1,11 @@
 import os
-import pytest
 import sys
 import time
-import grpc
-from helpers.cluster import ClickHouseCluster, run_and_check
 from threading import Thread
+
+import grpc
+import pytest
+from helpers.cluster import ClickHouseCluster, run_and_check
 
 GRPC_PORT = 9100
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -23,7 +24,6 @@ run_and_check(
 sys.path.append(gen_dir)
 import clickhouse_grpc_pb2
 import clickhouse_grpc_pb2_grpc
-
 
 # Utilities
 

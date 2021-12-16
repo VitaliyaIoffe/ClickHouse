@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import os
-import lxml.etree as etree
-import json
 import argparse
+import json
+import os
+
+import lxml.etree as etree
+
 
 def export_testcases_json(report, path):
     with open(os.path.join(path, "cases.jer"), "w") as testcases_file:

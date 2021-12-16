@@ -7,11 +7,10 @@ import os
 import subprocess
 
 import jinja2
-import markdown.inlinepatterns
-import markdown.extensions
-import markdown.util
 import macros.plugin
-
+import markdown.extensions
+import markdown.inlinepatterns
+import markdown.util
 import slugify as slugify_impl
 
 

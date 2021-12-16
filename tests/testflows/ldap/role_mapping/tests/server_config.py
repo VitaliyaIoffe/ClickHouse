@@ -1,10 +1,9 @@
-from testflows.core import *
-from testflows.asserts import error
-
-from ldap.role_mapping.requirements import *
-
 from ldap.authentication.tests.common import invalid_server_config
 from ldap.external_user_directory.tests.common import login
+from ldap.role_mapping.requirements import *
+from testflows.asserts import error
+from testflows.core import *
+
 
 @TestScenario
 @Requirements(

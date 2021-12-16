@@ -5,7 +5,6 @@ import logging
 import os
 
 import mkdocs.structure.nav
-
 import util
 
 

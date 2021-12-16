@@ -1,15 +1,15 @@
 import logging
 import os
 import subprocess
+import test
 
 import bs4
 import cssmin
 import jinja2
-import mkdocs.commands.build
-
 import mdx_clickhouse
-import test
+import mkdocs.commands.build
 import util
+
 import website
 
 

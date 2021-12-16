@@ -1,21 +1,20 @@
 #!/usr/bin/env python3
 
 
-import os
-import logging
-import sys
 import json
-import subprocess
-import traceback
+import logging
+import os
 import re
+import subprocess
+import sys
+import traceback
 
+from commit_status_helper import get_commit, post_commit_status
+from docker_pull_helper import get_image_with_version
+from get_robot_token import get_best_robot_token
 from github import Github
-
 from pr_info import PRInfo
 from s3_helper import S3Helper
-from get_robot_token import get_best_robot_token
-from docker_pull_helper import get_image_with_version
-from commit_status_helper import get_commit, post_commit_status
 from tee_popen import TeePopen
 
 IMAGE_NAME = 'clickhouse/performance-comparison'

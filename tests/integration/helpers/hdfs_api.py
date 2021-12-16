@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
-import io
 import gzip
-import subprocess
-import time
-from tempfile import NamedTemporaryFile
-import requests
-import requests_kerberos as reqkerb
-import socket
-import tempfile
+import io
 import logging
 import os
+import socket
+import subprocess
+import tempfile
+import time
+from tempfile import NamedTemporaryFile
+
+import requests
+import requests_kerberos as reqkerb
+
+
 class mk_krb_conf(object):
     def __init__(self, krb_conf, kdc_ip):
         self.krb_conf = krb_conf

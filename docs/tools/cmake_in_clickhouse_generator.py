@@ -1,6 +1,6 @@
-import re
 import os
-from typing import TextIO, List, Tuple, Optional, Dict
+import re
+from typing import Dict, List, Optional, TextIO, Tuple
 
 # name, default value, description
 Entity = Tuple[str, str, str]

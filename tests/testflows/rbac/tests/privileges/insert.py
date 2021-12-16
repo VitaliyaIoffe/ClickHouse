@@ -1,12 +1,12 @@
-from contextlib import contextmanager
 import json
+from contextlib import contextmanager
 
-from testflows.core import *
-from testflows.asserts import error
-
-from rbac.requirements import *
-from rbac.helper.common import *
 import rbac.helper.errors as errors
+from rbac.helper.common import *
+from rbac.requirements import *
+from testflows.asserts import error
+from testflows.core import *
+
 
 def input_output_equality_check(node, input_columns, input_data, table_name):
     data_list = [x.strip("'") for x in input_data.split(",")]

@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 
-import os
 import json
 import logging
+import os
 import sys
 import time
 
 import requests
-
 from ci_config import CI_CONFIG
 
 DOWNLOAD_RETRIES_COUNT = 5

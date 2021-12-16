@@ -2,9 +2,10 @@
 
 import logging
 import os
-import sys
-import bs4
 import subprocess
+import sys
+
+import bs4
 
 
 def test_single_page(input_path, lang):

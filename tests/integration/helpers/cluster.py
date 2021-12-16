@@ -3,37 +3,36 @@ import errno
 import http.client
 import logging
 import os
-import stat
 import os.path as p
 import pprint
 import pwd
 import re
+import shlex
 import shutil
 import socket
+import stat
 import subprocess
 import time
 import traceback
 import urllib.parse
-import shlex
-import urllib3
 
-from cassandra.policies import RoundRobinPolicy
 import cassandra.cluster
 import psycopg2
 import pymongo
 import pymysql
 import requests
+import urllib3
+from cassandra.policies import RoundRobinPolicy
 from confluent_kafka.avro.cached_schema_registry_client import \
     CachedSchemaRegistryClient
 from dict2xml import dict2xml
+from helpers import pytest_xdist_logging_to_separate_files
+from helpers.client import QueryRuntimeException
+from helpers.test_tools import assert_eq_with_retry, exec_query_with_retry
 from kazoo.client import KazooClient
 from kazoo.exceptions import KazooException
 from minio import Minio
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-
-from helpers.test_tools import assert_eq_with_retry, exec_query_with_retry
-from helpers import pytest_xdist_logging_to_separate_files
-from helpers.client import QueryRuntimeException
 
 import docker
 

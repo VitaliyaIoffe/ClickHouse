@@ -1,15 +1,14 @@
+import logging
+import os.path
 import time
+from multiprocessing.dummy import Pool
 
 import psycopg2
 import pymysql.cursors
 import pytest
-import logging
-import os.path
-
 from helpers.cluster import ClickHouseCluster
 from helpers.test_tools import assert_eq_with_retry
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-from multiprocessing.dummy import Pool
 
 cluster = ClickHouseCluster(__file__)
 node1 = cluster.add_instance('node1', with_odbc_drivers=True, with_mysql=True, with_postgres=True,

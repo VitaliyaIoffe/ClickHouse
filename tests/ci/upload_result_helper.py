@@ -1,8 +1,9 @@
-import os
-import logging
 import ast
+import logging
+import os
 
 from report import create_test_html_report
+
 
 def process_logs(s3_client, additional_logs, s3_path_prefix, test_results, with_raw_logs):
     proccessed_logs = {}

@@ -6,9 +6,10 @@ from testflows.core import *
 
 append_path(sys.path, "..")
 
-from helpers.cluster import Cluster
 from helpers.argparser import argparser
-from window_functions.requirements import SRS019_ClickHouse_Window_Functions, RQ_SRS_019_ClickHouse_WindowFunctions
+from helpers.cluster import Cluster
+from window_functions.requirements import (
+    RQ_SRS_019_ClickHouse_WindowFunctions, SRS019_ClickHouse_Window_Functions)
 
 xfails = {
     "tests/:/frame clause/range frame/between expr following and expr following without order by error":

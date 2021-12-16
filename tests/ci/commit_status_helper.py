@@ -2,6 +2,7 @@
 
 import os
 
+
 def get_commit(gh, commit_sha):
     repo = gh.get_repo(os.getenv("GITHUB_REPOSITORY", "ClickHouse/ClickHouse"))
     commit = repo.get_commit(commit_sha)

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-import shutil
+import logging
 import os
+import shutil
+import signal
 import subprocess
 import tempfile
-import logging
-import signal
 
 
 class SSHAgent:

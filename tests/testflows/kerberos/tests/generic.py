@@ -1,8 +1,8 @@
-from testflows.core import *
-from kerberos.tests.common import *
-from kerberos.requirements.requirements import *
-
 import time
+
+from kerberos.requirements.requirements import *
+from kerberos.tests.common import *
+from testflows.core import *
 
 
 @TestScenario

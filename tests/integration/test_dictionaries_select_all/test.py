@@ -4,7 +4,8 @@ import pytest
 from helpers.cluster import ClickHouseCluster
 from helpers.test_tools import TSV
 
-from .generate_dictionaries import generate_structure, generate_dictionaries, DictionaryTestTable
+from .generate_dictionaries import (DictionaryTestTable, generate_dictionaries,
+                                    generate_structure)
 
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 

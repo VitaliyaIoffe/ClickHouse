@@ -1,7 +1,8 @@
 import os
-import pytest
 import sys
+
 import grpc
+import pytest
 from helpers.cluster import ClickHouseCluster, run_and_check
 
 GRPC_PORT = 9100
@@ -22,7 +23,6 @@ run_and_check(
 sys.path.append(gen_dir)
 import clickhouse_grpc_pb2
 import clickhouse_grpc_pb2_grpc
-
 
 # Utilities
 

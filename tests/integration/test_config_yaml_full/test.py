@@ -1,11 +1,13 @@
-import time
 import threading
-from os import path as p, unlink
+import time
+from os import path as p
+from os import unlink
 from tempfile import NamedTemporaryFile
 
 import helpers
 import pytest
 from helpers.cluster import ClickHouseCluster
+
 
 def test_yaml_full_conf():
     # all configs are in YAML

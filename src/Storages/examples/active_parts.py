@@ -4,8 +4,8 @@
 # Displays a list of active parts - parts that are not overlapped by any other part.
 # Usage: `ls /var/lib/clickhouse/data/merge/visits | active_parts.py`
 
-import sys
 import re
+import sys
 
 parts = {}
 for s in sys.stdin.read().split():

@@ -6,8 +6,8 @@ from testflows.core import *
 
 append_path(sys.path, "..")
 
-from helpers.cluster import Cluster
 from helpers.argparser import argparser
+from helpers.cluster import Cluster
 from rbac.requirements import SRS_006_ClickHouse_Role_Based_Access_Control
 
 issue_14091 = "https://github.com/ClickHouse/ClickHouse/issues/14091"

@@ -1,7 +1,7 @@
-from testflows.core import *
-from testflows.asserts import error
-
 from example.requirements import *
+from testflows.asserts import error
+from testflows.core import *
+
 
 @TestScenario
 @Name("select 1")

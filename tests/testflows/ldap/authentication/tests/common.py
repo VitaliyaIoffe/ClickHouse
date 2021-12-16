@@ -1,18 +1,17 @@
 import os
-import uuid
-import time
-import string
 import random
+import string
 import textwrap
+import time
+import uuid
 import xml.etree.ElementTree as xmltree
-
 from collections import namedtuple
 from contextlib import contextmanager
 
 import testflows.settings as settings
-
-from testflows.core import *
 from testflows.asserts import error
+from testflows.core import *
+
 
 def getuid():
     return str(uuid.uuid1()).replace('-', '_')

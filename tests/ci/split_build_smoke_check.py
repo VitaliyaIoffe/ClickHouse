@@ -1,23 +1,22 @@
 #!/usr/bin/env python3
 
-import os
 import logging
+import os
 import subprocess
 import sys
 
-from github import Github
-
-from s3_helper import S3Helper
-from get_robot_token import get_best_robot_token
-from pr_info import PRInfo, get_event
 from build_download_helper import download_shared_build
-from upload_result_helper import upload_results
-from docker_pull_helper import get_image_with_version
+from clickhouse_helper import (ClickHouseHelper,
+                               prepare_tests_results_for_clickhouse)
 from commit_status_helper import post_commit_status
-from clickhouse_helper import ClickHouseHelper, prepare_tests_results_for_clickhouse
-from stopwatch import Stopwatch
+from docker_pull_helper import get_image_with_version
+from get_robot_token import get_best_robot_token
+from github import Github
+from pr_info import PRInfo, get_event
 from rerun_helper import RerunHelper
-
+from s3_helper import S3Helper
+from stopwatch import Stopwatch
+from upload_result_helper import upload_results
 
 DOCKER_IMAGE = "clickhouse/split-build-smoke-test"
 DOWNLOAD_RETRIES_COUNT = 5

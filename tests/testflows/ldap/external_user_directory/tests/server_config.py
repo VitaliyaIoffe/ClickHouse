@@ -1,11 +1,10 @@
 import time
 
+from ldap.authentication.tests.common import invalid_server_config
+from ldap.external_user_directory.requirements import *
+from ldap.external_user_directory.tests.common import *
 from testflows.core import *
 
-from ldap.external_user_directory.tests.common import *
-from ldap.external_user_directory.requirements import *
-
-from ldap.authentication.tests.common import invalid_server_config
 
 @TestScenario
 @Requirements(

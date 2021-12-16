@@ -1,5 +1,6 @@
 import os
 
+
 def argparser(parser):
     """Default argument parser for regressions.
     """

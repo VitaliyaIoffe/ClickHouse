@@ -1,12 +1,12 @@
 import os
 import random
+import string
 import sys
 import time
+from contextlib import contextmanager
+
 import kazoo
 import pytest
-import string
-import random
-from contextlib import contextmanager
 from helpers.cluster import ClickHouseCluster
 from helpers.test_tools import TSV
 

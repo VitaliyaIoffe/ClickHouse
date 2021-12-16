@@ -1,7 +1,8 @@
 import uuid
 
-from extended_precision_data_types.requirements import *
 from extended_precision_data_types.common import *
+from extended_precision_data_types.requirements import *
+
 
 def get_table_name():
     return "table" + "_" + str(uuid.uuid1()).replace('-', '_')

@@ -1,16 +1,15 @@
 import os
-import sys
-import time
 import random
 import string
-
-from helpers.cluster import ClickHouseCluster
-from helpers.test_tools import TSV
+import sys
+import time
 
 import kazoo
 import pytest
-import docker
+from helpers.cluster import ClickHouseCluster
+from helpers.test_tools import TSV
 
+import docker
 
 CURRENT_TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(CURRENT_TEST_DIR))

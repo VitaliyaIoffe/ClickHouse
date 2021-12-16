@@ -1,7 +1,7 @@
-import pytest
 import time
-import psycopg2
 
+import psycopg2
+import pytest
 from helpers.cluster import ClickHouseCluster
 from helpers.test_tools import assert_eq_with_retry
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT

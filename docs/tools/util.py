@@ -4,8 +4,8 @@ import datetime
 import multiprocessing
 import os
 import shutil
-import sys
 import socket
+import sys
 import tempfile
 import threading
 
@@ -108,6 +108,7 @@ yaml.add_representer(collections.OrderedDict, represent_ordereddict)
 
 def init_jinja2_filters(env):
     import amp
+
     import website
     chunk_size = 10240
     env.filters['chunks'] = lambda line: [line[i:i + chunk_size] for i in range(0, len(line), chunk_size)]

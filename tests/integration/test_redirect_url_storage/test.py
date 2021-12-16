@@ -1,9 +1,9 @@
-import pytest
-from helpers.cluster import ClickHouseCluster
-
-from helpers.network import PartitionManager
 import threading
 import time
+
+import pytest
+from helpers.cluster import ClickHouseCluster
+from helpers.network import PartitionManager
 
 cluster = ClickHouseCluster(__file__)
 node1 = cluster.add_instance('node1', main_configs=['configs/named_collections.xml'], with_zookeeper=False, with_hdfs=True)

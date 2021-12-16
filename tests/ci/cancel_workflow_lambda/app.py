@@ -2,10 +2,10 @@
 
 import json
 import time
-import jwt
 
-import requests
 import boto3
+import jwt
+import requests
 
 # https://docs.github.com/en/rest/reference/actions#cancel-a-workflow-run
 #

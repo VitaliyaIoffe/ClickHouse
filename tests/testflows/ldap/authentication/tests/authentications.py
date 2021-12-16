@@ -3,10 +3,10 @@ import random
 import time
 
 from helpers.common import Pool, join
-from testflows.core import *
-from testflows.asserts import error
-from ldap.authentication.tests.common import *
 from ldap.authentication.requirements import *
+from ldap.authentication.tests.common import *
+from testflows.asserts import error
+from testflows.core import *
 
 servers = {
     "openldap1": {

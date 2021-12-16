@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
 #
-import subprocess
-import logging
 import json
+import logging
 import os
+import subprocess
 import sys
 import time
-from github import Github
-from s3_helper import S3Helper
-from pr_info import PRInfo, get_event
-from get_robot_token import get_best_robot_token
-from version_helper import get_version_from_repo, update_version_local
+
 from ccache_utils import get_ccache_if_not_exists, upload_ccache
 from ci_config import CI_CONFIG
 from docker_pull_helper import get_image_with_version
+from get_robot_token import get_best_robot_token
+from github import Github
+from pr_info import PRInfo, get_event
+from s3_helper import S3Helper
 from tee_popen import TeePopen
+from version_helper import get_version_from_repo, update_version_local
 
 
 def get_build_config(build_check_name, build_name):

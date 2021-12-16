@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-import subprocess
 import logging
 import os
+import subprocess
+
 
 def compress_file_fast(path, archive_path):
     if os.path.exists('/usr/bin/pigz'):

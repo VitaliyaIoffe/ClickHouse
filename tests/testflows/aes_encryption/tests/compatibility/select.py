@@ -1,11 +1,11 @@
 import textwrap
 from contextlib import contextmanager
 
-from testflows.core import *
-from testflows.asserts.helpers import varname
-from testflows.asserts import values, error, snapshot
-
 from aes_encryption.tests.common import modes, mysql_modes
+from testflows.asserts import error, snapshot, values
+from testflows.asserts.helpers import varname
+from testflows.core import *
+
 
 @contextmanager
 def table(name, sql):

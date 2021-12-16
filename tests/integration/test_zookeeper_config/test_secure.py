@@ -1,5 +1,5 @@
+import os
 import threading
-import os 
 from tempfile import NamedTemporaryFile
 
 import pytest

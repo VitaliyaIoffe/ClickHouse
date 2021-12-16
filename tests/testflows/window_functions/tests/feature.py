@@ -1,7 +1,6 @@
 from testflows.core import *
-
-from window_functions.tests.common import *
 from window_functions.requirements import *
+from window_functions.tests.common import *
 
 
 @TestOutline(Feature)
