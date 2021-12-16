@@ -6,8 +6,7 @@ from testflows.core import *
 @TestScenario
 @Name("simple")
 def scenario(self, node="clickhouse1"):
-    """Check that an LDAP external user directory can be used to authenticate a user.
-    """
+    """Check that an LDAP external user directory can be used to authenticate a user."""
     self.context.node = self.context.cluster.node(node)
     servers = {
         "openldap1": {
@@ -15,10 +14,15 @@ def scenario(self, node="clickhouse1"):
             "port": "389",
             "enable_tls": "no",
             "auth_dn_prefix": "cn=",
-            "auth_dn_suffix": ",ou=users,dc=company,dc=com"
+            "auth_dn_suffix": ",ou=users,dc=company,dc=com",
         },
     }
     users = [
-        {"server": "openldap1", "username": "user1", "password": "user1", "login": True},
+        {
+            "server": "openldap1",
+            "username": "user1",
+            "password": "user1",
+            "login": True,
+        },
     ]
     login(servers, "openldap1", *users)

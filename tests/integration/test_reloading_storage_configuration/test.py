@@ -12,25 +12,41 @@ from helpers.test_tools import TSV
 
 cluster = helpers.cluster.ClickHouseCluster(__file__)
 
-node1 = cluster.add_instance('node1',
-                             main_configs=['configs/logs_config.xml'],
-                             with_zookeeper=True,
-                             stay_alive=True,
-                             tmpfs=['/jbod1:size=40M', '/jbod2:size=40M', '/jbod3:size=40M', '/jbod4:size=40M',
-                                    '/external:size=200M'],
-                             macros={"shard": 0, "replica": 1})
+node1 = cluster.add_instance(
+    "node1",
+    main_configs=["configs/logs_config.xml"],
+    with_zookeeper=True,
+    stay_alive=True,
+    tmpfs=[
+        "/jbod1:size=40M",
+        "/jbod2:size=40M",
+        "/jbod3:size=40M",
+        "/jbod4:size=40M",
+        "/external:size=200M",
+    ],
+    macros={"shard": 0, "replica": 1},
+)
 
-node2 = cluster.add_instance('node2',
-                             main_configs=['configs/logs_config.xml'],
-                             with_zookeeper=True,
-                             stay_alive=True,
-                             tmpfs=['/jbod1:size=40M', '/jbod2:size=40M', '/jbod3:size=40M', '/jbod4:size=40M',
-                                    '/external:size=200M'],
-                             macros={"shard": 0, "replica": 2})
+node2 = cluster.add_instance(
+    "node2",
+    main_configs=["configs/logs_config.xml"],
+    with_zookeeper=True,
+    stay_alive=True,
+    tmpfs=[
+        "/jbod1:size=40M",
+        "/jbod2:size=40M",
+        "/jbod3:size=40M",
+        "/jbod4:size=40M",
+        "/external:size=200M",
+    ],
+    macros={"shard": 0, "replica": 2},
+)
 
 
 def get_log(node):
-    return node.exec_in_container(["bash", "-c", "cat /var/log/clickhouse-server/clickhouse-server.log"])
+    return node.exec_in_container(
+        ["bash", "-c", "cat /var/log/clickhouse-server/clickhouse-server.log"]
+    )
 
 
 @pytest.fixture(scope="module")
@@ -44,11 +60,17 @@ def started_cluster():
 
 
 def start_over():
-    shutil.copy(os.path.join(os.path.dirname(__file__), "configs/config.d/storage_configuration.xml"),
-                os.path.join(node1.config_d_dir, "storage_configuration.xml"))
+    shutil.copy(
+        os.path.join(
+            os.path.dirname(__file__), "configs/config.d/storage_configuration.xml"
+        ),
+        os.path.join(node1.config_d_dir, "storage_configuration.xml"),
+    )
 
     for node in (node1, node2):
-        separate_configuration_path = os.path.join(node.config_d_dir, "separate_configuration.xml")
+        separate_configuration_path = os.path.join(
+            node.config_d_dir, "separate_configuration.xml"
+        )
         try:
             os.remove(separate_configuration_path)
         except:
@@ -56,16 +78,23 @@ def start_over():
 
 
 def add_disk(node, name, path, separate_file=False):
-    separate_configuration_path = os.path.join(node.config_d_dir, "separate_configuration.xml")
+    separate_configuration_path = os.path.join(
+        node.config_d_dir, "separate_configuration.xml"
+    )
 
     try:
         if separate_file:
             tree = ET.parse(separate_configuration_path)
         else:
-            tree = ET.parse(os.path.join(node.config_d_dir, "storage_configuration.xml"))
+            tree = ET.parse(
+                os.path.join(node.config_d_dir, "storage_configuration.xml")
+            )
     except:
         tree = ET.ElementTree(
-            ET.fromstring('<clickhouse><storage_configuration><disks/><policies/></storage_configuration></clickhouse>'))
+            ET.fromstring(
+                "<clickhouse><storage_configuration><disks/><policies/></storage_configuration></clickhouse>"
+            )
+        )
     root = tree.getroot()
     new_disk = ET.Element(name)
     new_path = ET.Element("path")
@@ -77,19 +106,25 @@ def add_disk(node, name, path, separate_file=False):
     else:
         tree.write(os.path.join(node.config_d_dir, "storage_configuration.xml"))
 
+
 def update_disk(node, name, path, keep_free_space_bytes, separate_file=False):
-    separate_configuration_path = os.path.join(node.config_d_dir,
-                                               "separate_configuration.xml")
+    separate_configuration_path = os.path.join(
+        node.config_d_dir, "separate_configuration.xml"
+    )
 
     try:
         if separate_file:
             tree = ET.parse(separate_configuration_path)
         else:
             tree = ET.parse(
-                os.path.join(node.config_d_dir, "storage_configuration.xml"))
+                os.path.join(node.config_d_dir, "storage_configuration.xml")
+            )
     except:
         tree = ET.ElementTree(
-            ET.fromstring('<clickhouse><storage_configuration><disks/><policies/></storage_configuration></clickhouse>'))
+            ET.fromstring(
+                "<clickhouse><storage_configuration><disks/><policies/></storage_configuration></clickhouse>"
+            )
+        )
 
     root = tree.getroot()
     disk = root.find("storage_configuration").find("disks").find(name)
@@ -135,15 +170,21 @@ def test_add_disk(started_cluster):
         node1.restart_clickhouse(kill=True)
         time.sleep(2)
 
-        node1.query("""
+        node1.query(
+            """
             CREATE TABLE {name} (
                 d UInt64
             ) ENGINE = {engine}
             ORDER BY d
             SETTINGS storage_policy='jbods_with_external'
-        """.format(name=name, engine=engine))
+        """.format(
+                name=name, engine=engine
+            )
+        )
 
-        assert "jbod3" not in set(node1.query("SELECT name FROM system.disks").splitlines())
+        assert "jbod3" not in set(
+            node1.query("SELECT name FROM system.disks").splitlines()
+        )
 
         add_disk(node1, "jbod3", "/jbod3/")
         node1.query("SYSTEM RELOAD CONFIG")
@@ -155,6 +196,7 @@ def test_add_disk(started_cluster):
         except:
             """"""
 
+
 def test_update_disk(started_cluster):
     try:
         name = "test_update_disk"
@@ -164,27 +206,34 @@ def test_update_disk(started_cluster):
         node1.restart_clickhouse(kill=True)
         time.sleep(2)
 
-        node1.query("""
+        node1.query(
+            """
             CREATE TABLE {name} (
                 d UInt64
             ) ENGINE = {engine}
             ORDER BY d
             SETTINGS storage_policy='jbods_with_external'
-        """.format(name=name, engine=engine))
+        """.format(
+                name=name, engine=engine
+            )
+        )
 
-        assert node1.query("SELECT path, keep_free_space FROM system.disks where name = 'jbod2'") == TSV([
-                ["/jbod2/", "10485760"]])
+        assert node1.query(
+            "SELECT path, keep_free_space FROM system.disks where name = 'jbod2'"
+        ) == TSV([["/jbod2/", "10485760"]])
 
         update_disk(node1, "jbod2", "/jbod2/", "20971520")
         node1.query("SYSTEM RELOAD CONFIG")
 
-        assert node1.query("SELECT path, keep_free_space FROM system.disks where name = 'jbod2'") == TSV([
-                ["/jbod2/", "20971520"]])
+        assert node1.query(
+            "SELECT path, keep_free_space FROM system.disks where name = 'jbod2'"
+        ) == TSV([["/jbod2/", "20971520"]])
     finally:
         try:
             node1.query("DROP TABLE IF EXISTS {}".format(name))
         except:
             """"""
+
 
 def test_add_disk_to_separate_config(started_cluster):
     try:
@@ -195,15 +244,21 @@ def test_add_disk_to_separate_config(started_cluster):
         node1.restart_clickhouse(kill=True)
         time.sleep(2)
 
-        node1.query("""
+        node1.query(
+            """
             CREATE TABLE {name} (
                 d UInt64
             ) ENGINE = {engine}
             ORDER BY d
             SETTINGS storage_policy='jbods_with_external'
-        """.format(name=name, engine=engine))
+        """.format(
+                name=name, engine=engine
+            )
+        )
 
-        assert "jbod3" not in set(node1.query("SELECT name FROM system.disks").splitlines())
+        assert "jbod3" not in set(
+            node1.query("SELECT name FROM system.disks").splitlines()
+        )
 
         add_disk(node1, "jbod3", "/jbod3/", separate_file=True)
         node1.query("SYSTEM RELOAD CONFIG")
@@ -229,23 +284,35 @@ def test_add_policy(started_cluster):
         node1.restart_clickhouse(kill=True)
         time.sleep(2)
 
-        node1.query("""
+        node1.query(
+            """
             CREATE TABLE {name} (
                 d UInt64
             ) ENGINE = {engine}
             ORDER BY d
             SETTINGS storage_policy='jbods_with_external'
-        """.format(name=name, engine=engine))
+        """.format(
+                name=name, engine=engine
+            )
+        )
 
         add_policy(node1, "cool_policy", {"volume1": ["jbod3", "jbod4"]})
         node1.query("SYSTEM RELOAD CONFIG")
 
         disks = set(node1.query("SELECT name FROM system.disks").splitlines())
-        assert "cool_policy" in set(node1.query("SELECT policy_name FROM system.storage_policies").splitlines())
-        assert {"volume1"} == set(node1.query(
-            "SELECT volume_name FROM system.storage_policies WHERE policy_name = 'cool_policy'").splitlines())
+        assert "cool_policy" in set(
+            node1.query("SELECT policy_name FROM system.storage_policies").splitlines()
+        )
+        assert {"volume1"} == set(
+            node1.query(
+                "SELECT volume_name FROM system.storage_policies WHERE policy_name = 'cool_policy'"
+            ).splitlines()
+        )
         assert {"['jbod3','jbod4']"} == set(
-            node1.query("SELECT disks FROM system.storage_policies WHERE policy_name = 'cool_policy'").splitlines())
+            node1.query(
+                "SELECT disks FROM system.storage_policies WHERE policy_name = 'cool_policy'"
+            ).splitlines()
+        )
 
     finally:
         try:
@@ -264,39 +331,69 @@ def test_new_policy_works(started_cluster):
         node1.restart_clickhouse(kill=True)
         time.sleep(2)
 
-        node1.query("""
+        node1.query(
+            """
             CREATE TABLE {name} (
                 d UInt64
             ) ENGINE = {engine}
             ORDER BY d
             SETTINGS storage_policy='jbods_with_external'
-        """.format(name=name, engine=engine))
+        """.format(
+                name=name, engine=engine
+            )
+        )
 
         add_policy(node1, "cool_policy", {"volume1": ["jbod3"]})
         node1.query("SYSTEM RELOAD CONFIG")
 
         # Incompatible storage policy.
         with pytest.raises(helpers.client.QueryRuntimeException):
-            node1.query("""
+            node1.query(
+                """
                 ALTER TABLE {name} MODIFY SETTING storage_policy='cool_policy'
-            """.format(name=name))
+            """.format(
+                    name=name
+                )
+            )
 
         start_over()
         add_disk(node1, "jbod3", "/jbod3/")
         add_disk(node1, "jbod4", "/jbod4/")
-        add_policy(node1, "cool_policy", collections.OrderedDict(
-            [("volume1", ["jbod3"]), ("main", ["jbod1", "jbod2"]), ("external", ["external"])]))
+        add_policy(
+            node1,
+            "cool_policy",
+            collections.OrderedDict(
+                [
+                    ("volume1", ["jbod3"]),
+                    ("main", ["jbod1", "jbod2"]),
+                    ("external", ["external"]),
+                ]
+            ),
+        )
         node1.query("SYSTEM RELOAD CONFIG")
 
-        node1.query("""
+        node1.query(
+            """
             ALTER TABLE {name} MODIFY SETTING storage_policy='cool_policy'
-        """.format(name=name))
+        """.format(
+                name=name
+            )
+        )
 
-        node1.query("""
+        node1.query(
+            """
             INSERT INTO TABLE {name} VALUES (1)
-        """.format(name=name))
-        assert {"jbod3"} == set(node1.query(
-            "SELECT disk_name FROM system.parts WHERE active = 1 AND table = '{name}'".format(name=name)).splitlines())
+        """.format(
+                name=name
+            )
+        )
+        assert {"jbod3"} == set(
+            node1.query(
+                "SELECT disk_name FROM system.parts WHERE active = 1 AND table = '{name}'".format(
+                    name=name
+                )
+            ).splitlines()
+        )
 
     finally:
         try:
@@ -317,24 +414,38 @@ def test_add_volume_to_policy(started_cluster):
         node1.restart_clickhouse(kill=True)
         time.sleep(2)
 
-        node1.query("""
+        node1.query(
+            """
             CREATE TABLE {name} (
                 d UInt64
             ) ENGINE = {engine}
             ORDER BY d
             SETTINGS storage_policy='jbods_with_external'
-        """.format(name=name, engine=engine))
+        """.format(
+                name=name, engine=engine
+            )
+        )
 
         start_over()
         add_disk(node1, "jbod3", "/jbod3/")
         add_disk(node1, "jbod4", "/jbod4/")
-        add_policy(node1, "cool_policy", collections.OrderedDict([("volume1", ["jbod3"]), ("volume2", ["jbod4"])]))
+        add_policy(
+            node1,
+            "cool_policy",
+            collections.OrderedDict([("volume1", ["jbod3"]), ("volume2", ["jbod4"])]),
+        )
         node1.query("SYSTEM RELOAD CONFIG")
 
-        volumes = set(node1.query(
-            "SELECT volume_name FROM system.storage_policies WHERE policy_name = 'cool_policy'").splitlines())
+        volumes = set(
+            node1.query(
+                "SELECT volume_name FROM system.storage_policies WHERE policy_name = 'cool_policy'"
+            ).splitlines()
+        )
         disks_sets = set(
-            node1.query("SELECT disks FROM system.storage_policies WHERE policy_name = 'cool_policy'").splitlines())
+            node1.query(
+                "SELECT disks FROM system.storage_policies WHERE policy_name = 'cool_policy'"
+            ).splitlines()
+        )
         assert {"volume1", "volume2"} == volumes
         assert {"['jbod3']", "['jbod4']"} == disks_sets
 
@@ -357,13 +468,17 @@ def test_add_disk_to_policy(started_cluster):
         node1.restart_clickhouse(kill=True)
         time.sleep(2)
 
-        node1.query("""
+        node1.query(
+            """
             CREATE TABLE {name} (
                 d UInt64
             ) ENGINE = {engine}
             ORDER BY d
             SETTINGS storage_policy='jbods_with_external'
-        """.format(name=name, engine=engine))
+        """.format(
+                name=name, engine=engine
+            )
+        )
 
         start_over()
         add_disk(node1, "jbod3", "/jbod3/")
@@ -371,10 +486,16 @@ def test_add_disk_to_policy(started_cluster):
         add_policy(node1, "cool_policy", {"volume1": ["jbod3", "jbod4"]})
         node1.query("SYSTEM RELOAD CONFIG")
 
-        volumes = set(node1.query(
-            "SELECT volume_name FROM system.storage_policies WHERE policy_name = 'cool_policy'").splitlines())
+        volumes = set(
+            node1.query(
+                "SELECT volume_name FROM system.storage_policies WHERE policy_name = 'cool_policy'"
+            ).splitlines()
+        )
         disks_sets = set(
-            node1.query("SELECT disks FROM system.storage_policies WHERE policy_name = 'cool_policy'").splitlines())
+            node1.query(
+                "SELECT disks FROM system.storage_policies WHERE policy_name = 'cool_policy'"
+            ).splitlines()
+        )
         assert {"volume1"} == volumes
         assert {"['jbod3','jbod4']"} == disks_sets
 
@@ -395,20 +516,28 @@ def test_remove_disk(started_cluster):
         node1.restart_clickhouse(kill=True)
         time.sleep(2)
 
-        node1.query("""
+        node1.query(
+            """
             CREATE TABLE {name} (
                 d UInt64
             ) ENGINE = {engine}
             ORDER BY d
             SETTINGS storage_policy='jbods_with_external'
-        """.format(name=name, engine=engine))
+        """.format(
+                name=name, engine=engine
+            )
+        )
 
-        assert "remove_disk_jbod3" in set(node1.query("SELECT name FROM system.disks").splitlines())
+        assert "remove_disk_jbod3" in set(
+            node1.query("SELECT name FROM system.disks").splitlines()
+        )
 
         start_over()
         node1.query("SYSTEM RELOAD CONFIG")
 
-        assert "remove_disk_jbod3" in set(node1.query("SELECT name FROM system.disks").splitlines())
+        assert "remove_disk_jbod3" in set(
+            node1.query("SELECT name FROM system.disks").splitlines()
+        )
         assert re.search("Warning.*remove_disk_jbod3", get_log(node1))
     finally:
         try:
@@ -429,16 +558,21 @@ def test_remove_policy(started_cluster):
         node1.restart_clickhouse(kill=True)
         time.sleep(2)
 
-        node1.query("""
+        node1.query(
+            """
             CREATE TABLE {name} (
                 d UInt64
             ) ENGINE = {engine}
             ORDER BY d
             SETTINGS storage_policy='jbods_with_external'
-        """.format(name=name, engine=engine))
+        """.format(
+                name=name, engine=engine
+            )
+        )
 
         assert "remove_policy_cool_policy" in set(
-            node1.query("SELECT policy_name FROM system.storage_policies").splitlines())
+            node1.query("SELECT policy_name FROM system.storage_policies").splitlines()
+        )
 
         start_over()
         add_disk(node1, "jbod3", "/jbod3/")
@@ -446,7 +580,8 @@ def test_remove_policy(started_cluster):
         node1.query("SYSTEM RELOAD CONFIG")
 
         assert "remove_policy_cool_policy" in set(
-            node1.query("SELECT policy_name FROM system.storage_policies").splitlines())
+            node1.query("SELECT policy_name FROM system.storage_policies").splitlines()
+        )
         assert re.search("Error.*remove_policy_cool_policy", get_log(node1))
 
     finally:
@@ -464,23 +599,36 @@ def test_remove_volume_from_policy(started_cluster):
         start_over()
         add_disk(node1, "jbod3", "/jbod3/")
         add_disk(node1, "jbod4", "/jbod4/")
-        add_policy(node1, "test_remove_volume_from_policy_cool_policy",
-                   collections.OrderedDict([("volume1", ["jbod3"]), ("volume2", ["jbod4"])]))
+        add_policy(
+            node1,
+            "test_remove_volume_from_policy_cool_policy",
+            collections.OrderedDict([("volume1", ["jbod3"]), ("volume2", ["jbod4"])]),
+        )
         node1.restart_clickhouse(kill=True)
         time.sleep(2)
 
-        node1.query("""
+        node1.query(
+            """
             CREATE TABLE {name} (
                 d UInt64
             ) ENGINE = {engine}
             ORDER BY d
             SETTINGS storage_policy='jbods_with_external'
-        """.format(name=name, engine=engine))
+        """.format(
+                name=name, engine=engine
+            )
+        )
 
-        volumes = set(node1.query(
-            "SELECT volume_name FROM system.storage_policies WHERE policy_name = 'test_remove_volume_from_policy_cool_policy'").splitlines())
-        disks_sets = set(node1.query(
-            "SELECT disks FROM system.storage_policies WHERE policy_name = 'test_remove_volume_from_policy_cool_policy'").splitlines())
+        volumes = set(
+            node1.query(
+                "SELECT volume_name FROM system.storage_policies WHERE policy_name = 'test_remove_volume_from_policy_cool_policy'"
+            ).splitlines()
+        )
+        disks_sets = set(
+            node1.query(
+                "SELECT disks FROM system.storage_policies WHERE policy_name = 'test_remove_volume_from_policy_cool_policy'"
+            ).splitlines()
+        )
         assert {"volume1", "volume2"} == volumes
         assert {"['jbod3']", "['jbod4']"} == disks_sets
 
@@ -490,13 +638,21 @@ def test_remove_volume_from_policy(started_cluster):
         add_policy(node1, "cool_policy", {"volume1": ["jbod3"]})
         node1.query("SYSTEM RELOAD CONFIG")
 
-        volumes = set(node1.query(
-            "SELECT volume_name FROM system.storage_policies WHERE policy_name = 'test_remove_volume_from_policy_cool_policy'").splitlines())
-        disks_sets = set(node1.query(
-            "SELECT disks FROM system.storage_policies WHERE policy_name = 'test_remove_volume_from_policy_cool_policy'").splitlines())
+        volumes = set(
+            node1.query(
+                "SELECT volume_name FROM system.storage_policies WHERE policy_name = 'test_remove_volume_from_policy_cool_policy'"
+            ).splitlines()
+        )
+        disks_sets = set(
+            node1.query(
+                "SELECT disks FROM system.storage_policies WHERE policy_name = 'test_remove_volume_from_policy_cool_policy'"
+            ).splitlines()
+        )
         assert {"volume1", "volume2"} == volumes
         assert {"['jbod3']", "['jbod4']"} == disks_sets
-        assert re.search("Error.*test_remove_volume_from_policy_cool_policy", get_log(node1))
+        assert re.search(
+            "Error.*test_remove_volume_from_policy_cool_policy", get_log(node1)
+        )
 
     finally:
         try:
@@ -513,22 +669,36 @@ def test_remove_disk_from_policy(started_cluster):
         start_over()
         add_disk(node1, "jbod3", "/jbod3/")
         add_disk(node1, "jbod4", "/jbod4/")
-        add_policy(node1, "test_remove_disk_from_policy_cool_policy", {"volume1": ["jbod3", "jbod4"]})
+        add_policy(
+            node1,
+            "test_remove_disk_from_policy_cool_policy",
+            {"volume1": ["jbod3", "jbod4"]},
+        )
         node1.restart_clickhouse(kill=True)
         time.sleep(2)
 
-        node1.query("""
+        node1.query(
+            """
             CREATE TABLE {name} (
                 d UInt64
             ) ENGINE = {engine}
             ORDER BY d
             SETTINGS storage_policy='jbods_with_external'
-        """.format(name=name, engine=engine))
+        """.format(
+                name=name, engine=engine
+            )
+        )
 
-        volumes = set(node1.query(
-            "SELECT volume_name FROM system.storage_policies WHERE policy_name = 'test_remove_disk_from_policy_cool_policy'").splitlines())
-        disks_sets = set(node1.query(
-            "SELECT disks FROM system.storage_policies WHERE policy_name = 'test_remove_disk_from_policy_cool_policy'").splitlines())
+        volumes = set(
+            node1.query(
+                "SELECT volume_name FROM system.storage_policies WHERE policy_name = 'test_remove_disk_from_policy_cool_policy'"
+            ).splitlines()
+        )
+        disks_sets = set(
+            node1.query(
+                "SELECT disks FROM system.storage_policies WHERE policy_name = 'test_remove_disk_from_policy_cool_policy'"
+            ).splitlines()
+        )
         assert {"volume1"} == volumes
         assert {"['jbod3','jbod4']"} == disks_sets
 
@@ -538,13 +708,21 @@ def test_remove_disk_from_policy(started_cluster):
         add_policy(node1, "cool_policy", {"volume1": ["jbod3"]})
         node1.query("SYSTEM RELOAD CONFIG")
 
-        volumes = set(node1.query(
-            "SELECT volume_name FROM system.storage_policies WHERE policy_name = 'test_remove_disk_from_policy_cool_policy'").splitlines())
-        disks_sets = set(node1.query(
-            "SELECT disks FROM system.storage_policies WHERE policy_name = 'test_remove_disk_from_policy_cool_policy'").splitlines())
+        volumes = set(
+            node1.query(
+                "SELECT volume_name FROM system.storage_policies WHERE policy_name = 'test_remove_disk_from_policy_cool_policy'"
+            ).splitlines()
+        )
+        disks_sets = set(
+            node1.query(
+                "SELECT disks FROM system.storage_policies WHERE policy_name = 'test_remove_disk_from_policy_cool_policy'"
+            ).splitlines()
+        )
         assert {"volume1"} == volumes
         assert {"['jbod3','jbod4']"} == disks_sets
-        assert re.search("Error.*test_remove_disk_from_policy_cool_policy", get_log(node1))
+        assert re.search(
+            "Error.*test_remove_disk_from_policy_cool_policy", get_log(node1)
+        )
 
     finally:
         try:

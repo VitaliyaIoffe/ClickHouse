@@ -4,7 +4,9 @@ from itertools import chain
 
 from grammarinator.runtime import *
 
-charset_0 = list(chain(*multirange_diff(printable_unicode_ranges, [(39, 40),(92, 93)])))
+charset_0 = list(
+    chain(*multirange_diff(printable_unicode_ranges, [(39, 40), (92, 93)]))
+)
 charset_1 = list(chain(range(97, 98), range(65, 66)))
 charset_2 = list(chain(range(98, 99), range(66, 67)))
 charset_3 = list(chain(range(99, 100), range(67, 68)))
@@ -34,13 +36,23 @@ charset_26 = list(chain(range(122, 123), range(90, 91)))
 charset_27 = list(chain(range(97, 123), range(65, 91)))
 charset_28 = list(chain(range(48, 58)))
 charset_29 = list(chain(range(48, 58), range(97, 103), range(65, 71)))
-charset_30 = list(chain(*multirange_diff(printable_unicode_ranges, [(92, 93),(92, 93)])))
-charset_31 = list(chain(range(32, 33), range(11, 12), range(12, 13), range(9, 10), range(13, 14), range(10, 11)))
+charset_30 = list(
+    chain(*multirange_diff(printable_unicode_ranges, [(92, 93), (92, 93)]))
+)
+charset_31 = list(
+    chain(
+        range(32, 33),
+        range(11, 12),
+        range(12, 13),
+        range(9, 10),
+        range(13, 14),
+        range(10, 11),
+    )
+)
 
 
 class ClickHouseUnlexer(Grammarinator):
-
-    def __init__(self, *, max_depth=float('inf'), weights=None, cooldown=1.0):
+    def __init__(self, *, max_depth=float("inf"), weights=None, cooldown=1.0):
         super(ClickHouseUnlexer, self).__init__()
         self.unlexer = self
         self.max_depth = max_depth
@@ -52,9 +64,18 @@ class ClickHouseUnlexer(Grammarinator):
 
     @depthcontrol
     def INTERVAL_TYPE(self):
-        current = self.create_node(UnlexerRule(name='INTERVAL_TYPE'))
-        choice = self.choice([0 if [2, 2, 2, 2, 2, 2, 2, 2][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_0', i), 1) for i, w in enumerate([1, 1, 1, 1, 1, 1, 1, 1])])
-        self.unlexer.weights[('alt_0', choice)] = self.unlexer.weights.get(('alt_0', choice), 1) * self.unlexer.cooldown
+        current = self.create_node(UnlexerRule(name="INTERVAL_TYPE"))
+        choice = self.choice(
+            [
+                0
+                if [2, 2, 2, 2, 2, 2, 2, 2][i] > self.unlexer.max_depth
+                else w * self.unlexer.weights.get(("alt_0", i), 1)
+                for i, w in enumerate([1, 1, 1, 1, 1, 1, 1, 1])
+            ]
+        )
+        self.unlexer.weights[("alt_0", choice)] = (
+            self.unlexer.weights.get(("alt_0", choice), 1) * self.unlexer.cooldown
+        )
         if choice == 0:
             current += self.unlexer.SECOND()
         elif choice == 1:
@@ -72,80 +93,97 @@ class ClickHouseUnlexer(Grammarinator):
         elif choice == 7:
             current += self.unlexer.YEAR()
         return current
+
     INTERVAL_TYPE.min_depth = 2
 
     @depthcontrol
     def ALIAS(self):
-        current = self.create_node(UnlexerRule(name='ALIAS'))
+        current = self.create_node(UnlexerRule(name="ALIAS"))
         current += self.unlexer.A()
         current += self.unlexer.L()
         current += self.unlexer.I()
         current += self.unlexer.A()
         current += self.unlexer.S()
         return current
+
     ALIAS.min_depth = 1
 
     @depthcontrol
     def ALL(self):
-        current = self.create_node(UnlexerRule(name='ALL'))
+        current = self.create_node(UnlexerRule(name="ALL"))
         current += self.unlexer.A()
         current += self.unlexer.L()
         current += self.unlexer.L()
         return current
+
     ALL.min_depth = 1
 
     @depthcontrol
     def AND(self):
-        current = self.create_node(UnlexerRule(name='AND'))
+        current = self.create_node(UnlexerRule(name="AND"))
         current += self.unlexer.A()
         current += self.unlexer.N()
         current += self.unlexer.D()
         return current
+
     AND.min_depth = 1
 
     @depthcontrol
     def ANTI(self):
-        current = self.create_node(UnlexerRule(name='ANTI'))
+        current = self.create_node(UnlexerRule(name="ANTI"))
         current += self.unlexer.A()
         current += self.unlexer.N()
         current += self.unlexer.T()
         current += self.unlexer.I()
         return current
+
     ANTI.min_depth = 1
 
     @depthcontrol
     def ANY(self):
-        current = self.create_node(UnlexerRule(name='ANY'))
+        current = self.create_node(UnlexerRule(name="ANY"))
         current += self.unlexer.A()
         current += self.unlexer.N()
         current += self.unlexer.Y()
         return current
+
     ANY.min_depth = 1
 
     @depthcontrol
     def ARRAY(self):
-        current = self.create_node(UnlexerRule(name='ARRAY'))
+        current = self.create_node(UnlexerRule(name="ARRAY"))
         current += self.unlexer.A()
         current += self.unlexer.R()
         current += self.unlexer.R()
         current += self.unlexer.A()
         current += self.unlexer.Y()
         return current
+
     ARRAY.min_depth = 1
 
     @depthcontrol
     def AS(self):
-        current = self.create_node(UnlexerRule(name='AS'))
+        current = self.create_node(UnlexerRule(name="AS"))
         current += self.unlexer.A()
         current += self.unlexer.S()
         return current
+
     AS.min_depth = 1
 
     @depthcontrol
     def ASCENDING(self):
-        current = self.create_node(UnlexerRule(name='ASCENDING'))
-        choice = self.choice([0 if [1, 1][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_9', i), 1) for i, w in enumerate([1, 1])])
-        self.unlexer.weights[('alt_9', choice)] = self.unlexer.weights.get(('alt_9', choice), 1) * self.unlexer.cooldown
+        current = self.create_node(UnlexerRule(name="ASCENDING"))
+        choice = self.choice(
+            [
+                0
+                if [1, 1][i] > self.unlexer.max_depth
+                else w * self.unlexer.weights.get(("alt_9", i), 1)
+                for i, w in enumerate([1, 1])
+            ]
+        )
+        self.unlexer.weights[("alt_9", choice)] = (
+            self.unlexer.weights.get(("alt_9", choice), 1) * self.unlexer.cooldown
+        )
         if choice == 0:
             current += self.unlexer.A()
             current += self.unlexer.S()
@@ -161,21 +199,23 @@ class ClickHouseUnlexer(Grammarinator):
             current += self.unlexer.N()
             current += self.unlexer.G()
         return current
+
     ASCENDING.min_depth = 1
 
     @depthcontrol
     def ASOF(self):
-        current = self.create_node(UnlexerRule(name='ASOF'))
+        current = self.create_node(UnlexerRule(name="ASOF"))
         current += self.unlexer.A()
         current += self.unlexer.S()
         current += self.unlexer.O()
         current += self.unlexer.F()
         return current
+
     ASOF.min_depth = 1
 
     @depthcontrol
     def BETWEEN(self):
-        current = self.create_node(UnlexerRule(name='BETWEEN'))
+        current = self.create_node(UnlexerRule(name="BETWEEN"))
         current += self.unlexer.B()
         current += self.unlexer.E()
         current += self.unlexer.T()
@@ -184,49 +224,54 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.E()
         current += self.unlexer.N()
         return current
+
     BETWEEN.min_depth = 1
 
     @depthcontrol
     def BOTH(self):
-        current = self.create_node(UnlexerRule(name='BOTH'))
+        current = self.create_node(UnlexerRule(name="BOTH"))
         current += self.unlexer.B()
         current += self.unlexer.O()
         current += self.unlexer.T()
         current += self.unlexer.H()
         return current
+
     BOTH.min_depth = 1
 
     @depthcontrol
     def BY(self):
-        current = self.create_node(UnlexerRule(name='BY'))
+        current = self.create_node(UnlexerRule(name="BY"))
         current += self.unlexer.B()
         current += self.unlexer.Y()
         return current
+
     BY.min_depth = 1
 
     @depthcontrol
     def CASE(self):
-        current = self.create_node(UnlexerRule(name='CASE'))
+        current = self.create_node(UnlexerRule(name="CASE"))
         current += self.unlexer.C()
         current += self.unlexer.A()
         current += self.unlexer.S()
         current += self.unlexer.E()
         return current
+
     CASE.min_depth = 1
 
     @depthcontrol
     def CAST(self):
-        current = self.create_node(UnlexerRule(name='CAST'))
+        current = self.create_node(UnlexerRule(name="CAST"))
         current += self.unlexer.C()
         current += self.unlexer.A()
         current += self.unlexer.S()
         current += self.unlexer.T()
         return current
+
     CAST.min_depth = 1
 
     @depthcontrol
     def CLUSTER(self):
-        current = self.create_node(UnlexerRule(name='CLUSTER'))
+        current = self.create_node(UnlexerRule(name="CLUSTER"))
         current += self.unlexer.C()
         current += self.unlexer.L()
         current += self.unlexer.U()
@@ -235,11 +280,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.E()
         current += self.unlexer.R()
         return current
+
     CLUSTER.min_depth = 1
 
     @depthcontrol
     def COLLATE(self):
-        current = self.create_node(UnlexerRule(name='COLLATE'))
+        current = self.create_node(UnlexerRule(name="COLLATE"))
         current += self.unlexer.C()
         current += self.unlexer.O()
         current += self.unlexer.L()
@@ -248,11 +294,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.T()
         current += self.unlexer.E()
         return current
+
     COLLATE.min_depth = 1
 
     @depthcontrol
     def CREATE(self):
-        current = self.create_node(UnlexerRule(name='CREATE'))
+        current = self.create_node(UnlexerRule(name="CREATE"))
         current += self.unlexer.C()
         current += self.unlexer.R()
         current += self.unlexer.E()
@@ -260,22 +307,24 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.T()
         current += self.unlexer.E()
         return current
+
     CREATE.min_depth = 1
 
     @depthcontrol
     def CROSS(self):
-        current = self.create_node(UnlexerRule(name='CROSS'))
+        current = self.create_node(UnlexerRule(name="CROSS"))
         current += self.unlexer.C()
         current += self.unlexer.R()
         current += self.unlexer.O()
         current += self.unlexer.S()
         current += self.unlexer.S()
         return current
+
     CROSS.min_depth = 1
 
     @depthcontrol
     def DATABASE(self):
-        current = self.create_node(UnlexerRule(name='DATABASE'))
+        current = self.create_node(UnlexerRule(name="DATABASE"))
         current += self.unlexer.D()
         current += self.unlexer.A()
         current += self.unlexer.T()
@@ -285,20 +334,22 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.S()
         current += self.unlexer.E()
         return current
+
     DATABASE.min_depth = 1
 
     @depthcontrol
     def DAY(self):
-        current = self.create_node(UnlexerRule(name='DAY'))
+        current = self.create_node(UnlexerRule(name="DAY"))
         current += self.unlexer.D()
         current += self.unlexer.A()
         current += self.unlexer.Y()
         return current
+
     DAY.min_depth = 1
 
     @depthcontrol
     def DEFAULT(self):
-        current = self.create_node(UnlexerRule(name='DEFAULT'))
+        current = self.create_node(UnlexerRule(name="DEFAULT"))
         current += self.unlexer.D()
         current += self.unlexer.E()
         current += self.unlexer.F()
@@ -307,11 +358,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.L()
         current += self.unlexer.T()
         return current
+
     DEFAULT.min_depth = 1
 
     @depthcontrol
     def DELETE(self):
-        current = self.create_node(UnlexerRule(name='DELETE'))
+        current = self.create_node(UnlexerRule(name="DELETE"))
         current += self.unlexer.D()
         current += self.unlexer.E()
         current += self.unlexer.L()
@@ -319,13 +371,23 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.T()
         current += self.unlexer.E()
         return current
+
     DELETE.min_depth = 1
 
     @depthcontrol
     def DESCENDING(self):
-        current = self.create_node(UnlexerRule(name='DESCENDING'))
-        choice = self.choice([0 if [1, 1][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_12', i), 1) for i, w in enumerate([1, 1])])
-        self.unlexer.weights[('alt_12', choice)] = self.unlexer.weights.get(('alt_12', choice), 1) * self.unlexer.cooldown
+        current = self.create_node(UnlexerRule(name="DESCENDING"))
+        choice = self.choice(
+            [
+                0
+                if [1, 1][i] > self.unlexer.max_depth
+                else w * self.unlexer.weights.get(("alt_12", i), 1)
+                for i, w in enumerate([1, 1])
+            ]
+        )
+        self.unlexer.weights[("alt_12", choice)] = (
+            self.unlexer.weights.get(("alt_12", choice), 1) * self.unlexer.cooldown
+        )
         if choice == 0:
             current += self.unlexer.D()
             current += self.unlexer.E()
@@ -343,21 +405,23 @@ class ClickHouseUnlexer(Grammarinator):
             current += self.unlexer.N()
             current += self.unlexer.G()
         return current
+
     DESCENDING.min_depth = 1
 
     @depthcontrol
     def DISK(self):
-        current = self.create_node(UnlexerRule(name='DISK'))
+        current = self.create_node(UnlexerRule(name="DISK"))
         current += self.unlexer.D()
         current += self.unlexer.I()
         current += self.unlexer.S()
         current += self.unlexer.K()
         return current
+
     DISK.min_depth = 1
 
     @depthcontrol
     def DISTINCT(self):
-        current = self.create_node(UnlexerRule(name='DISTINCT'))
+        current = self.create_node(UnlexerRule(name="DISTINCT"))
         current += self.unlexer.D()
         current += self.unlexer.I()
         current += self.unlexer.S()
@@ -367,40 +431,44 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.C()
         current += self.unlexer.T()
         return current
+
     DISTINCT.min_depth = 1
 
     @depthcontrol
     def DROP(self):
-        current = self.create_node(UnlexerRule(name='DROP'))
+        current = self.create_node(UnlexerRule(name="DROP"))
         current += self.unlexer.D()
         current += self.unlexer.R()
         current += self.unlexer.O()
         current += self.unlexer.P()
         return current
+
     DROP.min_depth = 1
 
     @depthcontrol
     def ELSE(self):
-        current = self.create_node(UnlexerRule(name='ELSE'))
+        current = self.create_node(UnlexerRule(name="ELSE"))
         current += self.unlexer.E()
         current += self.unlexer.L()
         current += self.unlexer.S()
         current += self.unlexer.E()
         return current
+
     ELSE.min_depth = 1
 
     @depthcontrol
     def END(self):
-        current = self.create_node(UnlexerRule(name='END'))
+        current = self.create_node(UnlexerRule(name="END"))
         current += self.unlexer.E()
         current += self.unlexer.N()
         current += self.unlexer.D()
         return current
+
     END.min_depth = 1
 
     @depthcontrol
     def ENGINE(self):
-        current = self.create_node(UnlexerRule(name='ENGINE'))
+        current = self.create_node(UnlexerRule(name="ENGINE"))
         current += self.unlexer.E()
         current += self.unlexer.N()
         current += self.unlexer.G()
@@ -408,11 +476,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.N()
         current += self.unlexer.E()
         return current
+
     ENGINE.min_depth = 1
 
     @depthcontrol
     def EXISTS(self):
-        current = self.create_node(UnlexerRule(name='EXISTS'))
+        current = self.create_node(UnlexerRule(name="EXISTS"))
         current += self.unlexer.E()
         current += self.unlexer.X()
         current += self.unlexer.I()
@@ -420,11 +489,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.T()
         current += self.unlexer.S()
         return current
+
     EXISTS.min_depth = 1
 
     @depthcontrol
     def EXTRACT(self):
-        current = self.create_node(UnlexerRule(name='EXTRACT'))
+        current = self.create_node(UnlexerRule(name="EXTRACT"))
         current += self.unlexer.E()
         current += self.unlexer.X()
         current += self.unlexer.T()
@@ -433,33 +503,36 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.C()
         current += self.unlexer.T()
         return current
+
     EXTRACT.min_depth = 1
 
     @depthcontrol
     def FINAL(self):
-        current = self.create_node(UnlexerRule(name='FINAL'))
+        current = self.create_node(UnlexerRule(name="FINAL"))
         current += self.unlexer.F()
         current += self.unlexer.I()
         current += self.unlexer.N()
         current += self.unlexer.A()
         current += self.unlexer.L()
         return current
+
     FINAL.min_depth = 1
 
     @depthcontrol
     def FIRST(self):
-        current = self.create_node(UnlexerRule(name='FIRST'))
+        current = self.create_node(UnlexerRule(name="FIRST"))
         current += self.unlexer.F()
         current += self.unlexer.I()
         current += self.unlexer.R()
         current += self.unlexer.S()
         current += self.unlexer.T()
         return current
+
     FIRST.min_depth = 1
 
     @depthcontrol
     def FORMAT(self):
-        current = self.create_node(UnlexerRule(name='FORMAT'))
+        current = self.create_node(UnlexerRule(name="FORMAT"))
         current += self.unlexer.F()
         current += self.unlexer.O()
         current += self.unlexer.R()
@@ -467,31 +540,34 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.A()
         current += self.unlexer.T()
         return current
+
     FORMAT.min_depth = 1
 
     @depthcontrol
     def FROM(self):
-        current = self.create_node(UnlexerRule(name='FROM'))
+        current = self.create_node(UnlexerRule(name="FROM"))
         current += self.unlexer.F()
         current += self.unlexer.R()
         current += self.unlexer.O()
         current += self.unlexer.M()
         return current
+
     FROM.min_depth = 1
 
     @depthcontrol
     def FULL(self):
-        current = self.create_node(UnlexerRule(name='FULL'))
+        current = self.create_node(UnlexerRule(name="FULL"))
         current += self.unlexer.F()
         current += self.unlexer.U()
         current += self.unlexer.L()
         current += self.unlexer.L()
         return current
+
     FULL.min_depth = 1
 
     @depthcontrol
     def GLOBAL(self):
-        current = self.create_node(UnlexerRule(name='GLOBAL'))
+        current = self.create_node(UnlexerRule(name="GLOBAL"))
         current += self.unlexer.G()
         current += self.unlexer.L()
         current += self.unlexer.O()
@@ -499,22 +575,24 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.A()
         current += self.unlexer.L()
         return current
+
     GLOBAL.min_depth = 1
 
     @depthcontrol
     def GROUP(self):
-        current = self.create_node(UnlexerRule(name='GROUP'))
+        current = self.create_node(UnlexerRule(name="GROUP"))
         current += self.unlexer.G()
         current += self.unlexer.R()
         current += self.unlexer.O()
         current += self.unlexer.U()
         current += self.unlexer.P()
         return current
+
     GROUP.min_depth = 1
 
     @depthcontrol
     def HAVING(self):
-        current = self.create_node(UnlexerRule(name='HAVING'))
+        current = self.create_node(UnlexerRule(name="HAVING"))
         current += self.unlexer.H()
         current += self.unlexer.A()
         current += self.unlexer.V()
@@ -522,39 +600,52 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.N()
         current += self.unlexer.G()
         return current
+
     HAVING.min_depth = 1
 
     @depthcontrol
     def HOUR(self):
-        current = self.create_node(UnlexerRule(name='HOUR'))
+        current = self.create_node(UnlexerRule(name="HOUR"))
         current += self.unlexer.H()
         current += self.unlexer.O()
         current += self.unlexer.U()
         current += self.unlexer.R()
         return current
+
     HOUR.min_depth = 1
 
     @depthcontrol
     def IF(self):
-        current = self.create_node(UnlexerRule(name='IF'))
+        current = self.create_node(UnlexerRule(name="IF"))
         current += self.unlexer.I()
         current += self.unlexer.F()
         return current
+
     IF.min_depth = 1
 
     @depthcontrol
     def IN(self):
-        current = self.create_node(UnlexerRule(name='IN'))
+        current = self.create_node(UnlexerRule(name="IN"))
         current += self.unlexer.I()
         current += self.unlexer.N()
         return current
+
     IN.min_depth = 1
 
     @depthcontrol
     def INF(self):
-        current = self.create_node(UnlexerRule(name='INF'))
-        choice = self.choice([0 if [1, 1][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_15', i), 1) for i, w in enumerate([1, 1])])
-        self.unlexer.weights[('alt_15', choice)] = self.unlexer.weights.get(('alt_15', choice), 1) * self.unlexer.cooldown
+        current = self.create_node(UnlexerRule(name="INF"))
+        choice = self.choice(
+            [
+                0
+                if [1, 1][i] > self.unlexer.max_depth
+                else w * self.unlexer.weights.get(("alt_15", i), 1)
+                for i, w in enumerate([1, 1])
+            ]
+        )
+        self.unlexer.weights[("alt_15", choice)] = (
+            self.unlexer.weights.get(("alt_15", choice), 1) * self.unlexer.cooldown
+        )
         if choice == 0:
             current += self.unlexer.I()
             current += self.unlexer.N()
@@ -569,22 +660,24 @@ class ClickHouseUnlexer(Grammarinator):
             current += self.unlexer.T()
             current += self.unlexer.Y()
         return current
+
     INF.min_depth = 1
 
     @depthcontrol
     def INNER(self):
-        current = self.create_node(UnlexerRule(name='INNER'))
+        current = self.create_node(UnlexerRule(name="INNER"))
         current += self.unlexer.I()
         current += self.unlexer.N()
         current += self.unlexer.N()
         current += self.unlexer.E()
         current += self.unlexer.R()
         return current
+
     INNER.min_depth = 1
 
     @depthcontrol
     def INSERT(self):
-        current = self.create_node(UnlexerRule(name='INSERT'))
+        current = self.create_node(UnlexerRule(name="INSERT"))
         current += self.unlexer.I()
         current += self.unlexer.N()
         current += self.unlexer.S()
@@ -592,11 +685,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.R()
         current += self.unlexer.T()
         return current
+
     INSERT.min_depth = 1
 
     @depthcontrol
     def INTERVAL(self):
-        current = self.create_node(UnlexerRule(name='INTERVAL'))
+        current = self.create_node(UnlexerRule(name="INTERVAL"))
         current += self.unlexer.I()
         current += self.unlexer.N()
         current += self.unlexer.T()
@@ -606,58 +700,64 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.A()
         current += self.unlexer.L()
         return current
+
     INTERVAL.min_depth = 1
 
     @depthcontrol
     def INTO(self):
-        current = self.create_node(UnlexerRule(name='INTO'))
+        current = self.create_node(UnlexerRule(name="INTO"))
         current += self.unlexer.I()
         current += self.unlexer.N()
         current += self.unlexer.T()
         current += self.unlexer.O()
         return current
+
     INTO.min_depth = 1
 
     @depthcontrol
     def IS(self):
-        current = self.create_node(UnlexerRule(name='IS'))
+        current = self.create_node(UnlexerRule(name="IS"))
         current += self.unlexer.I()
         current += self.unlexer.S()
         return current
+
     IS.min_depth = 1
 
     @depthcontrol
     def JOIN(self):
-        current = self.create_node(UnlexerRule(name='JOIN'))
+        current = self.create_node(UnlexerRule(name="JOIN"))
         current += self.unlexer.J()
         current += self.unlexer.O()
         current += self.unlexer.I()
         current += self.unlexer.N()
         return current
+
     JOIN.min_depth = 1
 
     @depthcontrol
     def KEY(self):
-        current = self.create_node(UnlexerRule(name='KEY'))
+        current = self.create_node(UnlexerRule(name="KEY"))
         current += self.unlexer.K()
         current += self.unlexer.E()
         current += self.unlexer.Y()
         return current
+
     KEY.min_depth = 1
 
     @depthcontrol
     def LAST(self):
-        current = self.create_node(UnlexerRule(name='LAST'))
+        current = self.create_node(UnlexerRule(name="LAST"))
         current += self.unlexer.L()
         current += self.unlexer.A()
         current += self.unlexer.S()
         current += self.unlexer.T()
         return current
+
     LAST.min_depth = 1
 
     @depthcontrol
     def LEADING(self):
-        current = self.create_node(UnlexerRule(name='LEADING'))
+        current = self.create_node(UnlexerRule(name="LEADING"))
         current += self.unlexer.L()
         current += self.unlexer.E()
         current += self.unlexer.A()
@@ -666,53 +766,58 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.N()
         current += self.unlexer.G()
         return current
+
     LEADING.min_depth = 1
 
     @depthcontrol
     def LEFT(self):
-        current = self.create_node(UnlexerRule(name='LEFT'))
+        current = self.create_node(UnlexerRule(name="LEFT"))
         current += self.unlexer.L()
         current += self.unlexer.E()
         current += self.unlexer.F()
         current += self.unlexer.T()
         return current
+
     LEFT.min_depth = 1
 
     @depthcontrol
     def LIKE(self):
-        current = self.create_node(UnlexerRule(name='LIKE'))
+        current = self.create_node(UnlexerRule(name="LIKE"))
         current += self.unlexer.L()
         current += self.unlexer.I()
         current += self.unlexer.K()
         current += self.unlexer.E()
         return current
+
     LIKE.min_depth = 1
 
     @depthcontrol
     def LIMIT(self):
-        current = self.create_node(UnlexerRule(name='LIMIT'))
+        current = self.create_node(UnlexerRule(name="LIMIT"))
         current += self.unlexer.L()
         current += self.unlexer.I()
         current += self.unlexer.M()
         current += self.unlexer.I()
         current += self.unlexer.T()
         return current
+
     LIMIT.min_depth = 1
 
     @depthcontrol
     def LOCAL(self):
-        current = self.create_node(UnlexerRule(name='LOCAL'))
+        current = self.create_node(UnlexerRule(name="LOCAL"))
         current += self.unlexer.L()
         current += self.unlexer.O()
         current += self.unlexer.C()
         current += self.unlexer.A()
         current += self.unlexer.L()
         return current
+
     LOCAL.min_depth = 1
 
     @depthcontrol
     def MATERIALIZED(self):
-        current = self.create_node(UnlexerRule(name='MATERIALIZED'))
+        current = self.create_node(UnlexerRule(name="MATERIALIZED"))
         current += self.unlexer.M()
         current += self.unlexer.A()
         current += self.unlexer.T()
@@ -726,11 +831,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.E()
         current += self.unlexer.D()
         return current
+
     MATERIALIZED.min_depth = 1
 
     @depthcontrol
     def MINUTE(self):
-        current = self.create_node(UnlexerRule(name='MINUTE'))
+        current = self.create_node(UnlexerRule(name="MINUTE"))
         current += self.unlexer.M()
         current += self.unlexer.I()
         current += self.unlexer.N()
@@ -738,61 +844,67 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.T()
         current += self.unlexer.E()
         return current
+
     MINUTE.min_depth = 1
 
     @depthcontrol
     def MONTH(self):
-        current = self.create_node(UnlexerRule(name='MONTH'))
+        current = self.create_node(UnlexerRule(name="MONTH"))
         current += self.unlexer.M()
         current += self.unlexer.O()
         current += self.unlexer.N()
         current += self.unlexer.T()
         current += self.unlexer.H()
         return current
+
     MONTH.min_depth = 1
 
     @depthcontrol
     def NAN_SQL(self):
-        current = self.create_node(UnlexerRule(name='NAN_SQL'))
+        current = self.create_node(UnlexerRule(name="NAN_SQL"))
         current += self.unlexer.N()
         current += self.unlexer.A()
         current += self.unlexer.N()
         return current
+
     NAN_SQL.min_depth = 1
 
     @depthcontrol
     def NOT(self):
-        current = self.create_node(UnlexerRule(name='NOT'))
+        current = self.create_node(UnlexerRule(name="NOT"))
         current += self.unlexer.N()
         current += self.unlexer.O()
         current += self.unlexer.T()
         return current
+
     NOT.min_depth = 1
 
     @depthcontrol
     def NULL_SQL(self):
-        current = self.create_node(UnlexerRule(name='NULL_SQL'))
+        current = self.create_node(UnlexerRule(name="NULL_SQL"))
         current += self.unlexer.N()
         current += self.unlexer.U()
         current += self.unlexer.L()
         current += self.unlexer.L()
         return current
+
     NULL_SQL.min_depth = 1
 
     @depthcontrol
     def NULLS(self):
-        current = self.create_node(UnlexerRule(name='NULLS'))
+        current = self.create_node(UnlexerRule(name="NULLS"))
         current += self.unlexer.N()
         current += self.unlexer.U()
         current += self.unlexer.L()
         current += self.unlexer.L()
         current += self.unlexer.S()
         return current
+
     NULLS.min_depth = 1
 
     @depthcontrol
     def OFFSET(self):
-        current = self.create_node(UnlexerRule(name='OFFSET'))
+        current = self.create_node(UnlexerRule(name="OFFSET"))
         current += self.unlexer.O()
         current += self.unlexer.F()
         current += self.unlexer.F()
@@ -800,49 +912,54 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.E()
         current += self.unlexer.T()
         return current
+
     OFFSET.min_depth = 1
 
     @depthcontrol
     def ON(self):
-        current = self.create_node(UnlexerRule(name='ON'))
+        current = self.create_node(UnlexerRule(name="ON"))
         current += self.unlexer.O()
         current += self.unlexer.N()
         return current
+
     ON.min_depth = 1
 
     @depthcontrol
     def OR(self):
-        current = self.create_node(UnlexerRule(name='OR'))
+        current = self.create_node(UnlexerRule(name="OR"))
         current += self.unlexer.O()
         current += self.unlexer.R()
         return current
+
     OR.min_depth = 1
 
     @depthcontrol
     def ORDER(self):
-        current = self.create_node(UnlexerRule(name='ORDER'))
+        current = self.create_node(UnlexerRule(name="ORDER"))
         current += self.unlexer.O()
         current += self.unlexer.R()
         current += self.unlexer.D()
         current += self.unlexer.E()
         current += self.unlexer.R()
         return current
+
     ORDER.min_depth = 1
 
     @depthcontrol
     def OUTER(self):
-        current = self.create_node(UnlexerRule(name='OUTER'))
+        current = self.create_node(UnlexerRule(name="OUTER"))
         current += self.unlexer.O()
         current += self.unlexer.U()
         current += self.unlexer.T()
         current += self.unlexer.E()
         current += self.unlexer.R()
         return current
+
     OUTER.min_depth = 1
 
     @depthcontrol
     def OUTFILE(self):
-        current = self.create_node(UnlexerRule(name='OUTFILE'))
+        current = self.create_node(UnlexerRule(name="OUTFILE"))
         current += self.unlexer.O()
         current += self.unlexer.U()
         current += self.unlexer.T()
@@ -851,11 +968,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.L()
         current += self.unlexer.E()
         return current
+
     OUTFILE.min_depth = 1
 
     @depthcontrol
     def PARTITION(self):
-        current = self.create_node(UnlexerRule(name='PARTITION'))
+        current = self.create_node(UnlexerRule(name="PARTITION"))
         current += self.unlexer.P()
         current += self.unlexer.A()
         current += self.unlexer.R()
@@ -866,11 +984,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.O()
         current += self.unlexer.N()
         return current
+
     PARTITION.min_depth = 1
 
     @depthcontrol
     def PREWHERE(self):
-        current = self.create_node(UnlexerRule(name='PREWHERE'))
+        current = self.create_node(UnlexerRule(name="PREWHERE"))
         current += self.unlexer.P()
         current += self.unlexer.R()
         current += self.unlexer.E()
@@ -880,11 +999,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.R()
         current += self.unlexer.E()
         return current
+
     PREWHERE.min_depth = 1
 
     @depthcontrol
     def PRIMARY(self):
-        current = self.create_node(UnlexerRule(name='PRIMARY'))
+        current = self.create_node(UnlexerRule(name="PRIMARY"))
         current += self.unlexer.P()
         current += self.unlexer.R()
         current += self.unlexer.I()
@@ -893,11 +1013,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.R()
         current += self.unlexer.Y()
         return current
+
     PRIMARY.min_depth = 1
 
     @depthcontrol
     def QUARTER(self):
-        current = self.create_node(UnlexerRule(name='QUARTER'))
+        current = self.create_node(UnlexerRule(name="QUARTER"))
         current += self.unlexer.Q()
         current += self.unlexer.U()
         current += self.unlexer.A()
@@ -906,22 +1027,24 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.E()
         current += self.unlexer.R()
         return current
+
     QUARTER.min_depth = 1
 
     @depthcontrol
     def RIGHT(self):
-        current = self.create_node(UnlexerRule(name='RIGHT'))
+        current = self.create_node(UnlexerRule(name="RIGHT"))
         current += self.unlexer.R()
         current += self.unlexer.I()
         current += self.unlexer.G()
         current += self.unlexer.H()
         current += self.unlexer.T()
         return current
+
     RIGHT.min_depth = 1
 
     @depthcontrol
     def SAMPLE(self):
-        current = self.create_node(UnlexerRule(name='SAMPLE'))
+        current = self.create_node(UnlexerRule(name="SAMPLE"))
         current += self.unlexer.S()
         current += self.unlexer.A()
         current += self.unlexer.M()
@@ -929,11 +1052,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.L()
         current += self.unlexer.E()
         return current
+
     SAMPLE.min_depth = 1
 
     @depthcontrol
     def SECOND(self):
-        current = self.create_node(UnlexerRule(name='SECOND'))
+        current = self.create_node(UnlexerRule(name="SECOND"))
         current += self.unlexer.S()
         current += self.unlexer.E()
         current += self.unlexer.C()
@@ -941,11 +1065,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.N()
         current += self.unlexer.D()
         return current
+
     SECOND.min_depth = 1
 
     @depthcontrol
     def SELECT(self):
-        current = self.create_node(UnlexerRule(name='SELECT'))
+        current = self.create_node(UnlexerRule(name="SELECT"))
         current += self.unlexer.S()
         current += self.unlexer.E()
         current += self.unlexer.L()
@@ -953,30 +1078,33 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.C()
         current += self.unlexer.T()
         return current
+
     SELECT.min_depth = 1
 
     @depthcontrol
     def SEMI(self):
-        current = self.create_node(UnlexerRule(name='SEMI'))
+        current = self.create_node(UnlexerRule(name="SEMI"))
         current += self.unlexer.S()
         current += self.unlexer.E()
         current += self.unlexer.M()
         current += self.unlexer.I()
         return current
+
     SEMI.min_depth = 1
 
     @depthcontrol
     def SET(self):
-        current = self.create_node(UnlexerRule(name='SET'))
+        current = self.create_node(UnlexerRule(name="SET"))
         current += self.unlexer.S()
         current += self.unlexer.E()
         current += self.unlexer.T()
         return current
+
     SET.min_depth = 1
 
     @depthcontrol
     def SETTINGS(self):
-        current = self.create_node(UnlexerRule(name='SETTINGS'))
+        current = self.create_node(UnlexerRule(name="SETTINGS"))
         current += self.unlexer.S()
         current += self.unlexer.E()
         current += self.unlexer.T()
@@ -986,22 +1114,24 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.G()
         current += self.unlexer.S()
         return current
+
     SETTINGS.min_depth = 1
 
     @depthcontrol
     def TABLE(self):
-        current = self.create_node(UnlexerRule(name='TABLE'))
+        current = self.create_node(UnlexerRule(name="TABLE"))
         current += self.unlexer.T()
         current += self.unlexer.A()
         current += self.unlexer.B()
         current += self.unlexer.L()
         current += self.unlexer.E()
         return current
+
     TABLE.min_depth = 1
 
     @depthcontrol
     def TEMPORARY(self):
-        current = self.create_node(UnlexerRule(name='TEMPORARY'))
+        current = self.create_node(UnlexerRule(name="TEMPORARY"))
         current += self.unlexer.T()
         current += self.unlexer.E()
         current += self.unlexer.M()
@@ -1012,29 +1142,32 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.R()
         current += self.unlexer.Y()
         return current
+
     TEMPORARY.min_depth = 1
 
     @depthcontrol
     def THEN(self):
-        current = self.create_node(UnlexerRule(name='THEN'))
+        current = self.create_node(UnlexerRule(name="THEN"))
         current += self.unlexer.T()
         current += self.unlexer.H()
         current += self.unlexer.E()
         current += self.unlexer.N()
         return current
+
     THEN.min_depth = 1
 
     @depthcontrol
     def TO(self):
-        current = self.create_node(UnlexerRule(name='TO'))
+        current = self.create_node(UnlexerRule(name="TO"))
         current += self.unlexer.T()
         current += self.unlexer.O()
         return current
+
     TO.min_depth = 1
 
     @depthcontrol
     def TOTALS(self):
-        current = self.create_node(UnlexerRule(name='TOTALS'))
+        current = self.create_node(UnlexerRule(name="TOTALS"))
         current += self.unlexer.T()
         current += self.unlexer.O()
         current += self.unlexer.T()
@@ -1042,11 +1175,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.L()
         current += self.unlexer.S()
         return current
+
     TOTALS.min_depth = 1
 
     @depthcontrol
     def TRAILING(self):
-        current = self.create_node(UnlexerRule(name='TRAILING'))
+        current = self.create_node(UnlexerRule(name="TRAILING"))
         current += self.unlexer.T()
         current += self.unlexer.R()
         current += self.unlexer.A()
@@ -1056,52 +1190,57 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.N()
         current += self.unlexer.G()
         return current
+
     TRAILING.min_depth = 1
 
     @depthcontrol
     def TRIM(self):
-        current = self.create_node(UnlexerRule(name='TRIM'))
+        current = self.create_node(UnlexerRule(name="TRIM"))
         current += self.unlexer.T()
         current += self.unlexer.R()
         current += self.unlexer.I()
         current += self.unlexer.M()
         return current
+
     TRIM.min_depth = 1
 
     @depthcontrol
     def TTL(self):
-        current = self.create_node(UnlexerRule(name='TTL'))
+        current = self.create_node(UnlexerRule(name="TTL"))
         current += self.unlexer.T()
         current += self.unlexer.T()
         current += self.unlexer.L()
         return current
+
     TTL.min_depth = 1
 
     @depthcontrol
     def UNION(self):
-        current = self.create_node(UnlexerRule(name='UNION'))
+        current = self.create_node(UnlexerRule(name="UNION"))
         current += self.unlexer.U()
         current += self.unlexer.N()
         current += self.unlexer.I()
         current += self.unlexer.O()
         current += self.unlexer.N()
         return current
+
     UNION.min_depth = 1
 
     @depthcontrol
     def USING(self):
-        current = self.create_node(UnlexerRule(name='USING'))
+        current = self.create_node(UnlexerRule(name="USING"))
         current += self.unlexer.U()
         current += self.unlexer.S()
         current += self.unlexer.I()
         current += self.unlexer.N()
         current += self.unlexer.G()
         return current
+
     USING.min_depth = 1
 
     @depthcontrol
     def VALUES(self):
-        current = self.create_node(UnlexerRule(name='VALUES'))
+        current = self.create_node(UnlexerRule(name="VALUES"))
         current += self.unlexer.V()
         current += self.unlexer.A()
         current += self.unlexer.L()
@@ -1109,11 +1248,12 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.E()
         current += self.unlexer.S()
         return current
+
     VALUES.min_depth = 1
 
     @depthcontrol
     def VOLUME(self):
-        current = self.create_node(UnlexerRule(name='VOLUME'))
+        current = self.create_node(UnlexerRule(name="VOLUME"))
         current += self.unlexer.V()
         current += self.unlexer.O()
         current += self.unlexer.L()
@@ -1121,72 +1261,97 @@ class ClickHouseUnlexer(Grammarinator):
         current += self.unlexer.M()
         current += self.unlexer.E()
         return current
+
     VOLUME.min_depth = 1
 
     @depthcontrol
     def WEEK(self):
-        current = self.create_node(UnlexerRule(name='WEEK'))
+        current = self.create_node(UnlexerRule(name="WEEK"))
         current += self.unlexer.W()
         current += self.unlexer.E()
         current += self.unlexer.E()
         current += self.unlexer.K()
         return current
+
     WEEK.min_depth = 1
 
     @depthcontrol
     def WHEN(self):
-        current = self.create_node(UnlexerRule(name='WHEN'))
+        current = self.create_node(UnlexerRule(name="WHEN"))
         current += self.unlexer.W()
         current += self.unlexer.H()
         current += self.unlexer.E()
         current += self.unlexer.N()
         return current
+
     WHEN.min_depth = 1
 
     @depthcontrol
     def WHERE(self):
-        current = self.create_node(UnlexerRule(name='WHERE'))
+        current = self.create_node(UnlexerRule(name="WHERE"))
         current += self.unlexer.W()
         current += self.unlexer.H()
         current += self.unlexer.E()
         current += self.unlexer.R()
         current += self.unlexer.E()
         return current
+
     WHERE.min_depth = 1
 
     @depthcontrol
     def WITH(self):
-        current = self.create_node(UnlexerRule(name='WITH'))
+        current = self.create_node(UnlexerRule(name="WITH"))
         current += self.unlexer.W()
         current += self.unlexer.I()
         current += self.unlexer.T()
         current += self.unlexer.H()
         return current
+
     WITH.min_depth = 1
 
     @depthcontrol
     def YEAR(self):
-        current = self.create_node(UnlexerRule(name='YEAR'))
+        current = self.create_node(UnlexerRule(name="YEAR"))
         current += self.unlexer.Y()
         current += self.unlexer.E()
         current += self.unlexer.A()
         current += self.unlexer.R()
         return current
+
     YEAR.min_depth = 1
 
     @depthcontrol
     def IDENTIFIER(self):
-        current = self.create_node(UnlexerRule(name='IDENTIFIER'))
-        choice = self.choice([0 if [1, 1][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_18', i), 1) for i, w in enumerate([1, 1])])
-        self.unlexer.weights[('alt_18', choice)] = self.unlexer.weights.get(('alt_18', choice), 1) * self.unlexer.cooldown
+        current = self.create_node(UnlexerRule(name="IDENTIFIER"))
+        choice = self.choice(
+            [
+                0
+                if [1, 1][i] > self.unlexer.max_depth
+                else w * self.unlexer.weights.get(("alt_18", i), 1)
+                for i, w in enumerate([1, 1])
+            ]
+        )
+        self.unlexer.weights[("alt_18", choice)] = (
+            self.unlexer.weights.get(("alt_18", choice), 1) * self.unlexer.cooldown
+        )
         if choice == 0:
             current += self.unlexer.LETTER()
         elif choice == 1:
             current += self.unlexer.UNDERSCORE()
         if self.unlexer.max_depth >= 1:
             for _ in self.zero_or_more():
-                choice = self.choice([0 if [1, 1, 1][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_22', i), 1) for i, w in enumerate([1, 1, 1])])
-                self.unlexer.weights[('alt_22', choice)] = self.unlexer.weights.get(('alt_22', choice), 1) * self.unlexer.cooldown
+                choice = self.choice(
+                    [
+                        0
+                        if [1, 1, 1][i] > self.unlexer.max_depth
+                        else w * self.unlexer.weights.get(("alt_22", i), 1)
+                        for i, w in enumerate([1, 1, 1])
+                    ]
+                )
+                self.unlexer.weights[("alt_22", choice)] = (
+                    self.unlexer.weights.get(("alt_22", choice), 1)
+                    * self.unlexer.cooldown
+                )
                 if choice == 0:
                     current += self.unlexer.LETTER()
                 elif choice == 1:
@@ -1195,13 +1360,23 @@ class ClickHouseUnlexer(Grammarinator):
                     current += self.unlexer.DEC_DIGIT()
 
         return current
+
     IDENTIFIER.min_depth = 1
 
     @depthcontrol
     def FLOATING_LITERAL(self):
-        current = self.create_node(UnlexerRule(name='FLOATING_LITERAL'))
-        choice = self.choice([0 if [2, 2, 2, 2][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_26', i), 1) for i, w in enumerate([1, 1, 1, 1])])
-        self.unlexer.weights[('alt_26', choice)] = self.unlexer.weights.get(('alt_26', choice), 1) * self.unlexer.cooldown
+        current = self.create_node(UnlexerRule(name="FLOATING_LITERAL"))
+        choice = self.choice(
+            [
+                0
+                if [2, 2, 2, 2][i] > self.unlexer.max_depth
+                else w * self.unlexer.weights.get(("alt_26", i), 1)
+                for i, w in enumerate([1, 1, 1, 1])
+            ]
+        )
+        self.unlexer.weights[("alt_26", choice)] = (
+            self.unlexer.weights.get(("alt_26", choice), 1) * self.unlexer.cooldown
+        )
         if choice == 0:
             current += self.unlexer.HEXADECIMAL_LITERAL()
             current += self.unlexer.DOT()
@@ -1211,16 +1386,36 @@ class ClickHouseUnlexer(Grammarinator):
 
             if self.unlexer.max_depth >= 1:
                 for _ in self.zero_or_one():
-                    choice = self.choice([0 if [1, 1][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_33', i), 1) for i, w in enumerate([1, 1])])
-                    self.unlexer.weights[('alt_33', choice)] = self.unlexer.weights.get(('alt_33', choice), 1) * self.unlexer.cooldown
+                    choice = self.choice(
+                        [
+                            0
+                            if [1, 1][i] > self.unlexer.max_depth
+                            else w * self.unlexer.weights.get(("alt_33", i), 1)
+                            for i, w in enumerate([1, 1])
+                        ]
+                    )
+                    self.unlexer.weights[("alt_33", choice)] = (
+                        self.unlexer.weights.get(("alt_33", choice), 1)
+                        * self.unlexer.cooldown
+                    )
                     if choice == 0:
                         current += self.unlexer.P()
                     elif choice == 1:
                         current += self.unlexer.E()
                     if self.unlexer.max_depth >= 1:
                         for _ in self.zero_or_one():
-                            choice = self.choice([0 if [1, 1][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_37', i), 1) for i, w in enumerate([1, 1])])
-                            self.unlexer.weights[('alt_37', choice)] = self.unlexer.weights.get(('alt_37', choice), 1) * self.unlexer.cooldown
+                            choice = self.choice(
+                                [
+                                    0
+                                    if [1, 1][i] > self.unlexer.max_depth
+                                    else w * self.unlexer.weights.get(("alt_37", i), 1)
+                                    for i, w in enumerate([1, 1])
+                                ]
+                            )
+                            self.unlexer.weights[("alt_37", choice)] = (
+                                self.unlexer.weights.get(("alt_37", choice), 1)
+                                * self.unlexer.cooldown
+                            )
                             if choice == 0:
                                 current += self.unlexer.PLUS()
                             elif choice == 1:
@@ -1230,19 +1425,37 @@ class ClickHouseUnlexer(Grammarinator):
                         for _ in self.one_or_more():
                             current += self.unlexer.DEC_DIGIT()
 
-
         elif choice == 1:
             current += self.unlexer.HEXADECIMAL_LITERAL()
-            choice = self.choice([0 if [1, 1][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_40', i), 1) for i, w in enumerate([1, 1])])
-            self.unlexer.weights[('alt_40', choice)] = self.unlexer.weights.get(('alt_40', choice), 1) * self.unlexer.cooldown
+            choice = self.choice(
+                [
+                    0
+                    if [1, 1][i] > self.unlexer.max_depth
+                    else w * self.unlexer.weights.get(("alt_40", i), 1)
+                    for i, w in enumerate([1, 1])
+                ]
+            )
+            self.unlexer.weights[("alt_40", choice)] = (
+                self.unlexer.weights.get(("alt_40", choice), 1) * self.unlexer.cooldown
+            )
             if choice == 0:
                 current += self.unlexer.P()
             elif choice == 1:
                 current += self.unlexer.E()
             if self.unlexer.max_depth >= 1:
                 for _ in self.zero_or_one():
-                    choice = self.choice([0 if [1, 1][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_44', i), 1) for i, w in enumerate([1, 1])])
-                    self.unlexer.weights[('alt_44', choice)] = self.unlexer.weights.get(('alt_44', choice), 1) * self.unlexer.cooldown
+                    choice = self.choice(
+                        [
+                            0
+                            if [1, 1][i] > self.unlexer.max_depth
+                            else w * self.unlexer.weights.get(("alt_44", i), 1)
+                            for i, w in enumerate([1, 1])
+                        ]
+                    )
+                    self.unlexer.weights[("alt_44", choice)] = (
+                        self.unlexer.weights.get(("alt_44", choice), 1)
+                        * self.unlexer.cooldown
+                    )
                     if choice == 0:
                         current += self.unlexer.PLUS()
                     elif choice == 1:
@@ -1264,8 +1477,18 @@ class ClickHouseUnlexer(Grammarinator):
                     current += self.unlexer.E()
                     if self.unlexer.max_depth >= 1:
                         for _ in self.zero_or_one():
-                            choice = self.choice([0 if [1, 1][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_50', i), 1) for i, w in enumerate([1, 1])])
-                            self.unlexer.weights[('alt_50', choice)] = self.unlexer.weights.get(('alt_50', choice), 1) * self.unlexer.cooldown
+                            choice = self.choice(
+                                [
+                                    0
+                                    if [1, 1][i] > self.unlexer.max_depth
+                                    else w * self.unlexer.weights.get(("alt_50", i), 1)
+                                    for i, w in enumerate([1, 1])
+                                ]
+                            )
+                            self.unlexer.weights[("alt_50", choice)] = (
+                                self.unlexer.weights.get(("alt_50", choice), 1)
+                                * self.unlexer.cooldown
+                            )
                             if choice == 0:
                                 current += self.unlexer.PLUS()
                             elif choice == 1:
@@ -1275,14 +1498,23 @@ class ClickHouseUnlexer(Grammarinator):
                         for _ in self.one_or_more():
                             current += self.unlexer.DEC_DIGIT()
 
-
         elif choice == 3:
             current += self.unlexer.INTEGER_LITERAL()
             current += self.unlexer.E()
             if self.unlexer.max_depth >= 1:
                 for _ in self.zero_or_one():
-                    choice = self.choice([0 if [1, 1][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_54', i), 1) for i, w in enumerate([1, 1])])
-                    self.unlexer.weights[('alt_54', choice)] = self.unlexer.weights.get(('alt_54', choice), 1) * self.unlexer.cooldown
+                    choice = self.choice(
+                        [
+                            0
+                            if [1, 1][i] > self.unlexer.max_depth
+                            else w * self.unlexer.weights.get(("alt_54", i), 1)
+                            for i, w in enumerate([1, 1])
+                        ]
+                    )
+                    self.unlexer.weights[("alt_54", choice)] = (
+                        self.unlexer.weights.get(("alt_54", choice), 1)
+                        * self.unlexer.cooldown
+                    )
                     if choice == 0:
                         current += self.unlexer.PLUS()
                     elif choice == 1:
@@ -1293,38 +1525,51 @@ class ClickHouseUnlexer(Grammarinator):
                     current += self.unlexer.DEC_DIGIT()
 
         return current
+
     FLOATING_LITERAL.min_depth = 2
 
     @depthcontrol
     def HEXADECIMAL_LITERAL(self):
-        current = self.create_node(UnlexerRule(name='HEXADECIMAL_LITERAL'))
-        current += self.create_node(UnlexerRule(src='0'))
+        current = self.create_node(UnlexerRule(name="HEXADECIMAL_LITERAL"))
+        current += self.create_node(UnlexerRule(src="0"))
         current += self.unlexer.X()
         if self.unlexer.max_depth >= 0:
             for _ in self.one_or_more():
                 current += self.unlexer.HEX_DIGIT()
 
         return current
+
     HEXADECIMAL_LITERAL.min_depth = 1
 
     @depthcontrol
     def INTEGER_LITERAL(self):
-        current = self.create_node(UnlexerRule(name='INTEGER_LITERAL'))
+        current = self.create_node(UnlexerRule(name="INTEGER_LITERAL"))
         if self.unlexer.max_depth >= 0:
             for _ in self.one_or_more():
                 current += self.unlexer.DEC_DIGIT()
 
         return current
+
     INTEGER_LITERAL.min_depth = 1
 
     @depthcontrol
     def STRING_LITERAL(self):
-        current = self.create_node(UnlexerRule(name='STRING_LITERAL'))
+        current = self.create_node(UnlexerRule(name="STRING_LITERAL"))
         current += self.unlexer.QUOTE_SINGLE()
         if self.unlexer.max_depth >= 0:
             for _ in self.zero_or_more():
-                choice = self.choice([0 if [0, 1][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_59', i), 1) for i, w in enumerate([1, 1])])
-                self.unlexer.weights[('alt_59', choice)] = self.unlexer.weights.get(('alt_59', choice), 1) * self.unlexer.cooldown
+                choice = self.choice(
+                    [
+                        0
+                        if [0, 1][i] > self.unlexer.max_depth
+                        else w * self.unlexer.weights.get(("alt_59", i), 1)
+                        for i, w in enumerate([1, 1])
+                    ]
+                )
+                self.unlexer.weights[("alt_59", choice)] = (
+                    self.unlexer.weights.get(("alt_59", choice), 1)
+                    * self.unlexer.cooldown
+                )
                 if choice == 0:
                     current += UnlexerRule(src=self.char_from_list(charset_0))
                 elif choice == 1:
@@ -1333,440 +1578,517 @@ class ClickHouseUnlexer(Grammarinator):
 
         current += self.unlexer.QUOTE_SINGLE()
         return current
+
     STRING_LITERAL.min_depth = 1
 
     @depthcontrol
     def A(self):
-        current = self.create_node(UnlexerRule(name='A'))
+        current = self.create_node(UnlexerRule(name="A"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_1)))
         return current
+
     A.min_depth = 0
 
     @depthcontrol
     def B(self):
-        current = self.create_node(UnlexerRule(name='B'))
+        current = self.create_node(UnlexerRule(name="B"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_2)))
         return current
+
     B.min_depth = 0
 
     @depthcontrol
     def C(self):
-        current = self.create_node(UnlexerRule(name='C'))
+        current = self.create_node(UnlexerRule(name="C"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_3)))
         return current
+
     C.min_depth = 0
 
     @depthcontrol
     def D(self):
-        current = self.create_node(UnlexerRule(name='D'))
+        current = self.create_node(UnlexerRule(name="D"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_4)))
         return current
+
     D.min_depth = 0
 
     @depthcontrol
     def E(self):
-        current = self.create_node(UnlexerRule(name='E'))
+        current = self.create_node(UnlexerRule(name="E"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_5)))
         return current
+
     E.min_depth = 0
 
     @depthcontrol
     def F(self):
-        current = self.create_node(UnlexerRule(name='F'))
+        current = self.create_node(UnlexerRule(name="F"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_6)))
         return current
+
     F.min_depth = 0
 
     @depthcontrol
     def G(self):
-        current = self.create_node(UnlexerRule(name='G'))
+        current = self.create_node(UnlexerRule(name="G"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_7)))
         return current
+
     G.min_depth = 0
 
     @depthcontrol
     def H(self):
-        current = self.create_node(UnlexerRule(name='H'))
+        current = self.create_node(UnlexerRule(name="H"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_8)))
         return current
+
     H.min_depth = 0
 
     @depthcontrol
     def I(self):
-        current = self.create_node(UnlexerRule(name='I'))
+        current = self.create_node(UnlexerRule(name="I"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_9)))
         return current
+
     I.min_depth = 0
 
     @depthcontrol
     def J(self):
-        current = self.create_node(UnlexerRule(name='J'))
+        current = self.create_node(UnlexerRule(name="J"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_10)))
         return current
+
     J.min_depth = 0
 
     @depthcontrol
     def K(self):
-        current = self.create_node(UnlexerRule(name='K'))
+        current = self.create_node(UnlexerRule(name="K"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_11)))
         return current
+
     K.min_depth = 0
 
     @depthcontrol
     def L(self):
-        current = self.create_node(UnlexerRule(name='L'))
+        current = self.create_node(UnlexerRule(name="L"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_12)))
         return current
+
     L.min_depth = 0
 
     @depthcontrol
     def M(self):
-        current = self.create_node(UnlexerRule(name='M'))
+        current = self.create_node(UnlexerRule(name="M"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_13)))
         return current
+
     M.min_depth = 0
 
     @depthcontrol
     def N(self):
-        current = self.create_node(UnlexerRule(name='N'))
+        current = self.create_node(UnlexerRule(name="N"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_14)))
         return current
+
     N.min_depth = 0
 
     @depthcontrol
     def O(self):
-        current = self.create_node(UnlexerRule(name='O'))
+        current = self.create_node(UnlexerRule(name="O"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_15)))
         return current
+
     O.min_depth = 0
 
     @depthcontrol
     def P(self):
-        current = self.create_node(UnlexerRule(name='P'))
+        current = self.create_node(UnlexerRule(name="P"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_16)))
         return current
+
     P.min_depth = 0
 
     @depthcontrol
     def Q(self):
-        current = self.create_node(UnlexerRule(name='Q'))
+        current = self.create_node(UnlexerRule(name="Q"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_17)))
         return current
+
     Q.min_depth = 0
 
     @depthcontrol
     def R(self):
-        current = self.create_node(UnlexerRule(name='R'))
+        current = self.create_node(UnlexerRule(name="R"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_18)))
         return current
+
     R.min_depth = 0
 
     @depthcontrol
     def S(self):
-        current = self.create_node(UnlexerRule(name='S'))
+        current = self.create_node(UnlexerRule(name="S"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_19)))
         return current
+
     S.min_depth = 0
 
     @depthcontrol
     def T(self):
-        current = self.create_node(UnlexerRule(name='T'))
+        current = self.create_node(UnlexerRule(name="T"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_20)))
         return current
+
     T.min_depth = 0
 
     @depthcontrol
     def U(self):
-        current = self.create_node(UnlexerRule(name='U'))
+        current = self.create_node(UnlexerRule(name="U"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_21)))
         return current
+
     U.min_depth = 0
 
     @depthcontrol
     def V(self):
-        current = self.create_node(UnlexerRule(name='V'))
+        current = self.create_node(UnlexerRule(name="V"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_22)))
         return current
+
     V.min_depth = 0
 
     @depthcontrol
     def W(self):
-        current = self.create_node(UnlexerRule(name='W'))
+        current = self.create_node(UnlexerRule(name="W"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_23)))
         return current
+
     W.min_depth = 0
 
     @depthcontrol
     def X(self):
-        current = self.create_node(UnlexerRule(name='X'))
+        current = self.create_node(UnlexerRule(name="X"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_24)))
         return current
+
     X.min_depth = 0
 
     @depthcontrol
     def Y(self):
-        current = self.create_node(UnlexerRule(name='Y'))
+        current = self.create_node(UnlexerRule(name="Y"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_25)))
         return current
+
     Y.min_depth = 0
 
     @depthcontrol
     def Z(self):
-        current = self.create_node(UnlexerRule(name='Z'))
+        current = self.create_node(UnlexerRule(name="Z"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_26)))
         return current
+
     Z.min_depth = 0
 
     @depthcontrol
     def LETTER(self):
-        current = self.create_node(UnlexerRule(name='LETTER'))
+        current = self.create_node(UnlexerRule(name="LETTER"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_27)))
         return current
+
     LETTER.min_depth = 0
 
     @depthcontrol
     def DEC_DIGIT(self):
-        current = self.create_node(UnlexerRule(name='DEC_DIGIT'))
+        current = self.create_node(UnlexerRule(name="DEC_DIGIT"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_28)))
         return current
+
     DEC_DIGIT.min_depth = 0
 
     @depthcontrol
     def HEX_DIGIT(self):
-        current = self.create_node(UnlexerRule(name='HEX_DIGIT'))
+        current = self.create_node(UnlexerRule(name="HEX_DIGIT"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_29)))
         return current
+
     HEX_DIGIT.min_depth = 0
 
     @depthcontrol
     def ARROW(self):
-        current = self.create_node(UnlexerRule(name='ARROW'))
-        current += self.create_node(UnlexerRule(src='->'))
+        current = self.create_node(UnlexerRule(name="ARROW"))
+        current += self.create_node(UnlexerRule(src="->"))
         return current
+
     ARROW.min_depth = 0
 
     @depthcontrol
     def ASTERISK(self):
-        current = self.create_node(UnlexerRule(name='ASTERISK'))
-        current += self.create_node(UnlexerRule(src='*'))
+        current = self.create_node(UnlexerRule(name="ASTERISK"))
+        current += self.create_node(UnlexerRule(src="*"))
         return current
+
     ASTERISK.min_depth = 0
 
     @depthcontrol
     def BACKQUOTE(self):
-        current = self.create_node(UnlexerRule(name='BACKQUOTE'))
-        current += self.create_node(UnlexerRule(src='`'))
+        current = self.create_node(UnlexerRule(name="BACKQUOTE"))
+        current += self.create_node(UnlexerRule(src="`"))
         return current
+
     BACKQUOTE.min_depth = 0
 
     @depthcontrol
     def BACKSLASH(self):
-        current = self.create_node(UnlexerRule(name='BACKSLASH'))
-        current += self.create_node(UnlexerRule(src='\\'))
+        current = self.create_node(UnlexerRule(name="BACKSLASH"))
+        current += self.create_node(UnlexerRule(src="\\"))
         return current
+
     BACKSLASH.min_depth = 0
 
     @depthcontrol
     def COLON(self):
-        current = self.create_node(UnlexerRule(name='COLON'))
-        current += self.create_node(UnlexerRule(src=':'))
+        current = self.create_node(UnlexerRule(name="COLON"))
+        current += self.create_node(UnlexerRule(src=":"))
         return current
+
     COLON.min_depth = 0
 
     @depthcontrol
     def COMMA(self):
-        current = self.create_node(UnlexerRule(name='COMMA'))
-        current += self.create_node(UnlexerRule(src=','))
+        current = self.create_node(UnlexerRule(name="COMMA"))
+        current += self.create_node(UnlexerRule(src=","))
         return current
+
     COMMA.min_depth = 0
 
     @depthcontrol
     def CONCAT(self):
-        current = self.create_node(UnlexerRule(name='CONCAT'))
-        current += self.create_node(UnlexerRule(src='||'))
+        current = self.create_node(UnlexerRule(name="CONCAT"))
+        current += self.create_node(UnlexerRule(src="||"))
         return current
+
     CONCAT.min_depth = 0
 
     @depthcontrol
     def DASH(self):
-        current = self.create_node(UnlexerRule(name='DASH'))
-        current += self.create_node(UnlexerRule(src='-'))
+        current = self.create_node(UnlexerRule(name="DASH"))
+        current += self.create_node(UnlexerRule(src="-"))
         return current
+
     DASH.min_depth = 0
 
     @depthcontrol
     def DOT(self):
-        current = self.create_node(UnlexerRule(name='DOT'))
-        current += self.create_node(UnlexerRule(src='.'))
+        current = self.create_node(UnlexerRule(name="DOT"))
+        current += self.create_node(UnlexerRule(src="."))
         return current
+
     DOT.min_depth = 0
 
     @depthcontrol
     def EQ_DOUBLE(self):
-        current = self.create_node(UnlexerRule(name='EQ_DOUBLE'))
-        current += self.create_node(UnlexerRule(src='=='))
+        current = self.create_node(UnlexerRule(name="EQ_DOUBLE"))
+        current += self.create_node(UnlexerRule(src="=="))
         return current
+
     EQ_DOUBLE.min_depth = 0
 
     @depthcontrol
     def EQ_SINGLE(self):
-        current = self.create_node(UnlexerRule(name='EQ_SINGLE'))
-        current += self.create_node(UnlexerRule(src='='))
+        current = self.create_node(UnlexerRule(name="EQ_SINGLE"))
+        current += self.create_node(UnlexerRule(src="="))
         return current
+
     EQ_SINGLE.min_depth = 0
 
     @depthcontrol
     def GE(self):
-        current = self.create_node(UnlexerRule(name='GE'))
-        current += self.create_node(UnlexerRule(src='>='))
+        current = self.create_node(UnlexerRule(name="GE"))
+        current += self.create_node(UnlexerRule(src=">="))
         return current
+
     GE.min_depth = 0
 
     @depthcontrol
     def GT(self):
-        current = self.create_node(UnlexerRule(name='GT'))
-        current += self.create_node(UnlexerRule(src='>'))
+        current = self.create_node(UnlexerRule(name="GT"))
+        current += self.create_node(UnlexerRule(src=">"))
         return current
+
     GT.min_depth = 0
 
     @depthcontrol
     def LBRACKET(self):
-        current = self.create_node(UnlexerRule(name='LBRACKET'))
-        current += self.create_node(UnlexerRule(src='['))
+        current = self.create_node(UnlexerRule(name="LBRACKET"))
+        current += self.create_node(UnlexerRule(src="["))
         return current
+
     LBRACKET.min_depth = 0
 
     @depthcontrol
     def LE(self):
-        current = self.create_node(UnlexerRule(name='LE'))
-        current += self.create_node(UnlexerRule(src='<='))
+        current = self.create_node(UnlexerRule(name="LE"))
+        current += self.create_node(UnlexerRule(src="<="))
         return current
+
     LE.min_depth = 0
 
     @depthcontrol
     def LPAREN(self):
-        current = self.create_node(UnlexerRule(name='LPAREN'))
-        current += self.create_node(UnlexerRule(src='('))
+        current = self.create_node(UnlexerRule(name="LPAREN"))
+        current += self.create_node(UnlexerRule(src="("))
         return current
+
     LPAREN.min_depth = 0
 
     @depthcontrol
     def LT(self):
-        current = self.create_node(UnlexerRule(name='LT'))
-        current += self.create_node(UnlexerRule(src='<'))
+        current = self.create_node(UnlexerRule(name="LT"))
+        current += self.create_node(UnlexerRule(src="<"))
         return current
+
     LT.min_depth = 0
 
     @depthcontrol
     def NOT_EQ(self):
-        current = self.create_node(UnlexerRule(name='NOT_EQ'))
-        choice = self.choice([0 if [0, 0][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_79', i), 1) for i, w in enumerate([1, 1])])
-        self.unlexer.weights[('alt_79', choice)] = self.unlexer.weights.get(('alt_79', choice), 1) * self.unlexer.cooldown
+        current = self.create_node(UnlexerRule(name="NOT_EQ"))
+        choice = self.choice(
+            [
+                0
+                if [0, 0][i] > self.unlexer.max_depth
+                else w * self.unlexer.weights.get(("alt_79", i), 1)
+                for i, w in enumerate([1, 1])
+            ]
+        )
+        self.unlexer.weights[("alt_79", choice)] = (
+            self.unlexer.weights.get(("alt_79", choice), 1) * self.unlexer.cooldown
+        )
         if choice == 0:
-            current += self.create_node(UnlexerRule(src='!='))
+            current += self.create_node(UnlexerRule(src="!="))
         elif choice == 1:
-            current += self.create_node(UnlexerRule(src='<>'))
+            current += self.create_node(UnlexerRule(src="<>"))
         return current
+
     NOT_EQ.min_depth = 0
 
     @depthcontrol
     def PERCENT(self):
-        current = self.create_node(UnlexerRule(name='PERCENT'))
-        current += self.create_node(UnlexerRule(src='%'))
+        current = self.create_node(UnlexerRule(name="PERCENT"))
+        current += self.create_node(UnlexerRule(src="%"))
         return current
+
     PERCENT.min_depth = 0
 
     @depthcontrol
     def PLUS(self):
-        current = self.create_node(UnlexerRule(name='PLUS'))
-        current += self.create_node(UnlexerRule(src='+'))
+        current = self.create_node(UnlexerRule(name="PLUS"))
+        current += self.create_node(UnlexerRule(src="+"))
         return current
+
     PLUS.min_depth = 0
 
     @depthcontrol
     def QUERY(self):
-        current = self.create_node(UnlexerRule(name='QUERY'))
-        current += self.create_node(UnlexerRule(src='?'))
+        current = self.create_node(UnlexerRule(name="QUERY"))
+        current += self.create_node(UnlexerRule(src="?"))
         return current
+
     QUERY.min_depth = 0
 
     @depthcontrol
     def QUOTE_SINGLE(self):
-        current = self.create_node(UnlexerRule(name='QUOTE_SINGLE'))
-        current += self.create_node(UnlexerRule(src='\''))
+        current = self.create_node(UnlexerRule(name="QUOTE_SINGLE"))
+        current += self.create_node(UnlexerRule(src="'"))
         return current
+
     QUOTE_SINGLE.min_depth = 0
 
     @depthcontrol
     def RBRACKET(self):
-        current = self.create_node(UnlexerRule(name='RBRACKET'))
-        current += self.create_node(UnlexerRule(src=']'))
+        current = self.create_node(UnlexerRule(name="RBRACKET"))
+        current += self.create_node(UnlexerRule(src="]"))
         return current
+
     RBRACKET.min_depth = 0
 
     @depthcontrol
     def RPAREN(self):
-        current = self.create_node(UnlexerRule(name='RPAREN'))
-        current += self.create_node(UnlexerRule(src=')'))
+        current = self.create_node(UnlexerRule(name="RPAREN"))
+        current += self.create_node(UnlexerRule(src=")"))
         return current
+
     RPAREN.min_depth = 0
 
     @depthcontrol
     def SEMICOLON(self):
-        current = self.create_node(UnlexerRule(name='SEMICOLON'))
-        current += self.create_node(UnlexerRule(src=';'))
+        current = self.create_node(UnlexerRule(name="SEMICOLON"))
+        current += self.create_node(UnlexerRule(src=";"))
         return current
+
     SEMICOLON.min_depth = 0
 
     @depthcontrol
     def SLASH(self):
-        current = self.create_node(UnlexerRule(name='SLASH'))
-        current += self.create_node(UnlexerRule(src='/'))
+        current = self.create_node(UnlexerRule(name="SLASH"))
+        current += self.create_node(UnlexerRule(src="/"))
         return current
+
     SLASH.min_depth = 0
 
     @depthcontrol
     def UNDERSCORE(self):
-        current = self.create_node(UnlexerRule(name='UNDERSCORE'))
-        current += self.create_node(UnlexerRule(src='_'))
+        current = self.create_node(UnlexerRule(name="UNDERSCORE"))
+        current += self.create_node(UnlexerRule(src="_"))
         return current
+
     UNDERSCORE.min_depth = 0
 
     @depthcontrol
     def SINGLE_LINE_COMMENT(self):
-        current = self.create_node(UnlexerRule(name='SINGLE_LINE_COMMENT'))
-        current += self.create_node(UnlexerRule(src='--'))
+        current = self.create_node(UnlexerRule(name="SINGLE_LINE_COMMENT"))
+        current += self.create_node(UnlexerRule(src="--"))
         if self.unlexer.max_depth >= 0:
             for _ in self.zero_or_more():
                 current += UnlexerRule(src=self.char_from_list(charset_30))
 
-        choice = self.choice([0 if [0, 0, 1][i] > self.unlexer.max_depth else w * self.unlexer.weights.get(('alt_95', i), 1) for i, w in enumerate([1, 1, 1])])
-        self.unlexer.weights[('alt_95', choice)] = self.unlexer.weights.get(('alt_95', choice), 1) * self.unlexer.cooldown
+        choice = self.choice(
+            [
+                0
+                if [0, 0, 1][i] > self.unlexer.max_depth
+                else w * self.unlexer.weights.get(("alt_95", i), 1)
+                for i, w in enumerate([1, 1, 1])
+            ]
+        )
+        self.unlexer.weights[("alt_95", choice)] = (
+            self.unlexer.weights.get(("alt_95", choice), 1) * self.unlexer.cooldown
+        )
         if choice == 0:
-            current += self.create_node(UnlexerRule(src='\n'))
+            current += self.create_node(UnlexerRule(src="\n"))
         elif choice == 1:
-            current += self.create_node(UnlexerRule(src='\r'))
+            current += self.create_node(UnlexerRule(src="\r"))
         elif choice == 2:
             current += self.unlexer.EOF()
         return current
+
     SINGLE_LINE_COMMENT.min_depth = 0
 
     @depthcontrol
     def MULTI_LINE_COMMENT(self):
-        current = self.create_node(UnlexerRule(name='MULTI_LINE_COMMENT'))
-        current += self.create_node(UnlexerRule(src='/*'))
+        current = self.create_node(UnlexerRule(name="MULTI_LINE_COMMENT"))
+        current += self.create_node(UnlexerRule(src="/*"))
         if self.unlexer.max_depth >= 0:
             for _ in self.zero_or_more():
                 current += UnlexerRule(src=self.any_char())
 
-        current += self.create_node(UnlexerRule(src='*/'))
+        current += self.create_node(UnlexerRule(src="*/"))
         return current
+
     MULTI_LINE_COMMENT.min_depth = 0
 
     @depthcontrol
     def WHITESPACE(self):
-        current = self.create_node(UnlexerRule(name='WHITESPACE'))
+        current = self.create_node(UnlexerRule(name="WHITESPACE"))
         current += self.create_node(UnlexerRule(src=self.char_from_list(charset_31)))
         return current
-    WHITESPACE.min_depth = 0
 
+    WHITESPACE.min_depth = 0

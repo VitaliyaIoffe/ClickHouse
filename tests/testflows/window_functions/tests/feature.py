@@ -5,10 +5,25 @@ from window_functions.tests.common import *
 
 @TestOutline(Feature)
 @Name("tests")
-@Examples("distributed", [
-    (False, Name("non distributed"),Requirements(RQ_SRS_019_ClickHouse_WindowFunctions_NonDistributedTables("1.0"))),
-    (True, Name("distributed"), Requirements(RQ_SRS_019_ClickHouse_WindowFunctions_DistributedTables("1.0")))
-])
+@Examples(
+    "distributed",
+    [
+        (
+            False,
+            Name("non distributed"),
+            Requirements(
+                RQ_SRS_019_ClickHouse_WindowFunctions_NonDistributedTables("1.0")
+            ),
+        ),
+        (
+            True,
+            Name("distributed"),
+            Requirements(
+                RQ_SRS_019_ClickHouse_WindowFunctions_DistributedTables("1.0")
+            ),
+        ),
+    ],
+)
 def feature(self, distributed, node="clickhouse1"):
     """Check window functions behavior using non-distributed or
     distributed tables.

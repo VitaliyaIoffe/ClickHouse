@@ -1,18 +1,23 @@
 import os
 
 from ldap.authentication.tests.common import (
-    Config, add_config, create_ldap_servers_config_content, getuid, xml_append,
-    xml_indent, xml_with_utf8, xmltree)
-from ldap.external_user_directory.tests.common import (ldap_users, rbac_roles,
-                                                       rbac_users)
+    Config,
+    add_config,
+    create_ldap_servers_config_content,
+    getuid,
+    xml_append,
+    xml_indent,
+    xml_with_utf8,
+    xmltree,
+)
+from ldap.external_user_directory.tests.common import ldap_users, rbac_roles, rbac_users
 from testflows.asserts import error
 from testflows.core import *
 
 
 @TestStep(Given)
 def create_table(self, name, create_statement, on_cluster=False):
-    """Create table.
-    """
+    """Create table."""
     node = current().context.node
     try:
         with Given(f"I have a {name} table"):
@@ -25,19 +30,26 @@ def create_table(self, name, create_statement, on_cluster=False):
             else:
                 node.query(f"DROP TABLE IF EXISTS {name}")
 
+
 @TestStep(Given)
-def add_ldap_servers_configuration(self, servers, config=None, config_d_dir="/etc/clickhouse-server/config.d",
-        config_file="ldap_servers.xml", timeout=60, restart=False):
-    """Add LDAP servers configuration to config.xml.
-    """
+def add_ldap_servers_configuration(
+    self,
+    servers,
+    config=None,
+    config_d_dir="/etc/clickhouse-server/config.d",
+    config_file="ldap_servers.xml",
+    timeout=60,
+    restart=False,
+):
+    """Add LDAP servers configuration to config.xml."""
     if config is None:
         config = create_ldap_servers_config_content(servers, config_d_dir, config_file)
     return add_config(config, restart=restart)
 
+
 @TestStep(Given)
 def add_ldap_groups(self, groups, node=None):
-    """Add multiple new groups to the LDAP server.
-    """
+    """Add multiple new groups to the LDAP server."""
     try:
         _groups = []
         for group in groups:
@@ -49,45 +61,58 @@ def add_ldap_groups(self, groups, node=None):
             for _group in _groups:
                 delete_group_from_ldap(_group, node=node)
 
+
 @TestStep(Given)
-def add_ldap_external_user_directory(self, server, roles=None, role_mappings=None,
-        config_d_dir="/etc/clickhouse-server/config.d",
-        config_file=None, timeout=60, restart=True, config=None):
-    """Add LDAP external user directory.
-    """
+def add_ldap_external_user_directory(
+    self,
+    server,
+    roles=None,
+    role_mappings=None,
+    config_d_dir="/etc/clickhouse-server/config.d",
+    config_file=None,
+    timeout=60,
+    restart=True,
+    config=None,
+):
+    """Add LDAP external user directory."""
     if config_file is None:
         config_file = f"ldap_external_user_directory_with_role_mapping_{getuid()}.xml"
 
     if config is None:
-        config = create_ldap_external_user_directory_config_content(server=server, roles=roles,
-            role_mappings=role_mappings, config_d_dir=config_d_dir, config_file=config_file)
+        config = create_ldap_external_user_directory_config_content(
+            server=server,
+            roles=roles,
+            role_mappings=role_mappings,
+            config_d_dir=config_d_dir,
+            config_file=config_file,
+        )
 
     return add_config(config, restart=restart)
 
+
 @TestStep(Given)
 def add_rbac_roles(self, roles):
-    """Add RBAC roles.
-    """
+    """Add RBAC roles."""
     with rbac_roles(*roles) as _roles:
         yield _roles
 
+
 @TestStep(Given)
 def add_rbac_users(self, users):
-    """Add RBAC users.
-    """
+    """Add RBAC users."""
     with rbac_users(*users) as _users:
         yield _users
 
+
 @TestStep(Given)
 def add_ldap_users(self, users, node=None):
-    """Add LDAP users.
-    """
+    """Add LDAP users."""
     with ldap_users(*users, node=node) as _users:
         yield _users
 
+
 def add_group_to_ldap(cn, gidnumber=None, node=None, _gidnumber=[600], exitcode=0):
-    """Add new group entry to LDAP.
-    """
+    """Add new group entry to LDAP."""
     _gidnumber[0] += 1
 
     if node is None:
@@ -100,7 +125,7 @@ def add_group_to_ldap(cn, gidnumber=None, node=None, _gidnumber=[600], exitcode=
         "dn": f"cn={cn},ou=groups,dc=company,dc=com",
         "objectclass": ["top", "groupOfUniqueNames"],
         "uniquemember": "cn=admin,dc=company,dc=com",
-        "_server": node.name
+        "_server": node.name,
     }
 
     lines = []
@@ -117,29 +142,31 @@ def add_group_to_ldap(cn, gidnumber=None, node=None, _gidnumber=[600], exitcode=
     ldif = "\n".join(lines)
 
     r = node.command(
-        f"echo -e \"{ldif}\" | ldapadd -x -H ldap://localhost -D \"cn=admin,dc=company,dc=com\" -w admin")
+        f'echo -e "{ldif}" | ldapadd -x -H ldap://localhost -D "cn=admin,dc=company,dc=com" -w admin'
+    )
 
     if exitcode is not None:
         assert r.exitcode == exitcode, error()
 
     return group
 
+
 def delete_group_from_ldap(group, node=None, exitcode=0):
-    """Delete group entry from LDAP.
-    """
+    """Delete group entry from LDAP."""
     if node is None:
         node = current().context.ldap_node
 
     with By(f"deleting group {group['dn']}"):
         r = node.command(
-            f"ldapdelete -x -H ldap://localhost -D \"cn=admin,dc=company,dc=com\" -w admin \"{group['dn']}\"")
+            f"ldapdelete -x -H ldap://localhost -D \"cn=admin,dc=company,dc=com\" -w admin \"{group['dn']}\""
+        )
 
     if exitcode is not None:
         assert r.exitcode == exitcode, error()
 
+
 def fix_ldap_permissions(node=None, exitcode=0):
-    """Fix LDAP access permissions.
-    """
+    """Fix LDAP access permissions."""
     if node is None:
         node = current().context.ldap_node
 
@@ -149,56 +176,64 @@ def fix_ldap_permissions(node=None, exitcode=0):
         "delete: olcAccess\n"
         "-\n"
         "add: olcAccess\n"
-        "olcAccess: to attrs=userPassword,shadowLastChange by self write by dn=\\\"cn=admin,dc=company,dc=com\\\" write by anonymous auth by * none\n"
-        "olcAccess: to * by self write by dn=\\\"cn=admin,dc=company,dc=com\\\" read by users read by * none"
+        'olcAccess: to attrs=userPassword,shadowLastChange by self write by dn=\\"cn=admin,dc=company,dc=com\\" write by anonymous auth by * none\n'
+        'olcAccess: to * by self write by dn=\\"cn=admin,dc=company,dc=com\\" read by users read by * none'
     )
 
-    r = node.command(
-        f"echo -e \"{ldif}\" | ldapmodify -Y EXTERNAL -Q -H ldapi:///")
+    r = node.command(f'echo -e "{ldif}" | ldapmodify -Y EXTERNAL -Q -H ldapi:///')
 
     if exitcode is not None:
         assert r.exitcode == exitcode, error()
 
+
 def add_user_to_group_in_ldap(user, group, node=None, exitcode=0):
-    """Add user to a group in LDAP.
-    """
+    """Add user to a group in LDAP."""
     if node is None:
         node = current().context.ldap_node
 
-    ldif = (f"dn: {group['dn']}\n"
+    ldif = (
+        f"dn: {group['dn']}\n"
         "changetype: modify\n"
         "add: uniquemember\n"
-        f"uniquemember: {user['dn']}")
+        f"uniquemember: {user['dn']}"
+    )
 
     with By(f"adding user {user['dn']} to group {group['dn']}"):
         r = node.command(
-            f"echo -e \"{ldif}\" | ldapmodify -x -H ldap://localhost -D \"cn=admin,dc=company,dc=com\" -w admin")
+            f'echo -e "{ldif}" | ldapmodify -x -H ldap://localhost -D "cn=admin,dc=company,dc=com" -w admin'
+        )
 
     if exitcode is not None:
         assert r.exitcode == exitcode, error()
 
+
 def delete_user_from_group_in_ldap(user, group, node=None, exitcode=0):
-    """Delete user from a group in LDAP.
-    """
+    """Delete user from a group in LDAP."""
     if node is None:
         node = current().context.ldap_node
 
-    ldif = (f"dn: {group['dn']}\n"
+    ldif = (
+        f"dn: {group['dn']}\n"
         "changetype: modify\n"
         "delete: uniquemember\n"
-        f"uniquemember: {user['dn']}")
+        f"uniquemember: {user['dn']}"
+    )
 
     with By(f"deleting user {user['dn']} from group {group['dn']}"):
         r = node.command(
-            f"echo -e \"{ldif}\" | ldapmodify -x -H ldap://localhost -D \"cn=admin,dc=company,dc=com\" -w admin")
+            f'echo -e "{ldif}" | ldapmodify -x -H ldap://localhost -D "cn=admin,dc=company,dc=com" -w admin'
+        )
 
     if exitcode is not None:
         assert r.exitcode == exitcode, error()
 
-def create_xml_config_content(entries, config_d_dir="/etc/clickhouse-server/config.d",
-        config_file="ldap_external_user_directories.xml"):
-    """Create XML configuration file from a dictionary.
-    """
+
+def create_xml_config_content(
+    entries,
+    config_d_dir="/etc/clickhouse-server/config.d",
+    config_file="ldap_external_user_directories.xml",
+):
+    """Create XML configuration file from a dictionary."""
     uid = getuid()
     path = os.path.join(config_d_dir, config_file)
     name = config_file
@@ -206,7 +241,7 @@ def create_xml_config_content(entries, config_d_dir="/etc/clickhouse-server/conf
     root.append(xmltree.Comment(text=f"config uid: {uid}"))
 
     def create_xml_tree(entries, root):
-        for k,v in entries.items():
+        for k, v in entries.items():
             if type(v) is dict:
                 xml_element = xmltree.Element(k)
                 create_xml_tree(v, xml_element)
@@ -221,19 +256,18 @@ def create_xml_config_content(entries, config_d_dir="/etc/clickhouse-server/conf
 
     create_xml_tree(entries, root)
     xml_indent(root)
-    content = xml_with_utf8 + str(xmltree.tostring(root, short_empty_elements=False, encoding="utf-8"), "utf-8")
+    content = xml_with_utf8 + str(
+        xmltree.tostring(root, short_empty_elements=False, encoding="utf-8"), "utf-8"
+    )
 
     return Config(content, path, name, uid, "config.xml")
 
-def create_ldap_external_user_directory_config_content(server=None, roles=None, role_mappings=None, **kwargs):
-    """Create LDAP external user directory configuration file content.
-    """
-    entries = {
-        "user_directories": {
-            "ldap": {
-            }
-        }
-    }
+
+def create_ldap_external_user_directory_config_content(
+    server=None, roles=None, role_mappings=None, **kwargs
+):
+    """Create LDAP external user directory configuration file content."""
+    entries = {"user_directories": {"ldap": {}}}
 
     entries["user_directories"]["ldap"] = []
 
@@ -241,7 +275,9 @@ def create_ldap_external_user_directory_config_content(server=None, roles=None, 
         entries["user_directories"]["ldap"].append({"server": server})
 
     if roles:
-        entries["user_directories"]["ldap"].append({"roles": [{r: None} for r in roles]})
+        entries["user_directories"]["ldap"].append(
+            {"roles": [{r: None} for r in roles]}
+        )
 
     if role_mappings:
         for role_mapping in role_mappings:
@@ -249,7 +285,7 @@ def create_ldap_external_user_directory_config_content(server=None, roles=None, 
 
     return create_xml_config_content(entries, **kwargs)
 
+
 def create_entries_ldap_external_user_directory_config_content(entries, **kwargs):
-    """Create LDAP external user directory configuration file content.
-    """
+    """Create LDAP external user directory configuration file content."""
     return create_xml_config_content(entries, **kwargs)

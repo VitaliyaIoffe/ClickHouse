@@ -7,11 +7,11 @@ from grammarinator.runtime.tree import *
 
 
 def single_line_whitespace(node):
-    return _whitespace(node, ' \t')
+    return _whitespace(node, " \t")
 
 
 def multi_line_whitespace(node):
-    return _whitespace(node, ' \t\r\n')
+    return _whitespace(node, " \t\r\n")
 
 
 def _whitespace(node, symbols):
@@ -27,9 +27,14 @@ def _whitespace(node, symbols):
     if isinstance(node, UnparserRule):
         new_children = []
         for child, next_child in with_next(node.children):
-            if (not next_child or
-                next_child and isinstance(next_child, UnlexerRule) and next_child.name == 'DOT' or
-                isinstance(child, UnlexerRule) and child.name == 'DOT'):
+            if (
+                not next_child
+                or next_child
+                and isinstance(next_child, UnlexerRule)
+                and next_child.name == "DOT"
+                or isinstance(child, UnlexerRule)
+                and child.name == "DOT"
+            ):
                 new_children.append(child)
             else:
                 new_children.extend([child, UnlexerRule(src=random.choice(symbols))])

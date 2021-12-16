@@ -3,13 +3,14 @@ import os
 
 import pytest
 from helpers.cluster import ClickHouseCluster
-from helpers.dictionary import (Dictionary, DictionaryStructure, Field, Layout,
-                                Row)
+from helpers.dictionary import Dictionary, DictionaryStructure, Field, Layout, Row
 from helpers.external_sources import SourceClickHouse
 
 from .common import *
 
-SOURCE = SourceClickHouse("LocalClickHouse", "localhost", "9000", "local_node", "9000", "default", "")
+SOURCE = SourceClickHouse(
+    "LocalClickHouse", "localhost", "9000", "local_node", "9000", "default", ""
+)
 
 cluster = None
 node = None
@@ -17,6 +18,7 @@ simple_tester = None
 complex_tester = None
 ranged_tester = None
 test_name = "local"
+
 
 def setup_module(module):
     global cluster
@@ -39,13 +41,15 @@ def setup_module(module):
     cluster = ClickHouseCluster(__file__, name=test_name)
 
     main_configs = []
-    main_configs.append(os.path.join('configs', 'disable_ssl_verification.xml'))
+    main_configs.append(os.path.join("configs", "disable_ssl_verification.xml"))
 
     dictionaries = simple_tester.list_dictionaries()
-        
-    node = cluster.add_instance('local_node', main_configs=main_configs, dictionaries=dictionaries)
 
-    
+    node = cluster.add_instance(
+        "local_node", main_configs=main_configs, dictionaries=dictionaries
+    )
+
+
 def teardown_module(module):
     simple_tester.cleanup()
 
@@ -64,14 +68,17 @@ def started_cluster():
     finally:
         cluster.shutdown()
 
+
 @pytest.mark.parametrize("layout_name", sorted(LAYOUTS_SIMPLE))
 def test_simple(started_cluster, layout_name):
     simple_tester.execute(layout_name, node)
 
+
 @pytest.mark.parametrize("layout_name", sorted(LAYOUTS_COMPLEX))
 def test_complex(started_cluster, layout_name):
     complex_tester.execute(layout_name, node)
-    
+
+
 @pytest.mark.parametrize("layout_name", sorted(LAYOUTS_RANGED))
 def test_ranged(started_cluster, layout_name):
     ranged_tester.execute(layout_name, node)

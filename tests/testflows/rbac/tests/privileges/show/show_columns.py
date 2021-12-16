@@ -18,7 +18,10 @@ def describe_with_privilege_granted_directly(self, node=None):
     with user(node, f"{user_name}"):
         table_name = f"table_name_{getuid()}"
 
-        Suite(test=describe)(grant_target_name=user_name, user_name=user_name, table_name=table_name)
+        Suite(test=describe)(
+            grant_target_name=user_name, user_name=user_name, table_name=table_name
+        )
+
 
 @TestSuite
 def describe_with_privilege_granted_via_role(self, node=None):
@@ -37,15 +40,17 @@ def describe_with_privilege_granted_via_role(self, node=None):
         with When("I grant the role to the user"):
             node.query(f"GRANT {role_name} TO {user_name}")
 
-        Suite(test=describe)(grant_target_name=role_name, user_name=user_name, table_name=table_name)
+        Suite(test=describe)(
+            grant_target_name=role_name, user_name=user_name, table_name=table_name
+        )
+
 
 @TestSuite
 @Requirements(
     RQ_SRS_006_RBAC_DescribeTable_RequiredPrivilege("1.0"),
 )
 def describe(self, grant_target_name, user_name, table_name, node=None):
-    """Check that user is able to execute DESCRIBE only when they have SHOW COLUMNS privilege.
-    """
+    """Check that user is able to execute DESCRIBE only when they have SHOW COLUMNS privilege."""
     exitcode, message = errors.not_enough_privileges(name=user_name)
 
     if node is None:
@@ -62,8 +67,12 @@ def describe(self, grant_target_name, user_name, table_name, node=None):
                 node.query(f"GRANT USAGE ON *.* TO {grant_target_name}")
 
             with Then(f"I attempt to DESCRIBE {table_name}"):
-                node.query(f"DESCRIBE {table_name}", settings=[("user",user_name)],
-                    exitcode=exitcode, message=message)
+                node.query(
+                    f"DESCRIBE {table_name}",
+                    settings=[("user", user_name)],
+                    exitcode=exitcode,
+                    message=message,
+                )
 
         with Scenario("DESCRIBE with privilege"):
 
@@ -71,7 +80,9 @@ def describe(self, grant_target_name, user_name, table_name, node=None):
                 node.query(f"GRANT SHOW COLUMNS ON {table_name} TO {grant_target_name}")
 
             with Then(f"I attempt to DESCRIBE {table_name}"):
-                node.query(f"DESCRIBE TABLE {table_name}", settings=[("user",user_name)])
+                node.query(
+                    f"DESCRIBE TABLE {table_name}", settings=[("user", user_name)]
+                )
 
         with Scenario("DESCRIBE with revoked privilege"):
 
@@ -79,11 +90,17 @@ def describe(self, grant_target_name, user_name, table_name, node=None):
                 node.query(f"GRANT SHOW COLUMNS ON {table_name} TO {grant_target_name}")
 
             with And(f"I revoke SHOW COLUMNS on the table"):
-                node.query(f"REVOKE SHOW COLUMNS ON {table_name} FROM {grant_target_name}")
+                node.query(
+                    f"REVOKE SHOW COLUMNS ON {table_name} FROM {grant_target_name}"
+                )
 
             with Then(f"I attempt to DESCRIBE {table_name}"):
-                node.query(f"DESCRIBE {table_name}", settings=[("user",user_name)],
-                    exitcode=exitcode, message=message)
+                node.query(
+                    f"DESCRIBE {table_name}",
+                    settings=[("user", user_name)],
+                    exitcode=exitcode,
+                    message=message,
+                )
 
         with Scenario("DESCRIBE with revoked ALL privilege"):
 
@@ -94,8 +111,12 @@ def describe(self, grant_target_name, user_name, table_name, node=None):
                 node.query(f"REVOKE ALL ON *.* FROM {grant_target_name}")
 
             with Then(f"I attempt to DESCRIBE {table_name}"):
-                node.query(f"DESCRIBE {table_name}", settings=[("user",user_name)],
-                    exitcode=exitcode, message=message)
+                node.query(
+                    f"DESCRIBE {table_name}",
+                    settings=[("user", user_name)],
+                    exitcode=exitcode,
+                    message=message,
+                )
 
         with Scenario("DESCRIBE with ALL privilege"):
 
@@ -103,7 +124,10 @@ def describe(self, grant_target_name, user_name, table_name, node=None):
                 node.query(f"GRANT ALL ON *.* TO {grant_target_name}")
 
             with Then(f"I attempt to DESCRIBE {table_name}"):
-                node.query(f"DESCRIBE TABLE {table_name}", settings=[("user",user_name)])
+                node.query(
+                    f"DESCRIBE TABLE {table_name}", settings=[("user", user_name)]
+                )
+
 
 @TestSuite
 def show_create_with_privilege_granted_directly(self, node=None):
@@ -118,7 +142,10 @@ def show_create_with_privilege_granted_directly(self, node=None):
     with user(node, f"{user_name}"):
         table_name = f"table_name_{getuid()}"
 
-        Suite(test=show_create)(grant_target_name=user_name, user_name=user_name, table_name=table_name)
+        Suite(test=show_create)(
+            grant_target_name=user_name, user_name=user_name, table_name=table_name
+        )
+
 
 @TestSuite
 def show_create_with_privilege_granted_via_role(self, node=None):
@@ -137,15 +164,17 @@ def show_create_with_privilege_granted_via_role(self, node=None):
         with When("I grant the role to the user"):
             node.query(f"GRANT {role_name} TO {user_name}")
 
-        Suite(test=show_create)(grant_target_name=role_name, user_name=user_name, table_name=table_name)
+        Suite(test=show_create)(
+            grant_target_name=role_name, user_name=user_name, table_name=table_name
+        )
+
 
 @TestSuite
 @Requirements(
     RQ_SRS_006_RBAC_ShowCreateTable_RequiredPrivilege("1.0"),
 )
 def show_create(self, grant_target_name, user_name, table_name, node=None):
-    """Check that user is able to execute SHOW CREATE on a table only when they have SHOW COLUMNS privilege.
-    """
+    """Check that user is able to execute SHOW CREATE on a table only when they have SHOW COLUMNS privilege."""
     exitcode, message = errors.not_enough_privileges(name=user_name)
 
     if node is None:
@@ -162,8 +191,12 @@ def show_create(self, grant_target_name, user_name, table_name, node=None):
                 node.query(f"GRANT USAGE ON *.* TO {grant_target_name}")
 
             with Then(f"I attempt to SHOW CREATE {table_name}"):
-                node.query(f"SHOW CREATE TABLE {table_name}", settings=[("user",user_name)],
-                    exitcode=exitcode, message=message)
+                node.query(
+                    f"SHOW CREATE TABLE {table_name}",
+                    settings=[("user", user_name)],
+                    exitcode=exitcode,
+                    message=message,
+                )
 
         with Scenario("SHOW CREATE with privilege"):
 
@@ -171,7 +204,9 @@ def show_create(self, grant_target_name, user_name, table_name, node=None):
                 node.query(f"GRANT SHOW COLUMNS ON {table_name} TO {grant_target_name}")
 
             with Then(f"I attempt to SHOW CREATE {table_name}"):
-                node.query(f"SHOW CREATE TABLE {table_name}", settings=[("user",user_name)])
+                node.query(
+                    f"SHOW CREATE TABLE {table_name}", settings=[("user", user_name)]
+                )
 
         with Scenario("SHOW CREATE with revoked privilege"):
 
@@ -179,11 +214,17 @@ def show_create(self, grant_target_name, user_name, table_name, node=None):
                 node.query(f"GRANT SHOW COLUMNS ON {table_name} TO {grant_target_name}")
 
             with And(f"I revoke SHOW COLUMNS on the table"):
-                node.query(f"REVOKE SHOW COLUMNS ON {table_name} FROM {grant_target_name}")
+                node.query(
+                    f"REVOKE SHOW COLUMNS ON {table_name} FROM {grant_target_name}"
+                )
 
             with Then(f"I attempt to SHOW CREATE {table_name}"):
-                node.query(f"SHOW CREATE TABLE {table_name}", settings=[("user",user_name)],
-                    exitcode=exitcode, message=message)
+                node.query(
+                    f"SHOW CREATE TABLE {table_name}",
+                    settings=[("user", user_name)],
+                    exitcode=exitcode,
+                    message=message,
+                )
 
         with Scenario("SHOW CREATE with ALL privilege"):
 
@@ -191,21 +232,35 @@ def show_create(self, grant_target_name, user_name, table_name, node=None):
                 node.query(f"GRANT ALL ON *.* TO {grant_target_name}")
 
             with Then(f"I attempt to SHOW CREATE {table_name}"):
-                node.query(f"SHOW CREATE TABLE {table_name}", settings=[("user",user_name)])
+                node.query(
+                    f"SHOW CREATE TABLE {table_name}", settings=[("user", user_name)]
+                )
+
 
 @TestFeature
 @Name("show columns")
 @Requirements(
     RQ_SRS_006_RBAC_ShowColumns_Privilege("1.0"),
     RQ_SRS_006_RBAC_Privileges_All("1.0"),
-    RQ_SRS_006_RBAC_Privileges_None("1.0")
+    RQ_SRS_006_RBAC_Privileges_None("1.0"),
 )
 def feature(self, node="clickhouse1"):
-    """Check the RBAC functionality of SHOW COLUMNS.
-    """
+    """Check the RBAC functionality of SHOW COLUMNS."""
     self.context.node = self.context.cluster.node(node)
 
-    Suite(run=describe_with_privilege_granted_directly, setup=instrument_clickhouse_server_log)
-    Suite(run=describe_with_privilege_granted_via_role, setup=instrument_clickhouse_server_log)
-    Suite(run=show_create_with_privilege_granted_directly, setup=instrument_clickhouse_server_log)
-    Suite(run=show_create_with_privilege_granted_via_role, setup=instrument_clickhouse_server_log)
+    Suite(
+        run=describe_with_privilege_granted_directly,
+        setup=instrument_clickhouse_server_log,
+    )
+    Suite(
+        run=describe_with_privilege_granted_via_role,
+        setup=instrument_clickhouse_server_log,
+    )
+    Suite(
+        run=show_create_with_privilege_granted_directly,
+        setup=instrument_clickhouse_server_log,
+    )
+    Suite(
+        run=show_create_with_privilege_granted_via_role,
+        setup=instrument_clickhouse_server_log,
+    )

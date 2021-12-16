@@ -13,8 +13,7 @@ from helpers.common import Pool, join, run_scenario
 @Name("ldap")
 @ArgumentParser(argparser)
 def regression(self, local, clickhouse_binary_path, parallel=None, stress=None):
-    """ClickHouse LDAP integration regression module.
-    """
+    """ClickHouse LDAP integration regression module."""
     top().terminating = False
     args = {"local": local, "clickhouse_binary_path": clickhouse_binary_path}
 
@@ -26,11 +25,29 @@ def regression(self, local, clickhouse_binary_path, parallel=None, stress=None):
     tasks = []
     with Pool(3) as pool:
         try:
-            run_scenario(pool, tasks, Feature(test=load("ldap.authentication.regression", "regression")), args)
-            run_scenario(pool, tasks, Feature(test=load("ldap.external_user_directory.regression", "regression")), args)
-            run_scenario(pool, tasks, Feature(test=load("ldap.role_mapping.regression", "regression")), args)
+            run_scenario(
+                pool,
+                tasks,
+                Feature(test=load("ldap.authentication.regression", "regression")),
+                args,
+            )
+            run_scenario(
+                pool,
+                tasks,
+                Feature(
+                    test=load("ldap.external_user_directory.regression", "regression")
+                ),
+                args,
+            )
+            run_scenario(
+                pool,
+                tasks,
+                Feature(test=load("ldap.role_mapping.regression", "regression")),
+                args,
+            )
         finally:
             join(tasks)
+
 
 if main():
     regression()

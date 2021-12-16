@@ -8,8 +8,11 @@ import subprocess
 import sys
 
 from build_download_helper import download_all_deb_packages
-from clickhouse_helper import (ClickHouseHelper, mark_flaky_tests,
-                               prepare_tests_results_for_clickhouse)
+from clickhouse_helper import (
+    ClickHouseHelper,
+    mark_flaky_tests,
+    prepare_tests_results_for_clickhouse,
+)
 from commit_status_helper import post_commit_status
 from docker_pull_helper import get_images_with_versions
 from get_robot_token import get_best_robot_token
@@ -33,24 +36,28 @@ IMAGES = [
     "clickhouse/integration-helper",
 ]
 
-def get_json_params_dict(check_name, pr_info, docker_images, run_by_hash_total, run_by_hash_num):
+
+def get_json_params_dict(
+    check_name, pr_info, docker_images, run_by_hash_total, run_by_hash_num
+):
     return {
-        'context_name': check_name,
-        'commit': pr_info.sha,
-        'pull_request': pr_info.number,
-        'pr_info': {'changed_files' : list(pr_info.changed_files)},
-        'docker_images_with_versions': docker_images,
-        'shuffle_test_groups': False,
-        'use_tmpfs': False,
-        'disable_net_host': True,
-        'run_by_hash_total': run_by_hash_total,
-        'run_by_hash_num': run_by_hash_num,
+        "context_name": check_name,
+        "commit": pr_info.sha,
+        "pull_request": pr_info.number,
+        "pr_info": {"changed_files": list(pr_info.changed_files)},
+        "docker_images_with_versions": docker_images,
+        "shuffle_test_groups": False,
+        "use_tmpfs": False,
+        "disable_net_host": True,
+        "run_by_hash_total": run_by_hash_total,
+        "run_by_hash_num": run_by_hash_num,
     }
 
+
 def get_env_for_runner(build_path, repo_path, result_path, work_path):
-    binary_path = os.path.join(build_path, 'clickhouse')
-    odbc_bridge_path = os.path.join(build_path, 'clickhouse-odbc-bridge')
-    library_bridge_path = os.path.join(build_path, 'clickhouse-library-bridge')
+    binary_path = os.path.join(build_path, "clickhouse")
+    odbc_bridge_path = os.path.join(build_path, "clickhouse-odbc-bridge")
+    library_bridge_path = os.path.join(build_path, "clickhouse-library-bridge")
 
     my_env = os.environ.copy()
     my_env["CLICKHOUSE_TESTS_BUILD_PATH"] = build_path
@@ -62,9 +69,10 @@ def get_env_for_runner(build_path, repo_path, result_path, work_path):
     my_env["CLICKHOUSE_TESTS_RESULT_PATH"] = result_path
     my_env["CLICKHOUSE_TESTS_BASE_CONFIG_DIR"] = f"{repo_path}/programs/server"
     my_env["CLICKHOUSE_TESTS_JSON_PARAMS_PATH"] = os.path.join(work_path, "params.json")
-    my_env["CLICKHOUSE_TESTS_RUNNER_RESTART_DOCKER"] = '0'
+    my_env["CLICKHOUSE_TESTS_RUNNER_RESTART_DOCKER"] = "0"
 
     return my_env
+
 
 def process_results(result_folder):
     test_results = []
@@ -72,15 +80,19 @@ def process_results(result_folder):
     # Just upload all files from result_folder.
     # If task provides processed results, then it's responsible for content of result_folder.
     if os.path.exists(result_folder):
-        test_files = [f for f in os.listdir(result_folder) if os.path.isfile(os.path.join(result_folder, f))]
+        test_files = [
+            f
+            for f in os.listdir(result_folder)
+            if os.path.isfile(os.path.join(result_folder, f))
+        ]
         additional_files = [os.path.join(result_folder, f) for f in test_files]
 
     status = []
     status_path = os.path.join(result_folder, "check_status.tsv")
     if os.path.exists(status_path):
         logging.info("Found test_results.tsv")
-        with open(status_path, 'r', encoding='utf-8') as status_file:
-            status = list(csv.reader(status_file, delimiter='\t'))
+        with open(status_path, "r", encoding="utf-8") as status_file:
+            status = list(csv.reader(status_file, delimiter="\t"))
 
     if len(status) != 1 or len(status[0]) != 2:
         logging.info("Files in result folder %s", os.listdir(result_folder))
@@ -89,12 +101,13 @@ def process_results(result_folder):
 
     results_path = os.path.join(result_folder, "test_results.tsv")
     if os.path.exists(results_path):
-        with open(results_path, 'r', encoding='utf-8') as results_file:
-            test_results = list(csv.reader(results_file, delimiter='\t'))
+        with open(results_path, "r", encoding="utf-8") as results_file:
+            test_results = list(csv.reader(results_file, delimiter="\t"))
     if len(test_results) == 0:
         return "error", "Empty test_results.tsv", test_results, additional_files
 
     return state, description, test_results, additional_files
+
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
@@ -107,10 +120,12 @@ if __name__ == "__main__":
 
     check_name = sys.argv[1]
 
-    if 'RUN_BY_HASH_NUM' in os.environ:
-        run_by_hash_num = int(os.getenv('RUN_BY_HASH_NUM'))
-        run_by_hash_total = int(os.getenv('RUN_BY_HASH_TOTAL'))
-        check_name_with_group = check_name + f' [{run_by_hash_num + 1}/{run_by_hash_total}]'
+    if "RUN_BY_HASH_NUM" in os.environ:
+        run_by_hash_num = int(os.getenv("RUN_BY_HASH_NUM"))
+        run_by_hash_total = int(os.getenv("RUN_BY_HASH_TOTAL"))
+        check_name_with_group = (
+            check_name + f" [{run_by_hash_num + 1}/{run_by_hash_total}]"
+        )
     else:
         run_by_hash_num = 0
         run_by_hash_total = 0
@@ -119,7 +134,7 @@ if __name__ == "__main__":
     if not os.path.exists(temp_path):
         os.makedirs(temp_path)
 
-    is_flaky_check = 'flaky' in check_name
+    is_flaky_check = "flaky" in check_name
     pr_info = PRInfo(get_event(), need_changed_files=is_flaky_check)
 
     gh = Github(get_best_robot_token())
@@ -147,9 +162,19 @@ if __name__ == "__main__":
 
     my_env = get_env_for_runner(build_path, repo_path, result_path, work_path)
 
-    json_path = os.path.join(work_path, 'params.json')
-    with open(json_path, 'w', encoding='utf-8') as json_params:
-        json_params.write(json.dumps(get_json_params_dict(check_name, pr_info, images_with_versions, run_by_hash_total, run_by_hash_num)))
+    json_path = os.path.join(work_path, "params.json")
+    with open(json_path, "w", encoding="utf-8") as json_params:
+        json_params.write(
+            json.dumps(
+                get_json_params_dict(
+                    check_name,
+                    pr_info,
+                    images_with_versions,
+                    run_by_hash_total,
+                    run_by_hash_num,
+                )
+            )
+        )
 
     output_path_log = os.path.join(result_path, "main_script_log.txt")
 
@@ -170,10 +195,28 @@ if __name__ == "__main__":
     ch_helper = ClickHouseHelper()
     mark_flaky_tests(ch_helper, check_name, test_results)
 
-    s3_helper = S3Helper('https://s3.amazonaws.com')
-    report_url = upload_results(s3_helper, pr_info.number, pr_info.sha, test_results, [output_path_log] + additional_logs, check_name_with_group, False)
+    s3_helper = S3Helper("https://s3.amazonaws.com")
+    report_url = upload_results(
+        s3_helper,
+        pr_info.number,
+        pr_info.sha,
+        test_results,
+        [output_path_log] + additional_logs,
+        check_name_with_group,
+        False,
+    )
     print(f"::notice ::Report url: {report_url}")
-    post_commit_status(gh, pr_info.sha, check_name_with_group, description, state, report_url)
+    post_commit_status(
+        gh, pr_info.sha, check_name_with_group, description, state, report_url
+    )
 
-    prepared_events = prepare_tests_results_for_clickhouse(pr_info, test_results, state, stopwatch.duration_seconds, stopwatch.start_time_str, report_url, check_name_with_group)
+    prepared_events = prepare_tests_results_for_clickhouse(
+        pr_info,
+        test_results,
+        state,
+        stopwatch.duration_seconds,
+        stopwatch.start_time_str,
+        report_url,
+        check_name_with_group,
+    )
     ch_helper.insert_events_into(db="gh-data", table="checks", events=prepared_events)

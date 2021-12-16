@@ -7,7 +7,8 @@ from get_robot_token import get_best_robot_token
 from github import Github
 from pr_info import PRInfo, get_event
 
-NAME = 'Run Check (actions)'
+NAME = "Run Check (actions)"
+
 
 def filter_statuses(statuses):
     """
@@ -24,6 +25,7 @@ def filter_statuses(statuses):
         filt[status.context] = status
     return filt
 
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
@@ -34,4 +36,9 @@ if __name__ == "__main__":
     url = f"{os.getenv('GITHUB_SERVER_URL')}/{os.getenv('GITHUB_REPOSITORY')}/actions/runs/{os.getenv('GITHUB_RUN_ID')}"
     statuses = filter_statuses(list(commit.get_statuses()))
     if NAME in statuses and statuses[NAME].state == "pending":
-        commit.create_status(context=NAME, description="All checks finished", state="success", target_url=url)
+        commit.create_status(
+            context=NAME,
+            description="All checks finished",
+            state="success",
+            target_url=url,
+        )

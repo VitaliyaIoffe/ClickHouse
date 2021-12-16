@@ -34,10 +34,10 @@ class IO(uexpect.IO):
         raise NotImplementedError
 
     def close(self, force=True):
-        self.reader['kill_event'].set()
+        self.reader["kill_event"].set()
         self.connection.close()
         if self._logger:
-            self._logger.write('\n')
+            self._logger.write("\n")
             self._logger.flush()
 
 
@@ -53,6 +53,7 @@ def reader(response, queue, kill_event):
                 break
             raise
 
+
 def spawn(connection, request):
     connection = http.client.HTTPConnection(**connection)
     connection.request(**request)
@@ -64,11 +65,20 @@ def spawn(connection, request):
     thread.daemon = True
     thread.start()
 
-    return IO(connection, response, queue, reader={'thread':thread, 'kill_event':reader_kill_event})
+    return IO(
+        connection,
+        response,
+        queue,
+        reader={"thread": thread, "kill_event": reader_kill_event},
+    )
 
-if __name__ == '__main__':
-    with spawn({'host':'localhost','port':8123},{'method':'GET', 'url':'?query=SELECT%201'}) as client:
+
+if __name__ == "__main__":
+    with spawn(
+        {"host": "localhost", "port": 8123},
+        {"method": "GET", "url": "?query=SELECT%201"},
+    ) as client:
         client.logger(sys.stdout)
         client.timeout(2)
         print(client.response.status, client.response.reason)
-        client.expect('1\n')
+        client.expect("1\n")
